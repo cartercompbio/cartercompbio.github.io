@@ -6,30 +6,10 @@ Official website for the Carter Lab at UC San Diego - Computational Cancer Genom
 
 This website showcases the research, people, software, and publications from the Carter Lab in the School of Medicine at UC San Diego.
 
-## 🚀 Quick Start
-
-### View Locally
-```bash
-# Open in browser (or use any local server)
-open index.html
-
-# Or with Python:
-python3 -m http.server 8000
-# Then visit: http://localhost:8000
-```
-
-### Deploy on GitHub Pages
-1. Go to repository Settings → Pages
-2. Under "Source", select the `main` branch
-3. Click Save
-4. Your site will be available at `https://carterlab.github.io`
-
----
-
 ## 📂 Project Structure
 
 ```
-carterlab.github.io/
+cartercompbio.github.io/
 ├── index.html              # Main homepage
 ├── styles.css              # Global styles
 ├── navigation.js           # Smooth scroll navigation
@@ -77,19 +57,6 @@ See **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** for image specifications and locations.
 
 ---
 
-## 🎨 Features
-
-- ✅ **Responsive Design** - Works on mobile, tablet, and desktop
-- ✅ **Dynamic Content** - News and people loaded from JSON files
-- ✅ **Clean URLs** - `/people/detail/?id=member-name`
-- ✅ **Individual Pages** - Each person and news item has a detail page
-- ✅ **News Archive** - All news organized by year
-- ✅ **Smooth Navigation** - Animated scrolling between sections
-- ✅ **Modern UI** - Teal color theme (#1e748a)
-- ✅ **Photo Management** - Placeholder support for missing images
-
----
-
 ## 🎯 Sections
 
 1. **Home** - Welcome message and lab overview
@@ -99,15 +66,6 @@ See **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** for image specifications and locations.
 5. **Software** - Lab software tools with links
 6. **Publications** - Selected publications by year
 7. **Contact** - Location and contact information
-
----
-
-## 🔧 Technology
-
-- **Pure HTML/CSS/JavaScript** - No build tools or frameworks required
-- **GitHub Pages** - Free hosting
-- **JSON Data** - Easy content management
-- **No Database** - All data in static JSON files
 
 ---
 
@@ -141,24 +99,6 @@ The site uses a teal color scheme. To change:
 - `.nojekyll` file ensures GitHub Pages doesn't process files with Jekyll
 
 ---
-
-## 🤝 Contributing
-
-1. Make changes to the appropriate files
-2. Test locally
-3. Commit and push:
-   ```bash
-   git add .
-   git commit -m "Description of changes"
-   git push
-   ```
-4. Changes appear on GitHub Pages within minutes
-
----
-
-## 📞 Support
-
-For questions about updating the website, refer to the documentation files listed above.
 
 ## Generated with Claude Code
 
