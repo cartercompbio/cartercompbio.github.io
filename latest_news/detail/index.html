@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">News Item</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .news-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .news-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #1e748a;
+        }
+        .news-title {
+            font-size: 2.5rem;
+            color: #1e748a;
+            margin-bottom: 0.5rem;
+        }
+        .news-date {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .news-section {
+            margin: 2rem 0;
+        }
+        .news-section h2 {
+            color: #1e748a;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .paper-link, .github-link {
+            display: block;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-left: 4px solid #1e748a;
+            margin: 1rem 0;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.3s;
+        }
+        .paper-link:hover, .github-link:hover {
+            background: #e9ecef;
+        }
+        .link-title {
+            font-weight: 600;
+            color: #1e748a;
+            margin-bottom: 0.5rem;
+        }
+        .link-url {
+            font-size: 0.9rem;
+            color: #666;
+            word-break: break-all;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            background: #1e748a;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #26a3ba;
+        }
+        .additional-links {
+            list-style: none;
+            padding: 0;
+        }
+        .additional-links li {
+            margin: 0.5rem 0;
+        }
+        .additional-links a {
+            color: #1e748a;
+        }
+    </style>
+    <script>
+        // Load news data and populate page
+        async function loadNewsDetail() {
+            // Get news ID from URL
+            const params = new URLSearchParams(window.location.search);
+            const newsId = params.get('id');
+
+            if (!newsId) {
+                document.querySelector('.news-page').innerHTML = '<p>News item not found.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('../../latest_news/news_data.json');
+                const newsData = await response.json();
+                const newsItem = newsData.find(item => item.id === newsId);
+
+                if (!newsItem) {
+                    document.querySelector('.news-page').innerHTML = '<p>News item not found.</p>';
+                    return;
+                }
+
+                // Populate page
+                document.getElementById('page-title').textContent = newsItem.title;
+                document.getElementById('news-title').textContent = newsItem.title;
+                document.getElementById('news-date').textContent = formatDate(newsItem);
+
+                // Paper section
+                if (newsItem.paper) {
+                    document.getElementById('paper-section').style.display = 'block';
+                    const paperLink = document.getElementById('paper-link');
+                    paperLink.href = newsItem.paper.url;
+                    document.getElementById('paper-title').textContent = newsItem.paper.title;
+                    document.getElementById('paper-url').textContent = newsItem.paper.url;
+                }
+
+                // GitHub section
+                if (newsItem.github) {
+                    document.getElementById('github-section').style.display = 'block';
+                    const githubLink = document.getElementById('github-link');
+                    githubLink.href = newsItem.github;
+                    document.getElementById('github-url').textContent = newsItem.github;
+                }
+
+                // Additional links
+                if (newsItem.links && newsItem.links.length > 0) {
+                    document.getElementById('links-section').style.display = 'block';
+                    const linksList = document.getElementById('links-list');
+                    newsItem.links.forEach(link => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.textContent = `${link.type}: ${link.url}`;
+                        a.target = '_blank';
+                        li.appendChild(a);
+                        linksList.appendChild(li);
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error loading news:', error);
+                document.querySelector('.news-page').innerHTML = '<p>Error loading news item.</p>';
+            }
+        }
+
+        function formatDate(newsItem) {
+            const startDate = new Date(newsItem.date);
+            if (newsItem.dateEnd) {
+                const endDate = new Date(newsItem.dateEnd);
+                return `${startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+            }
+            return startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadNewsDetail);
+    </script>
+</head>
+<body>
+    <div class="news-page">
+        <div class="news-header">
+            <h1 class="news-title" id="news-title">Loading...</h1>
+            <div class="news-date" id="news-date"></div>
+        </div>
+
+        <div id="paper-section" class="news-section" style="display: none;">
+            <h2>Paper</h2>
+            <a id="paper-link" class="paper-link" href="#" target="_blank">
+                <div class="link-title" id="paper-title"></div>
+                <div class="link-url" id="paper-url"></div>
+            </a>
+        </div>
+
+        <div id="github-section" class="news-section" style="display: none;">
+            <h2>GitHub Repository</h2>
+            <a id="github-link" class="github-link" href="#" target="_blank">
+                <div class="link-title">View on GitHub</div>
+                <div class="link-url" id="github-url"></div>
+            </a>
+        </div>
+
+        <div id="links-section" class="news-section" style="display: none;">
+            <h2>Additional Links</h2>
+            <ul id="links-list" class="additional-links"></ul>
+        </div>
+
+        <a href="../../index.html#news" class="back-link">← Back to News</a>
+    </div>
+</body>
+</html>

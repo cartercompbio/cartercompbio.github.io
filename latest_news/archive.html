@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Archive - The Carter Lab</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .archive-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .archive-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #1e748a;
+        }
+
+        .archive-header h1 {
+            color: #1e748a;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .archive-header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #1e748a;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .back-home:hover {
+            background: #26a3ba;
+            text-decoration: none;
+        }
+
+        .year-section {
+            margin-bottom: 3rem;
+        }
+
+        .year-header {
+            font-size: 2rem;
+            color: #1e748a;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .news-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .news-list-item {
+            display: grid;
+            grid-template-columns: 1fr auto 150px;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.5rem;
+            background: white;
+            border-left: 4px solid #1e748a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .news-list-date {
+            color: #1e748a;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: right;
+        }
+
+        .news-list-content {
+            text-align: left;
+        }
+
+        .news-list-title {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .news-list-title:hover {
+            color: #1e748a;
+        }
+
+        .news-list-meta {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .news-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #f0f0f0;
+            color: #666;
+            font-size: 0.85rem;
+            border-radius: 3px;
+        }
+
+        .news-badge.paper {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .news-badge.github {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .no-news {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .news-list-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .news-list-date {
+                text-align: left;
+            }
+
+            .news-list-content {
+                text-align: left;
+            }
+
+            .news-list-meta {
+                justify-content: flex-start;
+            }
+
+            .archive-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <script>
+        async function loadNewsArchive() {
+            try {
+                const response = await fetch('news_data.json');
+                const newsItems = await response.json();
+
+                // Sort by date (newest first)
+                newsItems.sort((a, b) => {
+                    const dateA = new Date(a.date);
+                    const dateB = new Date(b.date);
+                    return dateB - dateA;
+                });
+
+                // Group by year
+                const newsByYear = {};
+                newsItems.forEach(item => {
+                    const year = new Date(item.date).getFullYear();
+                    if (!newsByYear[year]) {
+                        newsByYear[year] = [];
+                    }
+                    newsByYear[year].push(item);
+                });
+
+                // Display
+                displayNewsArchive(newsByYear);
+
+            } catch (error) {
+                console.error('Error loading news:', error);
+                document.getElementById('archive-content').innerHTML =
+                    '<div class="no-news">Error loading news archive.</div>';
+            }
+        }
+
+        function displayNewsArchive(newsByYear) {
+            const container = document.getElementById('archive-content');
+            container.innerHTML = '';
+
+            const years = Object.keys(newsByYear).sort((a, b) => b - a);
+
+            if (years.length === 0) {
+                container.innerHTML = '<div class="no-news">No news items found.</div>';
+                return;
+            }
+
+            years.forEach(year => {
+                const yearSection = document.createElement('div');
+                yearSection.className = 'year-section';
+
+                const yearHeader = document.createElement('h2');
+                yearHeader.className = 'year-header';
+                yearHeader.textContent = year;
+                yearSection.appendChild(yearHeader);
+
+                const newsList = document.createElement('div');
+                newsList.className = 'news-list';
+
+                newsByYear[year].forEach(item => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-list-item';
+
+                    const dateDiv = document.createElement('div');
+                    dateDiv.className = 'news-list-date';
+                    dateDiv.textContent = formatNewsDate(item);
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'news-list-content';
+
+                    const titleLink = document.createElement('a');
+                    titleLink.className = 'news-list-title';
+                    titleLink.href = `detail/index.html?id=${item.id}`;
+                    titleLink.textContent = item.title;
+
+                    const metaDiv = document.createElement('div');
+                    metaDiv.className = 'news-list-meta';
+
+                    if (item.paper) {
+                        const paperBadge = document.createElement('span');
+                        paperBadge.className = 'news-badge paper';
+                        paperBadge.textContent = '📄 Paper';
+                        metaDiv.appendChild(paperBadge);
+                    }
+
+                    if (item.github) {
+                        const githubBadge = document.createElement('span');
+                        githubBadge.className = 'news-badge github';
+                        githubBadge.textContent = '💻 GitHub';
+                        metaDiv.appendChild(githubBadge);
+                    }
+
+                    if (item.links && item.links.length > 0) {
+                        const linksBadge = document.createElement('span');
+                        linksBadge.className = 'news-badge';
+                        linksBadge.textContent = `🔗 ${item.links.length} link${item.links.length > 1 ? 's' : ''}`;
+                        metaDiv.appendChild(linksBadge);
+                    }
+
+                    contentDiv.appendChild(titleLink);
+
+                    newsItem.appendChild(contentDiv);
+
+                    // Add meta badges in center column
+                    if (metaDiv.children.length > 0) {
+                        newsItem.appendChild(metaDiv);
+                    } else {
+                        newsItem.appendChild(document.createElement('div'));
+                    }
+
+                    newsItem.appendChild(dateDiv);
+                    newsList.appendChild(newsItem);
+                });
+
+                yearSection.appendChild(newsList);
+                container.appendChild(yearSection);
+            });
+        }
+
+        function formatNewsDate(item) {
+            const startDate = new Date(item.date);
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+
+            if (item.dateEnd) {
+                const endDate = new Date(item.dateEnd);
+                return `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', options)}`;
+            }
+            return startDate.toLocaleDateString('en-US', options);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadNewsArchive);
+    </script>
+</head>
+<body>
+    <div class="archive-container">
+        <a href="../index.html#news" class="back-home">← Back to Home</a>
+
+        <div class="archive-header">
+            <h1>News Archive</h1>
+            <p>Complete history of Carter Lab news and announcements</p>
+        </div>
+
+        <div id="archive-content" class="loading">
+            Loading news archive...
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+[
+  {
+    "id": "grievous-2024",
+    "title": "GRIEVOUS now published in Bioinformatics!",
+    "date": "2024-07-30",
+    "paper": {
+      "title": "GRIEVOUS: your command-line general for resolving cross-dataset genotype inconsistencies",
+      "url": "https://academic.oup.com/bioinformatics/article/40/8/btae489/7723992?login=true"
+    },
+    "github": "https://github.com/jvtalwar/GRIEVOUS",
+    "links": [
+      {
+        "type": "Twitter",
+        "url": "https://x.com/jvt_master/status/1831048819074826546"
+      }
+    ]
+  },
+  {
+    "id": "runx1-2024",
+    "title": "RUNX1 now published in Cell Reports!",
+    "date": "2024-07-23",
+    "paper": {
+      "title": "Interface-guided phenotyping of coding variants in the transcription factor RUNX1",
+      "url": "https://www.cell.com/cell-reports/fulltext/S2211-1247(24)00799-2"
+    },
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "eugene-2023",
+    "title": "EUGENe now published in Nature Computation Science!",
+    "date": "2023-11-16",
+    "paper": {
+      "title": "Predictive analyses of regulatory sequences with EUGENe",
+      "url": "https://www.nature.com/articles/s43588-023-00544-w"
+    },
+    "github": "https://github.com/cartercompbio/EUGENe",
+    "links": []
+  },
+  {
+    "id": "clarence-defense-2023",
+    "title": "Clarence Mah successfully defends his thesis!",
+    "date": "2023-11-03",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "kivil-defense-2022",
+    "title": "Kivilcim Ozturk successfully defends her thesis and graduates from the Carter Lab. Congratulations Dr. Ozturk!",
+    "date": "2022-12-01",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "ismb-2022",
+    "title": "Kivil and Meghana give talks at ISMB 2022, Madison, WI.",
+    "date": "2022-07-10",
+    "dateEnd": "2022-07-14",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "andrea-cri-fellowship-2022",
+    "title": "Andrea Castro has been awarded a Cancer Research Institute postdoctoral fellowship.",
+    "date": "2022-05-24",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "recomb-2022",
+    "title": "Kivil gives a talk at RECOMB-CCB 2022, La Jolla, CA.",
+    "date": "2022-05-20",
+    "dateEnd": "2022-05-21",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "meghana-defense-2022",
+    "title": "Meghana Pagadala successfully defends her thesis and graduates from the Carter Lab. Congratulations Dr. Pagadala!",
+    "date": "2022-05-16",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "andrea-defense-2022",
+    "title": "Andrea Castro successfully defends her thesis and graduates from the Carter Lab. Congratulations Dr. Castro!",
+    "date": "2022-03-09",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "iscb-rocky-2021",
+    "title": "Kivil and Meghana give talks at ISCB Rocky 2021, Aspen/Snowmass, CO.",
+    "date": "2021-12-02",
+    "dateEnd": "2021-12-04",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "andrea-siebel-2021",
+    "title": "Andrea Castro has been named a 2022 Siebel Scholar. Congratulations Andrea!",
+    "date": "2021-10-13",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "ismb-2021",
+    "title": "Meghana, Clarence and Kivil give talks and present posters ISMB 2021",
+    "date": "2021-07-27",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "clarence-nsf-2020",
+    "title": "Clarence Mah receives the 2020 NSF Graduate Research Fellowship. Congratulations Clarence!",
+    "date": "2020-04-21",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "michelle-defense-2020",
+    "title": "Michelle Dow successfully defends her thesis and graduates from the Carter Lab. Congratulations Dr. Dow!",
+    "date": "2020-03-30",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "ismb-eccb-2019",
+    "title": "Andrea gives a talk at ISMB/ECCB 2019, Basel, Switzerland.",
+    "date": "2019-07-21",
+    "dateEnd": "2019-07-25",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "brian-defense-2019",
+    "title": "Brian Tsui defended his thesis and graduated from the Carter Lab!",
+    "date": "2019-02-19",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "rachel-defense-2018",
+    "title": "Rachel Marty Pyke defended her thesis and is the first PhD student to graduate from the Carter Lab!",
+    "date": "2018-10-30",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "mhc-ii-cell-2018",
+    "title": "\"Evolutionary Pressure against MHC Class II Binding Cancer Mutations\" published in Cell",
+    "date": "2018-10-30",
+    "paper": {
+      "title": "Evolutionary Pressure against MHC Class II Binding Cancer Mutations",
+      "url": "https://www.cell.com/cell/fulltext/S0092-8674(18)31178-4"
+    },
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "rachel-siebel-2018",
+    "title": "Rachel Marty Pyke was selected as a 2018 Siebel Scholar. Congratulations Rachel!",
+    "date": "2018-10-30",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "embo-2018",
+    "title": "Kivil gives a talk at EMBO, Heidelberg, Germany.",
+    "date": "2018-04-15",
+    "dateEnd": "2018-04-17",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "carter-cifar-2017",
+    "title": "Dr. Carter is named a CIFAR Azrieli Global Scholar",
+    "date": "2017-10-30",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "mhc-i-cell-2017",
+    "title": "\"MHC-I genotype restricts the landscape of recurrent oncogenic mutations\" published in Cell",
+    "date": "2017-10-26",
+    "paper": {
+      "title": "MHC-I genotype restricts the landscape of recurrent oncogenic mutations",
+      "url": "https://www.cell.com/cell/fulltext/S0092-8674(17)31264-6"
+    },
+    "github": null,
+    "links": []
+  }
+]

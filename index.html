@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Carter Lab - Computational Cancer Genomics</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="news.js"></script>
+    <script src="navigation.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <!-- TODO: Upload cover image to assets/images/leadimage4.jpg -->
+        <div class="header-image" style="background-image: url('assets/images/homepage.webp');">
+            <div class="header-overlay">
+                <h1 class="site-title">The Carter Lab</h1>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <a href="#home">Home</a>
+        <a href="#research">Research</a>
+        <a href="#people">People</a>
+        <a href="#software">Software</a>
+        <a href="#publications">Publications</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main class="container">
+        <section id="home" class="intro">
+            <h2 class="section-title">Computational Cancer Genomics</h2>
+            <p>Welcome to the Carter Lab! We are located in the School of Medicine of <a href="https://ucsd.edu/">UC San Diego</a>.</p>
+        </section>
+
+        <section id="news" class="news-section">
+            <h2 class="section-title">Latest News</h2>
+            <div class="news-grid">
+                <!-- News items loaded dynamically from CSV via news.js -->
+            </div>
+            <div class="view-all-news">
+                <a href="latest_news/archive.html" class="view-all-button">View All News →</a>
+            </div>
+        </section>
+
+        <section id="research" class="research-section">
+            <h1>Research Areas</h1>
+            <hr>
+
+            <div class="research-area">
+                <div class="research-content">
+                    <div class="research-image">
+                        <!-- TODO: Upload image to assets/images/research1.png -->
+                        <img src="assets/images/research_immune_trait.png" alt="Genetic determinants research" />
+                    </div>
+                    <div class="research-text">
+                        <h3>Genetic determinants of anti-tumor immunity</h3>
+                        <p>Genetic variation in immune genes creates inter-individual differences in immune traits. We are investigating the implications of these differences for cancer risk, progression and response to therapy. By jointly analyzing matched tumor and normal genomic data, we have found that individual immune genotypes can influence the evolution of tumor genomes, shape the tumor immune microenvironment and modify response to immunotherapy treatment. These studies will ultimately guide development of precision immunotherapies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="research-area">
+                <h3>Predicting the effects of genetic variants on biological systems</h3>
+                <p>Experimental assays to probe genetic variants at the single cell level provide new opportunities to model the effects of variants on biological processes and cellular activities. We are developing new experimental and computational approaches to investigate the context-specific consequences of genetic variation for biological systems to better understand their implications for human health.</p>
+            </div>
+
+            <div class="research-area">
+                <div class="research-content reverse">
+                    <div class="research-text">
+                        <h3>Uncovering interactions between the inherited genome and tumor development</h3>
+                        <p>Cancer develops on an individual's unique genetic background. While some inherited mutations are known to predispose individuals to developing tumors, little is known about the effects of such inherited genetic variation on the evolution of the tumor genome. We are working to uncover new regions of the genome that influence the probability that certain mutations will occur during tumor development. We previously described multiple loci that influence mutation rates of known cancer genes and the site at which a tumor will occur.</p>
+                    </div>
+                    <div class="research-image">
+                        <!-- TODO: Upload image to assets/images/research2.png -->
+                        <img src="assets/images/research_germline_interaction.png" alt="Inherited genome interactions" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="research-area">
+                <div class="research-content">
+                    <div class="research-image">
+                        <!-- TODO: Upload image to assets/images/research3.png -->
+                        <img src="assets/images/research_cancer_drivers.png" alt="Cancer drivers research" />
+                    </div>
+                    <div class="research-text">
+                        <h3>Discriminating cancer drivers from passengers</h3>
+                        <p>Each cancer genome is characterized by tens-to-thousands of DNA mutations, but only a minority of those mutations is expected to drive tumor development and progression. The vast majority of mutations are so called passenger mutations that are carried along in the genomes of proliferating tumor cells. Discriminating drivers from passengers remains an important challenge in cancer 'omics research. We are developing new strategies to improve identification of drivers by studying mutations in the context of protein interaction networks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="people" class="people-section">
+            <h1>People</h1>
+            <p>Members of the Carter lab, past and present.</p>
+            <hr>
+
+            <div class="person-highlight">
+                <!-- TODO: Upload image to assets/images/people/hannah_carter.png -->
+                <img src="assets/images/people/hannah_carter.png" alt="Hannah Carter" class="person-image" />
+                <h3>Hannah Carter</h3>
+                <p class="person-title">Principal Investigator</p>
+            </div>
+
+            <h2>Current Members</h2>
+            <div class="people-grid">
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/adam_klie.jpeg -->
+                    <img src="assets/images/people/adam_klie.jpeg" alt="Adam Klie" />
+                    <h4>Adam Klie</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/kivilcim_ozturk.jpg -->
+                    <img src="assets/images/people/kivilcim_ozturk.jpg" alt="Kivilcim Ozturk, PhD" />
+                    <h4>Kivilcim Ozturk, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/tj_sears.jpeg -->
+                    <img src="assets/images/people/tj_sears.jpeg" alt="TJ Sears" />
+                    <h4>TJ Sears</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/james_talwar.png -->
+                    <img src="assets/images/people/james_talwar.png" alt="James Talwar" />
+                    <h4>James Talwar</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/david_laub.png -->
+                    <img src="assets/images/people/david_laub.png" alt="David Laub" />
+                    <h4>David Laub</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/douglas_meyer.jpg -->
+                    <img src="assets/images/people/douglas_meyer.jpg" alt="Douglas Meyer" />
+                    <h4>Douglas Meyer</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/sural_ranamukhaarachchi.jpg -->
+                    <img src="assets/images/people/sural_ranamukhaarachchi.jpg" alt="Sural K. Ranamukhaarachchi, PhD" />
+                    <h4>Sural K. Ranamukhaarachchi, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/kohan_lee.jpg -->
+                    <img src="assets/images/people/kohan_lee.jpg" alt="Ko-Han Lee" />
+                    <h4>Ko-Han Lee</h4>
+                </div>
+            </div>
+
+            <h2>Alumni</h2>
+            <div class="people-grid">
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/andrea_castro.jpg -->
+                    <img src="assets/images/people/andrea_castro.jpg" alt="Andrea Castro, PhD" />
+                    <h4>Andrea Castro, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/michelle_dow.png -->
+                    <img src="assets/images/people/michelle_dow.png" alt="Michelle Dow, PhD" />
+                    <h4>Michelle Dow, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/rachel_pyke.jpg -->
+                    <img src="assets/images/people/rachel_pyke.jpg" alt="Rachel Pyke, PhD" />
+                    <h4>Rachel Pyke, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/cameron_waller.jpg -->
+                    <img src="assets/images/people/cameron_waller.jpg" alt="T. Cameron Waller, PhD" />
+                    <h4>T. Cameron Waller, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/brian_tsui.png -->
+                    <img src="assets/images/people/brian_tsui.png" alt="Brian Tsui, PhD" />
+                    <h4>Brian Tsui, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/clarence_mah.png -->
+                    <img src="assets/images/people/clarence_mah.png" alt="Clarence Mah, PhD" />
+                    <h4>Clarence Mah, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/meghana_pagadala.png -->
+                    <img src="assets/images/people/meghana_pagadala.png" alt="Meghana Pagadala, PhD" />
+                    <h4>Meghana Pagadala, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/billur_engin.jpg -->
+                    <img src="assets/images/people/billur_engin.jpg" alt="Billur Engin, PhD" />
+                    <h4>Billur Engin, PhD</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/lucia_bazan.png -->
+                    <img src="assets/images/people/lucia_bazan.png" alt="Lucia Bazan" />
+                    <h4>Lucia Bazan</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/su_xian.jpg -->
+                    <img src="assets/images/people/su_xian.jpg" alt="Su Xian, MS" />
+                    <h4>Su Xian, MS</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/rohil_ahuja.jpg -->
+                    <img src="assets/images/people/rohil_ahuja.jpg" alt="Rohil Ahuja" />
+                    <h4>Rohil Ahuja</h4>
+                </div>
+                <div class="person-card">
+                    <!-- TODO: Upload image to assets/images/people/divya_kirani.jpg -->
+                    <img src="assets/images/people/divya_kirani.jpg" alt="Divya Kirani" />
+                    <h4>Divya Kirani</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="software" class="software-section">
+            <h1>Software</h1>
+            <p>Tools we have created including those we are actively working on.</p>
+            <hr>
+
+            <div class="software-grid">
+                <div class="software-card">
+                    <!-- TODO: Upload image to assets/images/software/bento.png -->
+                    <img src="assets/images/software/bento.png" alt="Bento" class="software-logo" />
+                    <h3>Bento</h3>
+                    <p>A Python toolkit for subcellular analysis of spatial transcriptomics data</p>
+                    <div class="software-links">
+                        <a href="https://bento-tools.readthedocs.io/en/latest/">Docs</a> |
+                        <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03217-7">Paper</a> |
+                        <a href="http://github.com/ckmah/bento-tools">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="software-card">
+                    <!-- TODO: Upload image to assets/images/software/grievous.png -->
+                    <img src="assets/images/software/grievous.png" alt="GRIEVOUS" class="software-logo" />
+                    <h3>GRIEVOUS</h3>
+                    <p>Generalized Realignment of Innocuous and Essential Variants Otherwise Utilized as Skewed</p>
+                    <div class="software-links">
+                        <a href="https://github.com/jvtalwar/GRIEVOUS/wiki">Docs</a> |
+                        <a href="https://academic.oup.com/bioinformatics/article/40/8/btae489/7723992?login=true">Paper</a> |
+                        <a href="https://github.com/jvtalwar/GRIEVOUS">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="software-card">
+                    <!-- TODO: Upload image to assets/images/software/eugene.png -->
+                    <img src="assets/images/software/eugene.png" alt="EUGENe" class="software-logo" />
+                    <h3>EUGENe</h3>
+                    <p>Elucidating the Utility of Genomic Elements with Neural Nets</p>
+                    <div class="software-links">
+                        <a href="https://eugene-tools.readthedocs.io/en/latest/?badge=latest">Docs</a> |
+                        <a href="https://www.nature.com/articles/s43588-023-00544-w">Paper</a> |
+                        <a href="https://github.com/cartercompbio/EUGENe">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="software-card">
+                    <!-- TODO: Upload image to assets/images/software/genvarloader.png -->
+                    <img src="assets/images/software/genvarloader.png" alt="GenVarLoader" class="software-logo" />
+                    <h3>GenVarLoader</h3>
+                    <p>Pipeline for efficient genomic data processing</p>
+                    <div class="software-links">
+                        <a href="https://genvarloader.readthedocs.io/en/latest/">Docs</a> |
+                        <a href="https://github.com/mcvickerlab/GenVarLoader">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="publications-section">
+            <h1>Selected Publications</h1>
+            <p><a href="https://scholar.google.com/citations?user=nlWQnXMAAAAJ&hl=en">Complete bibliography</a></p>
+            <hr>
+
+            <h3>2025</h3>
+            <ul>
+                <li>Pagadala M, Teerlink C, Jasuja GK, Palnati M, Lynch J, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Seibert TM, Rose BS, <strong>Carter H</strong>, Pridgen K, Panizzon MS, Hauger RL Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. <em>Nat Comm.</em> May 2;16(1):4104. 2025</li>
+            </ul>
+
+            <h3>2024</h3>
+            <ul>
+                <li>Talwar JV, Klie A, Pagadala MS, Carter H. GRIEVOUS: your command-line general for resolving cross-dataset genotype inconsistencies. <em>Bioinformatics.</em> 2024 Aug;40(8).</li>
+                <li>Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. <em>Cell Reports.</em> 2024 Jul 23;43(7).</li>
+                <li>Jado JC, Dow M, Carolino K, Klie A, Fonseca GJ, Ideker T, Carter H, Winzeler EA. In vitro evolution and whole genome analysis to study chemotherapy drug resistance in haploid human cells. <em>Scientific Reports.</em> 2024 Jun 18;14(1):13989.</li>
+                <li>Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. <em>Genome Biology.</em> 2024 Apr 2;25(1):82.</li>
+                <li>Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated germline and somatic features reveal divergent immune pathways driving ICB response. <em>Cancer Immunology Research.</em> 2024 Sep 10.</li>
+            </ul>
+
+            <h3>2023</h3>
+            <ul>
+                <li>Klie A, Laub D, Talwar JV, Stites H, Jores T, Solvason JJ, Farley EK, Carter H. Predictive analyses of regulatory sequences with EUGENe. <em>Nature Computational Science.</em> 2023 Nov;3(11):946-56.</li>
+                <li>Pagadala M, Sears T, Wu VH, Perez-Guijarro E, Kim H, Castro A, Talwar J, Gonzalez-Colin C, Cao S, Schmiedel B, Goudarzi S, Kirani D, Au J, Zhang T, Landi T, Salem RM, Morris GP, Harsimendy H, Patel SP, Alexandrov L, Mesirov JP, Zanetti M, Day CP, Fan CC, Thompson WK, Merlino G, Gutkind SJ, Vijayanand P, Carter H. Germline modifiers of the tumor immune microenvironment implicate drivers of cancer risk and immunotherapy response. <em>Nature Communications.</em> 2023 May 12;14(1):2744.</li>
+            </ul>
+
+            <h3>Earlier Highlights</h3>
+            <ul>
+                <li>Castro A, Pyke RM, Zhang X, Thompson WK, Day CP, Alexandrov LB, Zanetti M, Carter H. Strength of immune selection in tumors varies with sex and age. <em>Nature Communications.</em> 2020;11:4128.</li>
+                <li>Pyke RM, Thomson WK, Salem RM, Font-Burgada J, Zanetti M, Carter H. Evolutionary pressure against MHC class II binding cancer mutations. <em>Cell.</em> 2018 Oct 4;175(2):416-28.</li>
+                <li>Marty R, Kaabinejadian S, Rossell D, Slifker MJ, van de Haar J, Engin HB, de Prisco N, Ideker T, Hildebrand WH, Font-Burgada J, Carter H. MHC-I genotype restricts the oncogenic mutational landscape. <em>Cell.</em> 2017 Nov 30;171(6):1272-83.</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h1>Contact</h1>
+            <div class="contact-info">
+                <p>✉️ <a href="mailto:hkcarter@ucsd.edu">hkcarter@ucsd.edu</a></p>
+                <p>📞 <a href="tel:8588224706">858 822 4706</a></p>
+                <p>📍 BRFII Room 3A18, 9500 Gilman Dr., La Jolla, CA 92093-0688</p>
+                <p><a href="https://www.google.com/maps/place/Biomedical+Research+Facility+II/@32.8744664,-117.2371338,17z/data=!3m1!4b1!4m5!3m4!1s0x80dc06cf83785c07:0xef0daf822e4bf0d4!8m2!3d32.8744663!4d-117.2349198?hl=en-US" target="_blank">View on Google Maps</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 The Carter Lab, UC San Diego. All rights reserved.</p>
+    </footer>
+</body>
+</html>
