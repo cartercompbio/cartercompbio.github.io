@@ -6,7 +6,7 @@
       "position": "Graduate Researcher (PhD)",
       "program": "Bioinformatics & Systems Biology",
       "affiliation": "",
-      "bio": "Adam is a Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Adam’s research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
+      "bio": "Adam is a Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Adam\u2019s research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
       "education": [
         "B.S. in Bioengineering: Bioinformatics, 2017"
       ],
@@ -15,7 +15,7 @@
         "Deep learning",
         "Software development"
       ],
-      "email": "",
+      "email": "aklie@ucsd.edu",
       "links": [
         {
           "type": "Twitter",
@@ -43,7 +43,7 @@
       "position": "Graduate Student (PhD, year 5)",
       "program": "",
       "affiliation": "",
-      "bio": "David is currently investigating whether deep learning models of genetic regulation and evolution can improve phenotype prediction. When he’s not working, David like to cook, play music, rock climb, and surf. When he is working, he enjoys seeing his labmates' pets and surprise appearances by Prof. Carter’s kids on Zoom. David is also one of the only lab members that loves dark beers!",
+      "bio": "David is currently investigating whether deep learning models of genetic regulation and evolution can improve phenotype prediction. When he\u2019s not working, David like to cook, play music, rock climb, and surf. When he is working, he enjoys seeing his labmates' pets and surprise appearances by Prof. Carter\u2019s kids on Zoom. David is also one of the only lab members that loves dark beers!",
       "education": [
         "B.S. in Chemical Engineering, 2020UC San Diego"
       ],
@@ -52,7 +52,7 @@
         "Machine and Deep Learning",
         "Immunology"
       ],
-      "email": "",
+      "email": "dlaub@ucsd.edu",
       "links": [
         {
           "type": "Twitter",
@@ -75,7 +75,7 @@
       "bio": "",
       "education": [],
       "interests": [],
-      "email": "",
+      "email": "domeyer@ucsd.edu",
       "links": [],
       "photo": "douglas_meyer.jpg",
       "radar_chart": "douglas-meyer_radar.png"
@@ -97,7 +97,7 @@
         "Machine Learning",
         "Data Mining"
       ],
-      "email": "",
+      "email": "hkcarter@ucsd.edu",
       "links": [
         {
           "type": "Google Scholar",
@@ -113,7 +113,7 @@
       "position": "Graduate Researcher (PhD)",
       "program": "Bioinformatics & Systems Biology",
       "affiliation": "",
-      "bio": "To paraphrase from Spectre, we may all be kites dancing in a hurricane, but I’d at least like to know which way the wind is blowing. May the odds be ever in your favor!",
+      "bio": "To paraphrase from Spectre, we may all be kites dancing in a hurricane, but I\u2019d at least like to know which way the wind is blowing. May the odds be ever in your favor!",
       "education": [
         "B.S.E. in Bioengineering, 2014University of Pennsylvania"
       ],
@@ -123,7 +123,7 @@
         "Autoimmunity",
         "Genetic Risk"
       ],
-      "email": "",
+      "email": "jtalwar@eng.ucsd.edu",
       "links": [
         {
           "type": "Github",
@@ -143,7 +143,7 @@
       "position": "Postdoctoral Researcher",
       "program": "Bioinformatics & Systems Biology",
       "affiliation": "",
-      "bio": "Kivilcim Ozturk obtained her PhD degree in Bioinformatics and Systems Biology at UCSD. She received her MS in Computer Science and Engineering and BS in Biological Sciences and Bioengineering from Sabanci University, Istanbul, Turkey. Kivilcim’s research focuses on the analysis and interpretation of genetic variants and development of computational systems biology approaches in cancer genomics with incorporation of network biology methods. In her free time, she likes to workout, dance, read, and learn a new language.",
+      "bio": "Kivilcim Ozturk obtained her PhD degree in Bioinformatics and Systems Biology at UCSD. She received her MS in Computer Science and Engineering and BS in Biological Sciences and Bioengineering from Sabanci University, Istanbul, Turkey. Kivilcim\u2019s research focuses on the analysis and interpretation of genetic variants and development of computational systems biology approaches in cancer genomics with incorporation of network biology methods. In her free time, she likes to workout, dance, read, and learn a new language.",
       "education": [
         "PhD in Bioinformatics and Systems BiologyUC San Diego",
         "MS in Computer Science and EngineeringSabanci University, Istanbul, Turkey",
@@ -155,7 +155,7 @@
         "Cancer",
         "Network Biology"
       ],
-      "email": "",
+      "email": "kozturk@ucsd.edu",
       "links": [
         {
           "type": "Google Scholar",
@@ -171,14 +171,14 @@
       "position": "Graduate Researcher (PhD)",
       "program": "Bioinformatics & Systems Biology",
       "affiliation": "",
-      "bio": "Ko-Han is a 3rd year Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Ko-Han’s research interests are in identifying cancer neoantigens and applying deep learning on deciphering sequence of major histocompatibility complex (MHC) and T cell receptor (TCR).",
+      "bio": "Ko-Han is a 3rd year Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Ko-Han\u2019s research interests are in identifying cancer neoantigens and applying deep learning on deciphering sequence of major histocompatibility complex (MHC) and T cell receptor (TCR).",
       "education": [],
       "interests": [
         "Cancer Genomics",
         "Cancer Immunology",
         "Machine Learning"
       ],
-      "email": "",
+      "email": "kol004@ucsd.edu",
       "links": [
         {
           "type": "Twitter",
@@ -205,14 +205,14 @@
       "bio": "",
       "education": [],
       "interests": [
-        "Cancer Plasticity and Metastasis 🧬",
-        "Cancer Stem Cells 🌱",
-        "Differentiation Therapy 🔄",
-        "Extracellular Matrix 🕸️",
-        "Collective Cell Migration 🦠",
-        "Drug Development and Chemoproteomics 💊"
+        "Cancer Plasticity and Metastasis \ud83e\uddec",
+        "Cancer Stem Cells \ud83c\udf31",
+        "Differentiation Therapy \ud83d\udd04",
+        "Extracellular Matrix \ud83d\udd78\ufe0f",
+        "Collective Cell Migration \ud83e\udda0",
+        "Drug Development and Chemoproteomics \ud83d\udc8a"
       ],
-      "email": "",
+      "email": "sranamuk@ucsd.edu",
       "links": [
         {
           "type": "Google Scholar",
@@ -245,7 +245,7 @@
         "Machine learning",
         "Computational Biology"
       ],
-      "email": "",
+      "email": "tsears@ucsd.edu",
       "links": [
         {
           "type": "Github",
@@ -278,7 +278,7 @@
         "Immuno-informatics",
         "Translational Research"
       ],
-      "email": "",
+      "email": "andreabcastro@ucsd.edu",
       "links": [
         {
           "type": "Google Scholar",
@@ -340,7 +340,7 @@
         "Cancer",
         "Sofware Development"
       ],
-      "email": "",
+      "email": "ckmah@ucsd.edu",
       "links": [
         {
           "type": "Twitter",
@@ -377,7 +377,7 @@
         "Cancer immunology",
         "Autoimmunity and Inflammatory Disorders"
       ],
-      "email": "",
+      "email": "dkirani@ucsd.edu",
       "links": [],
       "photo": "divya_kirani.jpg",
       "radar_chart": null
@@ -410,7 +410,7 @@
         "Immunotherapy",
         "Germline Variation"
       ],
-      "email": "",
+      "email": "mpagadal@health.ucsd.edu",
       "links": [
         {
           "type": "Twitter",
@@ -469,7 +469,7 @@
       "interests": [
         "Cancer Immunology"
       ],
-      "email": "",
+      "email": "rhahuja@ucsd.edu",
       "links": [],
       "photo": "rohil_ahuja.jpg",
       "radar_chart": null
