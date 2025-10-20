@@ -6,52 +6,160 @@ Official website for the Carter Lab at UC San Diego - Computational Cancer Genom
 
 This website showcases the research, people, software, and publications from the Carter Lab in the School of Medicine at UC San Diego.
 
-## Setup
+## 🚀 Quick Start
 
-This site is built with pure HTML/CSS and is ready to deploy on GitHub Pages.
+### View Locally
+```bash
+# Open in browser (or use any local server)
+open index.html
 
-### To view locally:
-1. Open `index.html` in your web browser
+# Or with Python:
+python3 -m http.server 8000
+# Then visit: http://localhost:8000
+```
 
-### To deploy on GitHub Pages:
-1. Go to your repository Settings
-2. Navigate to Pages (in the left sidebar)
-3. Under "Source", select the `main` branch
-4. Click Save
-5. Your site will be available at `https://carterlab.github.io`
+### Deploy on GitHub Pages
+1. Go to repository Settings → Pages
+2. Under "Source", select the `main` branch
+3. Click Save
+4. Your site will be available at `https://carterlab.github.io`
 
-## Adding Images
+---
 
-Images are currently showing placeholders. To add your images:
+## 📂 Project Structure
 
-1. See `IMAGE_UPLOAD_GUIDE.md` for detailed instructions
-2. Upload images to the `assets/images/` directory following the structure outlined
-3. Original Notion images can be extracted from the `The Carter Lab 124614c65c4680038d97ed0273b0bdc4/` directory
+```
+carterlab.github.io/
+├── index.html              # Main homepage
+├── styles.css              # Global styles
+├── navigation.js           # Smooth scroll navigation
+├── news.js                 # News section loader
+├── people.js               # People section loader
+├── assets/
+│   └── images/
+│       ├── homepage.webp           # Header image
+│       ├── research_*.png          # Research area images
+│       ├── people/                 # Member photos
+│       │   ├── *.jpg/png          # Photos
+│       │   └── radar/             # Skill radar charts
+│       └── software/              # Software logos
+├── latest_news/
+│   ├── news_data.json     # All news items
+│   ├── archive.html       # News archive page
+│   └── detail/
+│       └── index.html     # Dynamic news detail template
+├── people/
+│   ├── people_data.json   # All lab members data
+│   └── detail/
+│       └── index.html     # Dynamic people detail template
+└── docs/
+    ├── HOW_TO_ADD_NEWS.md     # Adding news guide
+    ├── HOW_TO_ADD_PEOPLE.md   # Adding people guide
+    └── IMAGE_GUIDE.md         # Image specifications
+```
 
-## Structure
+---
 
-- `index.html` - Main website page
-- `styles.css` - Stylesheet
-- `assets/images/` - Image directory
-- `IMAGE_UPLOAD_GUIDE.md` - Guide for uploading images
+## ✏️ Common Tasks
 
-## Features
+### Adding a News Item
+See **[HOW_TO_ADD_NEWS.md](HOW_TO_ADD_NEWS.md)** for complete instructions.
 
-- Responsive design that works on mobile and desktop
-- Clean, modern interface
-- Sections for:
-  - Latest News
-  - Research Areas
-  - People (Current & Alumni)
-  - Software Projects
-  - Publications
-  - Contact Information
+Quick: Add entry to `latest_news/news_data.json`
 
-## Maintenance
+### Adding a Lab Member
+See **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** for complete instructions.
 
-To update content, edit `index.html`. All content is in plain HTML for easy editing.
+Quick: Add entry to `people/people_data.json` and photo to `assets/images/people/`
 
-## Original Files
+### Updating Images
+See **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** for image specifications and locations.
 
-- `notion_homepage.html` - Original Notion export (for reference)
-- `notion_latest_news.csv` - Original news data (for reference)
+---
+
+## 🎨 Features
+
+- ✅ **Responsive Design** - Works on mobile, tablet, and desktop
+- ✅ **Dynamic Content** - News and people loaded from JSON files
+- ✅ **Clean URLs** - `/people/detail/?id=member-name`
+- ✅ **Individual Pages** - Each person and news item has a detail page
+- ✅ **News Archive** - All news organized by year
+- ✅ **Smooth Navigation** - Animated scrolling between sections
+- ✅ **Modern UI** - Teal color theme (#1e748a)
+- ✅ **Photo Management** - Placeholder support for missing images
+
+---
+
+## 🎯 Sections
+
+1. **Home** - Welcome message and lab overview
+2. **News** - Latest 6 news items + archive link
+3. **Research** - Four main research areas with images
+4. **People** - PI, current members, and alumni with detail pages
+5. **Software** - Lab software tools with links
+6. **Publications** - Selected publications by year
+7. **Contact** - Location and contact information
+
+---
+
+## 🔧 Technology
+
+- **Pure HTML/CSS/JavaScript** - No build tools or frameworks required
+- **GitHub Pages** - Free hosting
+- **JSON Data** - Easy content management
+- **No Database** - All data in static JSON files
+
+---
+
+## 📚 Documentation
+
+- **[HOW_TO_ADD_NEWS.md](HOW_TO_ADD_NEWS.md)** - Adding and managing news items
+- **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** - Adding and managing lab members
+- **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** - Image requirements and locations
+
+---
+
+## 🎨 Customization
+
+### Colors
+The site uses a teal color scheme. To change:
+- Main color: `#1e748a` (search and replace in `styles.css`)
+- Hover color: `#26a3ba`
+
+### Layout
+- Edit `index.html` for structure
+- Edit `styles.css` for styling
+- All sections use semantic HTML
+
+---
+
+## 📝 Notes
+
+- All images should be in `assets/images/` subdirectories
+- People data format is defined in `people/people_data.json`
+- News data format is defined in `latest_news/news_data.json`
+- `.nojekyll` file ensures GitHub Pages doesn't process files with Jekyll
+
+---
+
+## 🤝 Contributing
+
+1. Make changes to the appropriate files
+2. Test locally
+3. Commit and push:
+   ```bash
+   git add .
+   git commit -m "Description of changes"
+   git push
+   ```
+4. Changes appear on GitHub Pages within minutes
+
+---
+
+## 📞 Support
+
+For questions about updating the website, refer to the documentation files listed above.
+
+## Generated with Claude Code
+
+This website was converted from Notion and built with assistance from [Claude Code](https://claude.com/claude-code).

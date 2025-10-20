@@ -1,0 +1,506 @@
+{
+  "current": [
+    {
+      "id": "adam-klie",
+      "name": "Adam Klie",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "Adam is a Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Adam’s research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
+      "education": [
+        "B.S. in Bioengineering: Bioinformatics, 2017"
+      ],
+      "interests": [
+        "Gene regulation",
+        "Deep learning",
+        "Software development"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Twitter",
+          "url": "https://twitter.com/klieadam"
+        },
+        {
+          "type": "Github",
+          "url": "https://github.com/adamklie"
+        },
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=kR9GSLMAAAAJ&hl=en"
+        },
+        {
+          "type": "Website",
+          "url": "https://www.notion.so/0a4691b1da0647a7b32a0eed81c22b3a?pvs=21"
+        }
+      ],
+      "photo": "adam_klie.jpeg",
+      "radar_chart": "adam-klie_radar.png"
+    },
+    {
+      "id": "david-laub",
+      "name": "David Laub",
+      "position": "Graduate Student (PhD, year 5)",
+      "program": "",
+      "affiliation": "",
+      "bio": "David is currently investigating whether deep learning models of genetic regulation and evolution can improve phenotype prediction. When he’s not working, David like to cook, play music, rock climb, and surf. When he is working, he enjoys seeing his labmates' pets and surprise appearances by Prof. Carter’s kids on Zoom. David is also one of the only lab members that loves dark beers!",
+      "education": [
+        "B.S. in Chemical Engineering, 2020UC San Diego"
+      ],
+      "interests": [
+        "Clinical Genomics",
+        "Machine and Deep Learning",
+        "Immunology"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Twitter",
+          "url": "https://twitter.com/dvdlaub"
+        },
+        {
+          "type": "Github",
+          "url": "https://github.com/d-laub"
+        }
+      ],
+      "photo": "david_laub.png",
+      "radar_chart": "david-laub_radar.png"
+    },
+    {
+      "id": "douglas-meyer",
+      "name": "Douglas Meyer",
+      "position": "",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "douglas_meyer.jpg",
+      "radar_chart": "douglas-meyer_radar.png"
+    },
+    {
+      "id": "hannah-carter",
+      "name": "Hannah Carter",
+      "position": "Principal Investigator",
+      "program": "",
+      "affiliation": "UC San Diego, Department of Medicine, Division of Medical Genetics",
+      "bio": "",
+      "education": [
+        "Ph.D. in Biomedical Engineering, 2012Johns Hopkins University",
+        "M.Eng. in Electrical and Computer Engineering, 2004University of Louisville"
+      ],
+      "interests": [
+        "Cancer Biology",
+        "Genetic Variation",
+        "Machine Learning",
+        "Data Mining"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=nlWQnXMAAAAJ&hl=en"
+        }
+      ],
+      "photo": "hannah_carter.png",
+      "radar_chart": null
+    },
+    {
+      "id": "james-talwar",
+      "name": "James Talwar",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "To paraphrase from Spectre, we may all be kites dancing in a hurricane, but I’d at least like to know which way the wind is blowing. May the odds be ever in your favor!",
+      "education": [
+        "B.S.E. in Bioengineering, 2014University of Pennsylvania"
+      ],
+      "interests": [
+        "Deep Learning",
+        "Cancer Immunology",
+        "Autoimmunity",
+        "Genetic Risk"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Github",
+          "url": "https://github.com/jvtalwar"
+        },
+        {
+          "type": "Github",
+          "url": "https://jvtalwar.github.io/dk-isle/"
+        }
+      ],
+      "photo": "james_talwar.png",
+      "radar_chart": "james-talwar_radar.png"
+    },
+    {
+      "id": "kivilcim-ozturk-phd",
+      "name": "Kivilcim Ozturk, PhD",
+      "position": "Postdoctoral Researcher",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "Kivilcim Ozturk obtained her PhD degree in Bioinformatics and Systems Biology at UCSD. She received her MS in Computer Science and Engineering and BS in Biological Sciences and Bioengineering from Sabanci University, Istanbul, Turkey. Kivilcim’s research focuses on the analysis and interpretation of genetic variants and development of computational systems biology approaches in cancer genomics with incorporation of network biology methods. In her free time, she likes to workout, dance, read, and learn a new language.",
+      "education": [
+        "PhD in Bioinformatics and Systems BiologyUC San Diego",
+        "MS in Computer Science and EngineeringSabanci University, Istanbul, Turkey",
+        "BS in Biological Sciences and BioengineeringSabanci University, Istanbul, Turkey"
+      ],
+      "interests": [
+        "Bioinformatics",
+        "Computational Biology",
+        "Cancer",
+        "Network Biology"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=0HA8AR0AAAAJ&hl=en"
+        }
+      ],
+      "photo": "kivilcim_ozturk.jpg",
+      "radar_chart": "kivilcim-ozturk-phd_radar.png"
+    },
+    {
+      "id": "ko-han-lee",
+      "name": "Ko-Han Lee",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "Ko-Han is a 3rd year Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Ko-Han’s research interests are in identifying cancer neoantigens and applying deep learning on deciphering sequence of major histocompatibility complex (MHC) and T cell receptor (TCR).",
+      "education": [],
+      "interests": [
+        "Cancer Genomics",
+        "Cancer Immunology",
+        "Machine Learning"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Twitter",
+          "url": "https://twitter.com/kohanlee1995"
+        },
+        {
+          "type": "Github",
+          "url": "https://github.com/kohanlee1995"
+        },
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=hC_PGbsAAAAJ&hl=en"
+        }
+      ],
+      "photo": "kohan_lee.jpg",
+      "radar_chart": "ko-han-lee_radar.png"
+    },
+    {
+      "id": "sural-k-ranamukhaarachchi-phd",
+      "name": "Sural K Ranamukhaarachchi, PhD",
+      "position": "Postdoctoral Scholar",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [
+        "Cancer Plasticity and Metastasis 🧬",
+        "Cancer Stem Cells 🌱",
+        "Differentiation Therapy 🔄",
+        "Extracellular Matrix 🕸️",
+        "Collective Cell Migration 🦠",
+        "Drug Development and Chemoproteomics 💊"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=OpQ7CBQAAAAJ&hl=en"
+        },
+        {
+          "type": "LinkedIn",
+          "url": "https://www.linkedin.com/in/suralr/"
+        },
+        {
+          "type": "Website",
+          "url": "https://profiles.ucsd.edu/sural.ranamukhaarachchi"
+        }
+      ],
+      "photo": "sural_ranamukhaarachchi.jpg",
+      "radar_chart": "sural-k-ranamukhaarachchi-phd_radar.png"
+    },
+    {
+      "id": "tj-sears",
+      "name": "TJ Sears",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "",
+      "education": [
+        "B.S. in Biochemistry and Molecular Biology: 2020, UCSB"
+      ],
+      "interests": [
+        "Immunotherapy",
+        "Machine learning",
+        "Computational Biology"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Github",
+          "url": "https://github.com/TJ-Sears"
+        },
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=jc2Ha9oAAAAJ&hl=en"
+        }
+      ],
+      "photo": "tj_sears.jpeg",
+      "radar_chart": "tj-sears_radar.png"
+    }
+  ],
+  "alumni": [
+    {
+      "id": "andrea-castro-phd",
+      "name": "Andrea Castro, PhD",
+      "position": "Postdoctoral Researcher",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "Andrea recently obtained her Ph.D. in Bioinformatics and Systems Biology at UCSD. Her research involves investigating the relationship between patient genetic diversity in the immune system and tumor evolution; leveraging large-scale genomic, transcriptomic, and proteomic datasets to learn more about immune surveillance and selection on tumors.",
+      "education": [
+        "PhD in Bioinformatics and Systems Biology, 2022UC San Diego",
+        "MS in Computer Science, 2021UC San Diego",
+        "BS in Microbiology Immunology and Molecular Genetics, 2017UCLA"
+      ],
+      "interests": [
+        "Immuno-oncology",
+        "Immuno-informatics",
+        "Translational Research"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=cUg5RxwAAAAJ&hl=en"
+        },
+        {
+          "type": "Twitter",
+          "url": "http://twitter.com/andrea_b_castro"
+        },
+        {
+          "type": "Github",
+          "url": "http://andreabc.github.io/"
+        }
+      ],
+      "photo": "andrea_castro.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "billur-engin-phd",
+      "name": "Billur Engin, PhD",
+      "position": "",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "billur_engin.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "brian-tsui-phd",
+      "name": "Brian Tsui, PhD",
+      "position": "",
+      "program": "PhD in Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "brian_tsui.png",
+      "radar_chart": null
+    },
+    {
+      "id": "clarence-mah-phd",
+      "name": "Clarence Mah, PhD",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "Clarence is a Ph.D. student in the Bioinformatics and Systems Biology Program (BISB) at UC San Diego. After graduation, he pursued computational cancer research with Dr. Jill Mesirov at UCSD focused in brain cancers. Alongside research, he worked on bioinformatics software tools, such as GenePattern and open-source Python packages, focused on research reproducible. Clarence is currently jointly advised by Dr. Gene Yeo and Dr. Hannah Carter in the UCSD School of Medicine and is developing methods for analyzing spatial transcriptomics data.",
+      "education": [
+        "B.S. in Bioengineering: Bioinformatics, 2016UC San Diego"
+      ],
+      "interests": [
+        "Machine Learning",
+        "RNA Biology",
+        "Cancer",
+        "Sofware Development"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Twitter",
+          "url": "https://twitter.com/mah_clarence"
+        },
+        {
+          "type": "Github",
+          "url": "https://github.com/ckmah"
+        },
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=UaDb2XQAAAAJ&hl=en"
+        },
+        {
+          "type": "Website",
+          "url": "https://clarencemah.me/"
+        }
+      ],
+      "photo": "clarence_mah.png",
+      "radar_chart": "clarence-mah-phd_radar.png"
+    },
+    {
+      "id": "divya-kirani",
+      "name": "Divya Kirani",
+      "position": "Undergraduate Researcher",
+      "program": "",
+      "affiliation": "",
+      "bio": "Divya is a senior at UC San Diego studying Bioinformatics. She is interested in understanding the genetic basis of immune disorder onset, progression, and therapeutic response using computational methods. She enjoys cooking, running (not catching public transit), and socializing in her free time.",
+      "education": [
+        "BS in Biology with a specialization in Bioinformatics, 2023UC San Diego"
+      ],
+      "interests": [
+        "Immunotherapy",
+        "Cancer immunology",
+        "Autoimmunity and Inflammatory Disorders"
+      ],
+      "email": "",
+      "links": [],
+      "photo": "divya_kirani.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "lucia-bazan",
+      "name": "Lucia Bazan",
+      "position": "",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "lucia_bazan.png",
+      "radar_chart": null
+    },
+    {
+      "id": "meghana-pagadala-phd",
+      "name": "Meghana Pagadala, PhD",
+      "position": "Graduate Researcher (PhD)",
+      "program": "Medical Scientist Training Program",
+      "affiliation": "",
+      "bio": "Meghana Pagadala is an M.D./Ph.D. student co-mentored by Drs. Carter and Mesirov focused on understanding germline-somatic interactions underlying the tumor immune microenvironment. She graduated from Caltech with a B.S. in Chemistry. Previously, she has worked on T cell receptor (TCR) chain mispairing under the mentorship of Dr. Baltimore at Caltech and CD8+ FoxP3+ T cells under the mentorship of Dr. Aurora at SLU School of Medicine. In her free time, she likes to work out, play volleyball, dance, travel and eat.",
+      "education": [
+        "B.S. in Chemistry, 2016Caltech"
+      ],
+      "interests": [
+        "Immunotherapy",
+        "Germline Variation"
+      ],
+      "email": "",
+      "links": [
+        {
+          "type": "Twitter",
+          "url": "https://twitter.com/meghatron2016"
+        },
+        {
+          "type": "Github",
+          "url": "https://github.com/meghanasp21"
+        },
+        {
+          "type": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=KcOawvkAAAAJ&hl=en&oi=ao"
+        }
+      ],
+      "photo": "meghana_agadala.png",
+      "radar_chart": null
+    },
+    {
+      "id": "michelle-dow-phd",
+      "name": "Michelle Dow, PhD",
+      "position": "",
+      "program": "PhD in Bioinformatics & Systems Biology with a specialization in Biomedical Informatics",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "michelle_dow.png",
+      "radar_chart": null
+    },
+    {
+      "id": "rachel-pyke-phd",
+      "name": "Rachel Pyke, PhD",
+      "position": "",
+      "program": "PhD in Bioinformatics & Systems Biology",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "rachel_pyke.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "rohil-ahuja",
+      "name": "Rohil Ahuja",
+      "position": "Undergraduate Researcher",
+      "program": "Bioengineering with a concentration in Bioinformatics",
+      "affiliation": "",
+      "bio": "",
+      "education": [
+        "BS in Bioengineering with a concentration in Bioinformatics, 2023UC San Diego"
+      ],
+      "interests": [
+        "Cancer Immunology"
+      ],
+      "email": "",
+      "links": [],
+      "photo": "rohil_ahuja.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "su-xian-ms",
+      "name": "Su Xian, MS",
+      "position": "",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "su_xian.jpg",
+      "radar_chart": null
+    },
+    {
+      "id": "t-cameron-waller-phd",
+      "name": "T Cameron Waller, PhD",
+      "position": "",
+      "program": "",
+      "affiliation": "",
+      "bio": "",
+      "education": [],
+      "interests": [],
+      "email": "",
+      "links": [],
+      "photo": "cameron_waller.jpg",
+      "radar_chart": null
+    }
+  ]
+}

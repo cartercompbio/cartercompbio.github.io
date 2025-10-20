@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="news.js"></script>
     <script src="navigation.js"></script>
+    <script src="people.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -97,120 +98,16 @@
             <p>Members of the Carter lab, past and present.</p>
             <hr>
 
-            <div class="person-highlight">
-                <!-- TODO: Upload image to assets/images/people/hannah_carter.png -->
-                <img src="assets/images/people/hannah_carter.png" alt="Hannah Carter" class="person-image" />
-                <h3>Hannah Carter</h3>
-                <p class="person-title">Principal Investigator</p>
-            </div>
+            <!-- PI container loaded dynamically -->
+            <div id="pi-container"></div>
 
             <h2>Current Members</h2>
-            <div class="people-grid">
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/adam_klie.jpeg -->
-                    <img src="assets/images/people/adam_klie.jpeg" alt="Adam Klie" />
-                    <h4>Adam Klie</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/kivilcim_ozturk.jpg -->
-                    <img src="assets/images/people/kivilcim_ozturk.jpg" alt="Kivilcim Ozturk, PhD" />
-                    <h4>Kivilcim Ozturk, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/tj_sears.jpeg -->
-                    <img src="assets/images/people/tj_sears.jpeg" alt="TJ Sears" />
-                    <h4>TJ Sears</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/james_talwar.png -->
-                    <img src="assets/images/people/james_talwar.png" alt="James Talwar" />
-                    <h4>James Talwar</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/david_laub.png -->
-                    <img src="assets/images/people/david_laub.png" alt="David Laub" />
-                    <h4>David Laub</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/douglas_meyer.jpg -->
-                    <img src="assets/images/people/douglas_meyer.jpg" alt="Douglas Meyer" />
-                    <h4>Douglas Meyer</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/sural_ranamukhaarachchi.jpg -->
-                    <img src="assets/images/people/sural_ranamukhaarachchi.jpg" alt="Sural K. Ranamukhaarachchi, PhD" />
-                    <h4>Sural K. Ranamukhaarachchi, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/kohan_lee.jpg -->
-                    <img src="assets/images/people/kohan_lee.jpg" alt="Ko-Han Lee" />
-                    <h4>Ko-Han Lee</h4>
-                </div>
-            </div>
+            <!-- Current members loaded dynamically -->
+            <div id="current-members-grid" class="people-grid"></div>
 
             <h2>Alumni</h2>
-            <div class="people-grid">
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/andrea_castro.jpg -->
-                    <img src="assets/images/people/andrea_castro.jpg" alt="Andrea Castro, PhD" />
-                    <h4>Andrea Castro, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/michelle_dow.png -->
-                    <img src="assets/images/people/michelle_dow.png" alt="Michelle Dow, PhD" />
-                    <h4>Michelle Dow, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/rachel_pyke.jpg -->
-                    <img src="assets/images/people/rachel_pyke.jpg" alt="Rachel Pyke, PhD" />
-                    <h4>Rachel Pyke, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/cameron_waller.jpg -->
-                    <img src="assets/images/people/cameron_waller.jpg" alt="T. Cameron Waller, PhD" />
-                    <h4>T. Cameron Waller, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/brian_tsui.png -->
-                    <img src="assets/images/people/brian_tsui.png" alt="Brian Tsui, PhD" />
-                    <h4>Brian Tsui, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/clarence_mah.png -->
-                    <img src="assets/images/people/clarence_mah.png" alt="Clarence Mah, PhD" />
-                    <h4>Clarence Mah, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/meghana_pagadala.png -->
-                    <img src="assets/images/people/meghana_pagadala.png" alt="Meghana Pagadala, PhD" />
-                    <h4>Meghana Pagadala, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/billur_engin.jpg -->
-                    <img src="assets/images/people/billur_engin.jpg" alt="Billur Engin, PhD" />
-                    <h4>Billur Engin, PhD</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/lucia_bazan.png -->
-                    <img src="assets/images/people/lucia_bazan.png" alt="Lucia Bazan" />
-                    <h4>Lucia Bazan</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/su_xian.jpg -->
-                    <img src="assets/images/people/su_xian.jpg" alt="Su Xian, MS" />
-                    <h4>Su Xian, MS</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/rohil_ahuja.jpg -->
-                    <img src="assets/images/people/rohil_ahuja.jpg" alt="Rohil Ahuja" />
-                    <h4>Rohil Ahuja</h4>
-                </div>
-                <div class="person-card">
-                    <!-- TODO: Upload image to assets/images/people/divya_kirani.jpg -->
-                    <img src="assets/images/people/divya_kirani.jpg" alt="Divya Kirani" />
-                    <h4>Divya Kirani</h4>
-                </div>
-            </div>
+            <!-- Alumni loaded dynamically -->
+            <div id="alumni-grid" class="people-grid"></div>
         </section>
 
         <section id="software" class="software-section">
