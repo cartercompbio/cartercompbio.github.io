@@ -3,12 +3,13 @@
     {
       "id": "adam-klie",
       "name": "Adam Klie",
-      "position": "Graduate Researcher (PhD)",
-      "program": "Bioinformatics & Systems Biology",
+      "position": "Postdoctoral Researcher",
+      "program": "Eric and Wendy Schmidt AI in Science Postdoctoral Fellow",
       "affiliation": "",
-      "bio": "Adam is a Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Adam\u2019s research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
+      "bio": "Adam is a Schmidt AI in Science Postdoctoral Fellow. Adam\u2019s research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
       "education": [
-        "B.S. in Bioengineering: Bioinformatics, 2017"
+        "B.S. in Bioengineering: Bioinformatics, 2017 UC San Diego",
+        "Ph.D. in Bioinformatics & Systems Biology, 2023 UC San Diego"
       ],
       "interests": [
         "Gene regulation",
@@ -18,16 +19,16 @@
       "email": "aklie@ucsd.edu",
       "links": [
         {
-          "type": "Twitter",
-          "url": "https://twitter.com/klieadam"
-        },
-        {
           "type": "Github",
           "url": "https://github.com/adamklie"
         },
         {
           "type": "Google Scholar",
           "url": "https://scholar.google.com/citations?user=kR9GSLMAAAAJ&hl=en"
+        },
+        {
+          "type": "LinkedIn",
+          "url": "https://www.linkedin.com/in/adamklie/"
         },
         {
           "type": "Website",
