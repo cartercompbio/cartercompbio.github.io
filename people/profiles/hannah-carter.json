@@ -1,0 +1,26 @@
+{
+  "id": "hannah-carter",
+  "name": "Hannah Carter",
+  "position": "Principal Investigator",
+  "program": "",
+  "affiliation": "UC San Diego, Department of Medicine, Division of Medical Genetics",
+  "bio": "",
+  "education": [
+    "Ph.D. in Biomedical Engineering, 2012Johns Hopkins University",
+    "M.Eng. in Electrical and Computer Engineering, 2004University of Louisville"
+  ],
+  "interests": [
+    "Cancer Biology",
+    "Genetic Variation",
+    "Machine Learning",
+    "Data Mining"
+  ],
+  "email": "hkcarter@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=nlWQnXMAAAAJ&hl=en"
+    }
+  ],
+  "photo": "hannah_carter.png"
+}

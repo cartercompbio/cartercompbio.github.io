@@ -29,13 +29,14 @@ cartercompbio.github.io/
 │   └── detail/
 │       └── index.html     # Dynamic news detail template
 ├── people/
-│   ├── people_data.json   # All lab members data
+│   ├── index.json         # List of current/alumni IDs
+│   ├── profiles/
+│   │   ├── _TEMPLATE.json # Template for new members
+│   │   └── *.json         # Individual profile files
 │   └── detail/
 │       └── index.html     # Dynamic people detail template
-└── docs/
-    ├── HOW_TO_ADD_NEWS.md     # Adding news guide
-    ├── HOW_TO_ADD_PEOPLE.md   # Adding people guide
-    └── IMAGE_GUIDE.md         # Image specifications
+├── HOW_TO_ADD_NEWS.md          # Adding news guide
+└── HOW_TO_ADD_PEOPLE.md        # Managing profiles guide
 ```
 
 ---
@@ -50,10 +51,7 @@ Quick: Add entry to `latest_news/news_data.json`
 ### Adding a Lab Member
 See **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** for complete instructions.
 
-Quick: Add entry to `people/people_data.json` and photo to `assets/images/people/`
-
-### Updating Images
-See **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** for image specifications and locations.
+Quick: Create `people/profiles/name.json`, add photo, update `people/index.json`
 
 ---
 
@@ -71,9 +69,8 @@ See **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** for image specifications and locations.
 
 ## 📚 Documentation
 
-- **[HOW_TO_ADD_NEWS.md](HOW_TO_ADD_NEWS.md)** - Adding and managing news items
-- **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** - Adding and managing lab members
-- **[IMAGE_GUIDE.md](IMAGE_GUIDE.md)** - Image requirements and locations
+- **[HOW_TO_ADD_NEWS.md](HOW_TO_ADD_NEWS.md)** - Adding news items
+- **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** - Managing lab member profiles
 
 ---
 
@@ -93,10 +90,10 @@ The site uses a teal color scheme. To change:
 
 ## 📝 Notes
 
-- All images should be in `assets/images/` subdirectories
-- People data format is defined in `people/people_data.json`
-- News data format is defined in `latest_news/news_data.json`
-- `.nojekyll` file ensures GitHub Pages doesn't process files with Jekyll
+- All images in `assets/images/` subdirectories
+- People: Individual profiles in `people/profiles/`, index in `people/index.json`
+- News: All items in `latest_news/news_data.json`
+- `.nojekyll` ensures GitHub Pages doesn't use Jekyll processing
 
 ---
 

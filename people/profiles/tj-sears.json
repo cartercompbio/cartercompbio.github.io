@@ -1,0 +1,32 @@
+{
+  "id": "tj-sears",
+  "name": "TJ Sears",
+  "position": "Graduate Researcher (PhD)",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "",
+  "education": [
+    "B.S. in Biochemistry and Molecular Biology: 2020, UCSB"
+  ],
+  "interests": [
+    "Immunotherapy",
+    "Machine learning",
+    "Computational Biology"
+  ],
+  "email": "tsears@ucsd.edu",
+  "links": [
+    {
+      "type": "Github",
+      "url": "https://github.com/TJ-Sears"
+    },
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=jc2Ha9oAAAAJ&hl=en"
+    }
+  ],
+  "photo": "tj_sears.jpeg",
+  "radar_data": {
+    "labels": ["basketball", "lobster catching", "league of legends", "willingness to dance", "dancing skills", "opinion of T-Cells", "annoying enthusiasm", "python", "R"],
+    "values": [6, 7, 7.5, 8.5, 4.5, 7.5, 10, 7, 9]
+  }
+}

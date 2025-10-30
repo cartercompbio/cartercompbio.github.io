@@ -1,0 +1,19 @@
+{
+  "id": "divya-kirani",
+  "name": "Divya Kirani",
+  "position": "Undergraduate Researcher",
+  "program": "",
+  "affiliation": "",
+  "bio": "Divya is a senior at UC San Diego studying Bioinformatics. She is interested in understanding the genetic basis of immune disorder onset, progression, and therapeutic response using computational methods. She enjoys cooking, running (not catching public transit), and socializing in her free time.",
+  "education": [
+    "BS in Biology with a specialization in Bioinformatics, 2023UC San Diego"
+  ],
+  "interests": [
+    "Immunotherapy",
+    "Cancer immunology",
+    "Autoimmunity and Inflammatory Disorders"
+  ],
+  "email": "dkirani@ucsd.edu",
+  "links": [],
+  "photo": "divya_kirani.jpg"
+}

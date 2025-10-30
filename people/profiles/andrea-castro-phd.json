@@ -1,0 +1,34 @@
+{
+  "id": "andrea-castro-phd",
+  "name": "Andrea Castro, PhD",
+  "position": "Postdoctoral Researcher",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "Andrea recently obtained her Ph.D. in Bioinformatics and Systems Biology at UCSD. Her research involves investigating the relationship between patient genetic diversity in the immune system and tumor evolution; leveraging large-scale genomic, transcriptomic, and proteomic datasets to learn more about immune surveillance and selection on tumors.",
+  "education": [
+    "PhD in Bioinformatics and Systems Biology, 2022UC San Diego",
+    "MS in Computer Science, 2021UC San Diego",
+    "BS in Microbiology Immunology and Molecular Genetics, 2017UCLA"
+  ],
+  "interests": [
+    "Immuno-oncology",
+    "Immuno-informatics",
+    "Translational Research"
+  ],
+  "email": "andreabcastro@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=cUg5RxwAAAAJ&hl=en"
+    },
+    {
+      "type": "Twitter",
+      "url": "http://twitter.com/andrea_b_castro"
+    },
+    {
+      "type": "Github",
+      "url": "http://andreabc.github.io/"
+    }
+  ],
+  "photo": "andrea_castro.jpg"
+}

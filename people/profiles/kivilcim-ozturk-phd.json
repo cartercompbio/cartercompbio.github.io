@@ -1,0 +1,31 @@
+{
+  "id": "kivilcim-ozturk-phd",
+  "name": "Kivilcim Ozturk, PhD",
+  "position": "Postdoctoral Researcher",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "Kivilcim Ozturk obtained her PhD degree in Bioinformatics and Systems Biology at UCSD. She received her MS in Computer Science and Engineering and BS in Biological Sciences and Bioengineering from Sabanci University, Istanbul, Turkey. Kivilcim's research focuses on the analysis and interpretation of genetic variants and development of computational systems biology approaches in cancer genomics with incorporation of network biology methods. In her free time, she likes to workout, dance, read, and learn a new language.",
+  "education": [
+    "PhD in Bioinformatics and Systems BiologyUC San Diego",
+    "MS in Computer Science and EngineeringSabanci University, Istanbul, Turkey",
+    "BS in Biological Sciences and BioengineeringSabanci University, Istanbul, Turkey"
+  ],
+  "interests": [
+    "Bioinformatics",
+    "Computational Biology",
+    "Cancer",
+    "Network Biology"
+  ],
+  "email": "kozturk@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=0HA8AR0AAAAJ&hl=en"
+    }
+  ],
+  "photo": "kivilcim_ozturk.jpg",
+  "radar_data": {
+    "labels": ["R", "organizing", "upper body workouts", "learning german", "hot yoga cardio", "finding time to read books", "reading books", "coding", "python"],
+    "values": [7, 10, 3, 6.5, 9, 5, 10, 10, 9]
+  }
+}

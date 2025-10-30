@@ -1,0 +1,32 @@
+{
+  "id": "david-laub",
+  "name": "David Laub",
+  "position": "Graduate Student (PhD, year 5)",
+  "program": "",
+  "affiliation": "",
+  "bio": "David is currently investigating whether deep learning models of genetic regulation and evolution can improve phenotype prediction. When he's not working, David like to cook, play music, rock climb, and surf. When he is working, he enjoys seeing his labmates' pets and surprise appearances by Prof. Carter's kids on Zoom. David is also one of the only lab members that loves dark beers!",
+  "education": [
+    "B.S. in Chemical Engineering, 2020UC San Diego"
+  ],
+  "interests": [
+    "Clinical Genomics",
+    "Machine and Deep Learning",
+    "Immunology"
+  ],
+  "email": "dlaub@ucsd.edu",
+  "links": [
+    {
+      "type": "Twitter",
+      "url": "https://twitter.com/dvdlaub"
+    },
+    {
+      "type": "Github",
+      "url": "https://github.com/d-laub"
+    }
+  ],
+  "photo": "david_laub.png",
+  "radar_data": {
+    "labels": ["R", "Love for the Carter Lab", "Nerding out for ML", "Pets obtained", "Wanting a pet", "Surfing skill", "Surfing enthusiasm", "Starcraft", "Python"],
+    "values": [5, 10, 10, 2, 10, 3.5, 8.5, 8.5, 9]
+  }
+}

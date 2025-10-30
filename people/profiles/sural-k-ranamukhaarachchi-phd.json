@@ -1,0 +1,37 @@
+{
+  "id": "sural-k-ranamukhaarachchi-phd",
+  "name": "Sural K Ranamukhaarachchi, PhD",
+  "position": "Postdoctoral Scholar",
+  "program": "",
+  "affiliation": "",
+  "bio": "",
+  "education": [],
+  "interests": [
+    "Cancer Plasticity and Metastasis 🧬",
+    "Cancer Stem Cells 🌱",
+    "Differentiation Therapy 🔄",
+    "Extracellular Matrix 🕸️",
+    "Collective Cell Migration 🦠",
+    "Drug Development and Chemoproteomics 💊"
+  ],
+  "email": "sranamuk@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=OpQ7CBQAAAAJ&hl=en"
+    },
+    {
+      "type": "LinkedIn",
+      "url": "https://www.linkedin.com/in/suralr/"
+    },
+    {
+      "type": "Website",
+      "url": "https://profiles.ucsd.edu/sural.ranamukhaarachchi"
+    }
+  ],
+  "photo": "sural_ranamukhaarachchi.jpg",
+  "radar_data": {
+    "labels": ["R", "Love for the Carter Lab", "Cancer Biology", "Fantasy Football", "% Cyborg", "Beatmaking", "Nerding Out for ML", "Serological Pipetting", "Python"],
+    "values": [3, 10, 8.5, 6, 5, 7.5, 7, 10, 3]
+  }
+}

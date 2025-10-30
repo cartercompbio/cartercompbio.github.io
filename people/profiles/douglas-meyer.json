@@ -1,0 +1,17 @@
+{
+  "id": "douglas-meyer",
+  "name": "Douglas Meyer",
+  "position": "",
+  "program": "",
+  "affiliation": "",
+  "bio": "",
+  "education": [],
+  "interests": [],
+  "email": "domeyer@ucsd.edu",
+  "links": [],
+  "photo": "douglas_meyer.jpg",
+  "radar_data": {
+    "labels": ["R", "Beard", "Cancer Genomics", "Driving", "Eating Bread", "Baking Bread", "Wanting a Cat", "Python"],
+    "values": [5, 10, 9.5, 2, 10, 9, 8.5, 9.5]
+  }
+}

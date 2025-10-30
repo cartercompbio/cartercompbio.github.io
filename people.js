@@ -1,21 +1,32 @@
-// Load and display people from JSON data file
+// Load and display people from individual profile files
 async function loadPeople() {
     try {
-        const response = await fetch('people/people_data.json');
-        const peopleData = await response.json();
+        // Load index to get list of people IDs
+        const indexResponse = await fetch('people/index.json?_=' + Date.now());
+        const index = await indexResponse.json();
+
+        // Load all profiles in parallel
+        const timestamp = Date.now();
+        const currentProfiles = await Promise.all(
+            index.current.map(id => fetch(`people/profiles/${id}.json?_=${timestamp}`).then(r => r.json()))
+        );
+
+        const alumniProfiles = await Promise.all(
+            index.alumni.map(id => fetch(`people/profiles/${id}.json?_=${timestamp}`).then(r => r.json()))
+        );
 
         // Display PI (Hannah Carter)
-        const pi = peopleData.current.find(p => p.id === 'hannah-carter');
+        const pi = currentProfiles.find(p => p.id === 'hannah-carter');
         if (pi) {
             displayPI(pi);
         }
 
         // Display current members (excluding PI)
-        const currentMembers = peopleData.current.filter(p => p.id !== 'hannah-carter');
+        const currentMembers = currentProfiles.filter(p => p.id !== 'hannah-carter');
         displayPeopleGrid('current-members-grid', currentMembers);
 
         // Display alumni
-        displayPeopleGrid('alumni-grid', peopleData.alumni);
+        displayPeopleGrid('alumni-grid', alumniProfiles);
 
     } catch (error) {
         console.error('Error loading people:', error);

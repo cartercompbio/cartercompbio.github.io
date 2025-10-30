@@ -1,0 +1,45 @@
+{
+  "id": "your-name-here",
+  "name": "Your Full Name",
+  "position": "Your Position (e.g., Graduate Student, Postdoc, etc.)",
+  "program": "Your Program (optional)",
+  "affiliation": "Your Affiliation (optional)",
+  "bio": "A brief bio about yourself, your research, and interests.",
+  "education": [
+    "Degree, Year, Institution",
+    "Add more as needed"
+  ],
+  "interests": [
+    "Research Interest 1",
+    "Research Interest 2",
+    "Research Interest 3"
+  ],
+  "email": "your.email@ucsd.edu",
+  "links": [
+    {
+      "type": "Github",
+      "url": "https://github.com/yourusername"
+    },
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/..."
+    },
+    {
+      "type": "LinkedIn",
+      "url": "https://linkedin.com/in/..."
+    },
+    {
+      "type": "Twitter",
+      "url": "https://twitter.com/..."
+    },
+    {
+      "type": "Website",
+      "url": "https://yourwebsite.com"
+    }
+  ],
+  "photo": "your_photo.jpg",
+  "radar_data": {
+    "labels": ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8"],
+    "values": [8, 7, 9, 5, 6, 10, 4, 7]
+  }
+}

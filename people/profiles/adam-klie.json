@@ -1,0 +1,41 @@
+{
+  "id": "adam-klie",
+  "name": "Adam Klie",
+  "position": "Postdoctoral Researcher",
+  "program": "Eric and Wendy Schmidt AI in Science Postdoctoral Fellow",
+  "affiliation": "",
+  "bio": "Adam is a Schmidt AI in Science Postdoctoral Fellow. Adam's research interests are in building models of gene regulation. Adam also spent two years abroad playing professional basketball and in his spare time enjoys exercising and playing guitar.",
+  "education": [
+    "B.S. in Bioengineering: Bioinformatics, 2017 UC San Diego",
+    "Ph.D. in Bioinformatics & Systems Biology, 2023 UC San Diego"
+  ],
+  "interests": [
+    "Gene regulation",
+    "Deep learning",
+    "Software development"
+  ],
+  "email": "aklie@ucsd.edu",
+  "links": [
+    {
+      "type": "Github",
+      "url": "https://github.com/adamklie"
+    },
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=kR9GSLMAAAAJ&hl=en"
+    },
+    {
+      "type": "LinkedIn",
+      "url": "https://www.linkedin.com/in/adamklie/"
+    },
+    {
+      "type": "Website",
+      "url": "https://www.notion.so/0a4691b1da0647a7b32a0eed81c22b3a?pvs=21"
+    }
+  ],
+  "photo": "adam_klie.jpeg",
+  "radar_data": {
+    "labels": ["LOTR", "wonderwall", "ability to multitask", "rec league champ", "enhancers", "Python", "R", "Notion addiction", "open source software"],
+    "values": [9, 7, 3.5, 8.5, 7, 7.5, 2.5, 8.5, 9]
+  }
+}

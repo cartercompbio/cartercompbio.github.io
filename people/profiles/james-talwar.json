@@ -1,0 +1,33 @@
+{
+  "id": "james-talwar",
+  "name": "James Talwar",
+  "position": "Graduate Researcher (PhD)",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "To paraphrase from Spectre, we may all be kites dancing in a hurricane, but I'd at least like to know which way the wind is blowing. May the odds be ever in your favor!",
+  "education": [
+    "B.S.E. in Bioengineering, 2014University of Pennsylvania"
+  ],
+  "interests": [
+    "Deep Learning",
+    "Cancer Immunology",
+    "Autoimmunity",
+    "Genetic Risk"
+  ],
+  "email": "jtalwar@eng.ucsd.edu",
+  "links": [
+    {
+      "type": "Github",
+      "url": "https://github.com/jvtalwar"
+    },
+    {
+      "type": "Github",
+      "url": "https://jvtalwar.github.io/dk-isle/"
+    }
+  ],
+  "photo": "james_talwar.png",
+  "radar_data": {
+    "labels": ["awesome alliteration", "machine learning", "poker pro", "ability to quote movies", "anything earlier than noon", "drinking coffee", "seafood", "Python", "R"],
+    "values": [10, 10, 10, 10, 2, 10, 2, 10, 2]
+  }
+}

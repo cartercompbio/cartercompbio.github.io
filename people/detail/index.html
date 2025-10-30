@@ -228,20 +228,15 @@
             }
 
             try {
-                // Load people data
-                const response = await fetch('../people_data.json');
-                const peopleData = await response.json();
+                // Load individual profile
+                const response = await fetch(`../profiles/${memberId}.json?_=${Date.now()}`);
 
-                // Find the member
-                let member = peopleData.current.find(p => p.id === memberId);
-                if (!member) {
-                    member = peopleData.alumni.find(p => p.id === memberId);
-                }
-
-                if (!member) {
+                if (!response.ok) {
                     contentDiv.innerHTML = '<div class="error">Member not found.</div>';
                     return;
                 }
+
+                const member = await response.json();
 
                 // Update page title
                 document.title = `${member.name} - The Carter Lab`;
