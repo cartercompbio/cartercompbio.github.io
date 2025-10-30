@@ -28,6 +28,8 @@ cartercompbio.github.io/
 │   ├── archive.html       # News archive page
 │   └── detail/
 │       └── index.html     # Dynamic news detail template
+├── publications/
+│   └── publications.json  # All publications with citations
 ├── people/
 │   ├── index.json         # List of current/alumni IDs
 │   ├── profiles/
@@ -53,6 +55,11 @@ See **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** for complete instructions.
 
 Quick: Create `people/profiles/name.json`, add photo, update `people/index.json`
 
+### Adding a Publication
+See **[HOW_TO_ADD_PUBLICATIONS.md](HOW_TO_ADD_PUBLICATIONS.md)** for complete instructions.
+
+Quick: Add entry to `publications/publications.json` with citation text
+
 ---
 
 ## 🎯 Sections
@@ -71,6 +78,7 @@ Quick: Create `people/profiles/name.json`, add photo, update `people/index.json`
 
 - **[HOW_TO_ADD_NEWS.md](HOW_TO_ADD_NEWS.md)** - Adding news items
 - **[HOW_TO_ADD_PEOPLE.md](HOW_TO_ADD_PEOPLE.md)** - Managing lab member profiles
+- **[HOW_TO_ADD_PUBLICATIONS.md](HOW_TO_ADD_PUBLICATIONS.md)** - Adding publications
 
 ---
 
@@ -93,6 +101,7 @@ The site uses a teal color scheme. To change:
 - All images in `assets/images/` subdirectories
 - People: Individual profiles in `people/profiles/`, index in `people/index.json`
 - News: All items in `latest_news/news_data.json`
+- Publications: All citations in `publications/publications.json`
 - `.nojekyll` ensures GitHub Pages doesn't use Jekyll processing
 
 ---

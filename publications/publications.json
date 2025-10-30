@@ -1,0 +1,238 @@
+{
+  "2025": [
+    {
+      "citation": "Pagadala M, Teerlink C, Jasuja GK, Palnati M, Lynch J, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Seibert TM, Rose BS, Carter H, Pridgen K, Panizzon MS, Hauger RL Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. Nat Comm. May 2;16(1):4104. 2025",
+      "journal": "Nat Comm.",
+      "labAuthors": ["Carter H"],
+      "url": null
+    }
+  ],
+  "2024": [
+    {
+      "citation": "Talwar JV, Klie A, Pagadala MS, Carter H. GRIEVOUS: your command-line general for resolving cross-dataset genotype inconsistencies. Bioinformatics. 2024 Aug;40(8).",
+      "journal": "Bioinformatics",
+      "labAuthors": ["Talwar JV", "Klie A", "Pagadala MS", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. Cell Reports. 2024 Jul 23;43(7).",
+      "journal": "Cell Reports",
+      "labAuthors": ["Ozturk K"],
+      "url": null
+    },
+    {
+      "citation": "Jado JC, Dow M, Carolino K, Klie A, Fonseca GJ, Ideker T, Carter H, Winzeler EA. In vitro evolution and whole genome analysis to study chemotherapy drug resistance in haploid human cells. Scientific Reports. 2024 Jun 18;14(1):13989.",
+      "journal": "Scientific Reports",
+      "labAuthors": ["Dow M", "Klie A", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. Genome Biology. 2024 Apr 2;25(1):82.",
+      "journal": "Genome Biology",
+      "labAuthors": ["Mah CK"],
+      "url": null
+    },
+    {
+      "citation": "Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated germline and somatic features reveal divergent immune pathways driving ICB response. Cancer Immunology Research. 2024 Sep 10.",
+      "journal": "Cancer Immunology Research",
+      "labAuthors": ["Sears TJ", "Pagadala MS", "Castro A", "Lee K", "Carter H"],
+      "url": null
+    }
+  ],
+  "2023": [
+    {
+      "citation": "Klie A, Laub D, Talwar JV, Stites H, Jores T, Solvason JJ, Farley EK, Carter H. Predictive analyses of regulatory sequences with EUGENe. Nature Computational Science. 2023 Nov;3(11):946-56.",
+      "journal": "Nature Computational Science",
+      "labAuthors": ["Klie A", "Laub D", "Talwar JV", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Pagadala M, Sears T, Wu VH, Perez-Guijarro E, Kim H, Castro A, Talwar J, Gonzalez-Colin C, Cao S, Schmiedel B, Goudarzi S, Kirani D, Au J, Zhang T, Landi T, Salem RM, Morris GP, Harsimendy H, Patel SP, Alexandrov L, Mesirov JP, Zanetti M, Day CP, Fan CC, Thompson WK, Merlino G, Gutkind SJ, Vijayanand P, Carter H. Germline modifiers of the tumor immune microenvironment implicate drivers of cancer risk and immunotherapy response. Nature Communications. 2023 May 12;14(1):2744. PMID: 37173324.",
+      "journal": "Nature Communications",
+      "labAuthors": ["Pagadala M", "Sears T", "Castro A", "Talwar J", "Kirani D", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Castro A, Goodman A, Rane Z, Talwar J, Frampton G, Morris G, Lippman S, Zhang X, Kurzrock R, Carter H. Autoimmune HLA Alleles and Neoepitope Presentation Predict Post-Allogenic Transplant Relapse. Journal of Immunotherapy and Precision Oncology. 2023 May 15. PMID: 37637234.",
+      "journal": "Journal of Immunotherapy and Precision Oncology",
+      "labAuthors": ["Castro A", "Talwar J", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Talwar JV, Laub D, Pagadala MS, Castro A, Lewis M, Luebeck GE, Gorman BR, Pan C, Dong FN, Markianos K, Teerlink CC, Lynch J, Hauger R, Pyarajan S, Tsao PS, Morris GP, Salem RM, Thompson WK, Curtius K, Zanetti M, Carter H. Autoimmune alleles at the major histocompatibility locus modify melanoma susceptibility. Am J Hum Genet. 2023 Jul 6;110(7):1138-1161. doi: 10.1016/j.ajhg.2023.05.013. Epub 2023 Jun 19. PMID: 37339630.",
+      "journal": "Am J Hum Genet",
+      "labAuthors": ["Talwar JV", "Laub D", "Pagadala MS", "Castro A", "Carter H"],
+      "url": null
+    }
+  ],
+  "2022": [
+    {
+      "citation": "Castro A, Kaabinejadian S, Hildebrand W, Zanetti M, Carter H. Immunogenic potential of neopeptides depends on parent protein subcellular location. The EMBO Journal. 2022 Dec 15. PMID: 36314681.",
+      "journal": "The EMBO Journal",
+      "labAuthors": ["Castro A", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Deichaite I, Hopper A, Krockenberger L, Sears TJ, Sutton L, Ray X, Sharabi A, Navon A, Sanghvi P, Carter H, Moiseenko V. Germline Genetic Biomarkers to Stratify Patients for Personalized Radiation Treatment. Journal of Translational Medicine. 2022 Dec;20(1):1-3. PMID: 35962345.",
+      "journal": "Journal of Translational Medicine",
+      "labAuthors": ["Sears TJ", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Pagadala MS, Linscott JA, Talwar JV, Seibert TM, Rose B, Lynch J, Panizzon M, Hauger R, Hansen MH, Sammon JD, Hayn MH, Kader K, Carter H, Ryan ST. PRState: Incorporating genetic ancestry in prostate cancer risk scores for men of African ancestry. BMC Cancer. 2022 Dec;22(1):1-1. PMID: 36494783.",
+      "journal": "BMC Cancer",
+      "labAuthors": ["Pagadala MS", "Talwar JV", "Carter H"],
+      "url": null
+    }
+  ],
+  "2021": [
+    {
+      "citation": "Xian S, Dosset M, Almanza G, Searles S, Sahani P, Waller TC, Jepsen K, Carter H, Zanetti M. The unfolded protein response links tumor aneuploidy to local immune dysregulation. EMBO Reports. 2021 Dec 6;22(12). PMID: 34698427.",
+      "journal": "EMBO Reports",
+      "labAuthors": ["Waller TC", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Ozturk K, Carter H. Predicting functional consequences of mutations using molecular interaction network features. Human Genetics. 2021 Aug 25:1-6. PMID: 34432150.",
+      "journal": "Human Genetics",
+      "labAuthors": ["Ozturk K", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Zhang P, Kitchen-Smith I, Xiong L, Stracquadanio G, Brown K, Richter P, Wallace M, Bond E, Sahgal N, Moore S, Nornes S, De Val S, Surakhy M, Sims D, Wang X, Bell DA, Zeron-Medina J, Jiang Y, Ryan A, Selfe J, Shipley J, Kar S, Pharoah P, Loveday C, Jansen R, Grochola LF, Palles C, Protheroe A, Millar V, Ebner D, Pagadala M, Blagden SP, Maughan T, Domingo E, Tomlinson I, Turnbull C, Carter H, Bond G. Germline and somatic genetic variants in the p53 pathway interact to affect cancer risk, progression and drug response. Cancer Research. PMID: 33558336.",
+      "journal": "Cancer Research",
+      "labAuthors": ["Pagadala M", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Chen K, Ozturk K, Contreras RL, Simon J, McCann S, Chen WJ, Carter H, Fraley SI. Phenotypically supervised single-cell sequencing parses within-cell-type heterogeneity. iScience. 2021 Jan 22;24(1):101991. PMID: 33490901.",
+      "journal": "iScience",
+      "labAuthors": ["Ozturk K", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Castro A, Ozturk K, Zanetti M, Carter H. In silico analysis suggests less effective MHC-II presentation of SARS-CoV-2 RBM peptides: Implication for neutralizing antibody responses. PLOS ONE. 2021 Feb 11;16(2). PMID: 33571241.",
+      "journal": "PLOS ONE",
+      "labAuthors": ["Castro A", "Ozturk K", "Carter H"],
+      "url": null
+    }
+  ],
+  "2020": [
+    {
+      "citation": "Castro A, Pyke RM, Zhang X, Thompson WK, Day CP, Alexandrov LB, Zanetti M, Carter H. Strength of immune selection in tumors varies with sex and age. Nature Communications. 2020;11:4128. PMID: 32807809.",
+      "journal": "Nature Communications",
+      "labAuthors": ["Castro A", "Pyke RM", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Goodman AM, Castro A, Pyke RM, Okamura R, Kato S, Riviere P, Frampton G, Sokol E, Zhang X, Ball ED, Carter H, Kurzrock R. MHC-I genotype and tumor mutational burden predict response to immunotherapy. Genome Medicine. 2020 May 19;12(1):45. PMID: 32430031.",
+      "journal": "Genome Medicine",
+      "labAuthors": ["Castro A", "Pyke RM", "Carter H"],
+      "url": null
+    }
+  ],
+  "2019": [
+    {
+      "citation": "Castro A, Ozturk K, Pyke RM, Xian Su, Zanetti M, Carter H. Elevated neoantigen levels in tumors with somatic mutations to B2M and HLA. BMC Medical Genomics. 2019;12(6):107. PMID: 31345234.",
+      "journal": "BMC Medical Genomics",
+      "labAuthors": ["Castro A", "Ozturk K", "Pyke RM", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Marty R, Gfeller D, Genolet R, Harari A, Carter H. Computational KIR copy number discovery reveals interaction between inhibitory receptor burden and survival. Pacific Symposium on Biocomputing. 2019;24:148-159. PMID: 30864318.",
+      "journal": "Pacific Symposium on Biocomputing",
+      "labAuthors": ["Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Tsui B, Dow M, Skola D, Carter H. Extracting allelic read counts from 250,000 human sequencing runs in Sequence Read Archive. Pacific Symposium on Biocomputing. 2019;24:196-207. PMID: 30864322.",
+      "journal": "Pacific Symposium on Biocomputing",
+      "labAuthors": ["Tsui B", "Dow M", "Carter H"],
+      "url": null
+    }
+  ],
+  "2018": [
+    {
+      "citation": "Dow M, Marty R, Tsui B, Alexandrov LB, Nakagawa H, Taniguchi K, Ekihiro S, Harismendy O, Shalapour S, Karin M, Carter H, Font-Burgada J. Integrative genomic analysis of mouse and human hepatocellular carcinoma. Proceedings of the National Academy of Sciences. 2018 Oct 16;115(42). PMID: 30287485.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "labAuthors": ["Dow M", "Tsui B", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Pyke RM, Thomson WK, Salem RM, Font-Burgada J, Zanetti M, Carter H. Evolutionary pressure against MHC class II binding cancer mutations. Cell. 2018 Oct 4;175(2):416-28. PMID: 30245014.",
+      "journal": "Cell",
+      "labAuthors": ["Pyke RM", "Carter H"],
+      "url": null
+    }
+  ],
+  "2017": [
+    {
+      "citation": "Marty R, Kaabinejadian S, Rossell D, Slifker MJ, van de Haar J, Engin HB, de Prisco N, Ideker T, Hildebrand WH, Font-Burgada J, Carter H. MHC-I genotype restricts the oncogenic mutational landscape. Cell. 2017 Nov 30;171(6):1272-83. PMID: 29107334.",
+      "journal": "Cell",
+      "labAuthors": ["Engin HB", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Engin B, Carlin D, Pratt D, Carter H. Modeling of RAS complexes supports roles in cancer for less studied partners. BMC Biophysics. 2017 Aug 11;10(1):5. PMID: 28815022.",
+      "journal": "BMC Biophysics",
+      "labAuthors": ["Engin B", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Carter H, Marty R, Hofree M, Gross A, Jensen J, Fisch K, Wu X, DeBoever C, Van Nostrand E, Song Y, Wheeler E, Kreisberg J, Lippman S, Yeo G, Gutkind S, Ideker T. Interaction landscape of inherited polymorphisms with somatic events in cancer. Cancer Discovery. 2017 Apr 1;7(4):410-23. PMID: 28188128.",
+      "journal": "Cancer Discovery",
+      "labAuthors": ["Carter H"],
+      "url": null
+    }
+  ],
+  "2016": [
+    {
+      "citation": "Engin B, Kreisberg J, Carter H. Structure-based analysis reveals cancer missense mutations target protein interaction interfaces. PLOS ONE. 2016 Apr 4;11(4). PMID: 27043210.",
+      "journal": "PLOS ONE",
+      "labAuthors": ["Engin B", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Levy E, Marty R, Garate-Calderon V, Woo B, Dow M, Armisen R, Carter H, Harismendy O. Immune DNA signature of T-Cell infiltration in breast tumor exomes. Scientific Reports. 2016;6:30064. PMID: 27452728.",
+      "journal": "Scientific Reports",
+      "labAuthors": ["Dow M", "Carter H"],
+      "url": null
+    }
+  ],
+  "2015": [
+    {
+      "citation": "Engin B, Hofree M, Carter H. Identifying mutation-specific cancer pathways using a structurally resolved protein interaction network. Pacific Symposium on Biocomputing. 2015;84-95. PMID: 25592571.",
+      "journal": "Pacific Symposium on Biocomputing",
+      "labAuthors": ["Engin B", "Carter H"],
+      "url": null
+    }
+  ],
+  "reviews": [
+    {
+      "citation": "Castro A, Zanetti M, Carter H. Neoantigen Controversies. Annual Review of Biomedical Data Science. 2021 May 11;4. PMID: 34465181.",
+      "journal": "Annual Review of Biomedical Data Science",
+      "labAuthors": ["Castro A", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Capriotti E, Ozturk K, Carter H. Integrating molecular networks with genetic variant interpretation for precision medicine. Wiley Interdisciplinary Reviews. 2018. PMID: 30548534.",
+      "journal": "Wiley Interdisciplinary Reviews",
+      "labAuthors": ["Ozturk K", "Carter H"],
+      "url": null
+    },
+    {
+      "citation": "Ozturk K, Dow M, Carlin D, Bejar R, Carter H. The emerging potential for network analysis to inform precision cancer medicine. Journal of Molecular Biology. 2018 Jun 15;430(12):30612-0. PMID: 29908887.",
+      "journal": "Journal of Molecular Biology",
+      "labAuthors": ["Ozturk K", "Dow M", "Carter H"],
+      "url": null
+    }
+  ],
+  "protocols": [
+    {
+      "citation": "Chen K, Ozturk K, Liefeld T, Reich M, Mesirov JP, Carter H, Fraley SI. A phenotypically supervised single-cell analysis protocol to study within-cell-type heterogeneity of cultured mammalian cells. STAR Protocols. 2021 Jun 18;2(2):100561.",
+      "journal": "STAR Protocols",
+      "labAuthors": ["Ozturk K", "Carter H"],
+      "url": null
+    }
+  ]
+}
