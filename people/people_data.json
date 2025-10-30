@@ -36,7 +36,10 @@
         }
       ],
       "photo": "adam_klie.jpeg",
-      "radar_chart": "adam-klie_radar.png"
+      "radar_data": {
+        "labels": ["LOTR", "wonderwall", "ability to multitask", "rec league champ", "enhancers", "Python", "R", "Notion addiction", "open source software"],
+        "values": [9, 7, 3.5, 8.5, 7, 7.5, 2.5, 8.5, 9]
+      }
     },
     {
       "id": "david-laub",
@@ -65,7 +68,10 @@
         }
       ],
       "photo": "david_laub.png",
-      "radar_chart": "david-laub_radar.png"
+      "radar_data": {
+        "labels": ["R", "Love for the Carter Lab", "Nerding out for ML", "Pets obtained", "Wanting a pet", "Surfing skill", "Surfing enthusiasm", "Starcraft", "Python"],
+        "values": [5, 10, 10, 2, 10, 3.5, 8.5, 8.5, 9]
+      }
     },
     {
       "id": "douglas-meyer",
@@ -79,7 +85,10 @@
       "email": "domeyer@ucsd.edu",
       "links": [],
       "photo": "douglas_meyer.jpg",
-      "radar_chart": "douglas-meyer_radar.png"
+      "radar_data": {
+        "labels": ["R", "Beard", "Cancer Genomics", "Driving", "Eating Bread", "Baking Bread", "Wanting a Cat", "Python"],
+        "values": [5, 10, 9.5, 2, 10, 9, 8.5, 9.5]
+      }
     },
     {
       "id": "hannah-carter",
@@ -136,7 +145,10 @@
         }
       ],
       "photo": "james_talwar.png",
-      "radar_chart": "james-talwar_radar.png"
+      "radar_data": {
+        "labels": ["awesome alliteration", "machine learning", "poker pro", "ability to quote movies", "anything earlier than noon", "drinking coffee", "seafood", "Python", "R"],
+        "values": [10, 10, 10, 10, 2, 10, 2, 10, 2]
+      }
     },
     {
       "id": "kivilcim-ozturk-phd",
@@ -164,7 +176,10 @@
         }
       ],
       "photo": "kivilcim_ozturk.jpg",
-      "radar_chart": "kivilcim-ozturk-phd_radar.png"
+      "radar_data": {
+        "labels": ["R", "organizing", "upper body workouts", "learning german", "hot yoga cardio", "finding time to read books", "reading books", "coding", "python"],
+        "values": [7, 10, 3, 6.5, 9, 5, 10, 10, 9]
+      }
     },
     {
       "id": "ko-han-lee",
@@ -195,7 +210,10 @@
         }
       ],
       "photo": "kohan_lee.jpg",
-      "radar_chart": "ko-han-lee_radar.png"
+      "radar_data": {
+        "labels": ["R", "Love for the Carter Lab", "Hate for Cardio", "Need to SCUBA dive", "Enthusiasm for Movies", "Baseball", "Machine Learning", "Python"],
+        "values": [5, 10, 9, 8.5, 8.5, 7, 8.5, 9]
+      }
     },
     {
       "id": "sural-k-ranamukhaarachchi-phd",
@@ -229,7 +247,10 @@
         }
       ],
       "photo": "sural_ranamukhaarachchi.jpg",
-      "radar_chart": "sural-k-ranamukhaarachchi-phd_radar.png"
+      "radar_data": {
+        "labels": ["R", "Love for the Carter Lab", "Cancer Biology", "Fantasy Football", "% Cyborg", "Beatmaking", "Nerding Out for ML", "Serological Pipetting", "Python"],
+        "values": [3, 10, 8.5, 6, 5, 7.5, 7, 10, 3]
+      }
     },
     {
       "id": "tj-sears",
@@ -258,7 +279,10 @@
         }
       ],
       "photo": "tj_sears.jpeg",
-      "radar_chart": "tj-sears_radar.png"
+      "radar_data": {
+        "labels": ["basketball", "lobster catching", "league of legends", "willingness to dance", "dancing skills", "opinion of T-Cells", "annoying enthusiasm", "python", "R"],
+        "values": [6, 7, 7.5, 8.5, 4.5, 7.5, 10, 7, 9]
+      }
     }
   ],
   "alumni": [
@@ -361,7 +385,10 @@
         }
       ],
       "photo": "clarence_mah.png",
-      "radar_chart": "clarence-mah-phd_radar.png"
+      "radar_data": {
+        "labels": ["STRENGTH", "CONSTITUTION", "CHARISMA", "WISDOM", "INTELLIGENCE", "DEXTERITY"],
+        "values": [5, 4.5, 8.5, 7.5, 8, 8.5]
+      }
     },
     {
       "id": "divya-kirani",

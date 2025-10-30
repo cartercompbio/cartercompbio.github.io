@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Member - The Carter Lab</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         .member-detail {
             max-width: 900px;
@@ -315,19 +316,68 @@
                 }
 
                 // Radar chart section
-                if (member.radar_chart) {
-                    const radarPath = `../../assets/images/people/radar/${member.radar_chart}`;
+                if (member.radar_data) {
                     html += `
                         <div class="member-section">
                             <h2>📊 Skills & Interests Radar</h2>
                             <div class="radar-chart-container">
-                                <img src="${radarPath}" alt="${member.name} Skills Radar" class="radar-chart" />
+                                <canvas id="radarChart" width="400" height="400"></canvas>
                             </div>
                         </div>
                     `;
                 }
 
                 contentDiv.innerHTML = html;
+
+                // Render radar chart if data exists
+                if (member.radar_data) {
+                    const ctx = document.getElementById('radarChart');
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: member.radar_data.labels,
+                            datasets: [{
+                                label: member.name,
+                                data: member.radar_data.values,
+                                fill: true,
+                                backgroundColor: 'rgba(30, 116, 138, 0.2)',
+                                borderColor: 'rgba(30, 116, 138, 1)',
+                                borderWidth: 2,
+                                pointBackgroundColor: 'rgba(30, 116, 138, 1)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(30, 116, 138, 1)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: 10,
+                                    ticks: {
+                                        stepSize: 2,
+                                        font: {
+                                            size: 12
+                                        }
+                                    },
+                                    pointLabels: {
+                                        font: {
+                                            size: 14
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
 
             } catch (error) {
                 console.error('Error loading member details:', error);
