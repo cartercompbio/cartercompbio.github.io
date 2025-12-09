@@ -1,0 +1,36 @@
+{
+  "id": "noa-popko",
+  "name": "Noa Popko",
+  "position": "Graduate Student",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "Noa is a 2nd year Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Noa currently uses machine learning to study how germline genetic variation impacts the immune system’s response to cancer.",
+  "education": [
+    "B.S. in Computational and Systems Biology, 2023 UCLA"
+  ],
+  "interests": [
+    "Immunogenetics",
+    "Cancer Immunotherapy",
+    "Machine Learning"
+  ],
+  "email": "nopopko@ucsd.edu",
+  "links": [
+    {
+      "type": "Github",
+      "url": "https://github.com/noapopko"
+    },
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=GNAgcfgAAAAJ&hl=en&oi=ao"
+    },
+    {
+      "type": "LinkedIn",
+      "url": "https://linkedin.com/in/noa-popko-59543221b/"
+    }
+  ],
+  "photo": "noa_popko.jpg",
+  "radar_data": {
+    "labels": ["Coffee addiction", "Lego enthusiasm", "Love for dogs", "Rock climbing", "Cooking skills", "Baking skills", "Stationary addiction", "Ice skating", "Coding"],
+    "values": [9.5, 8, 10, 7, 9, 5, 8.5, 9, 7]
+  }
+}
