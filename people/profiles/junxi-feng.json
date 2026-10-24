@@ -1,0 +1,31 @@
+{
+  "id": "junxi-feng",
+  "name": "Junxi Feng",
+  "position": "Graduate Student",
+  "program": "Bioinformatics & Systems Biology",
+  "affiliation": "",
+  "bio": "Junxi is a second-year Ph.D. student in Bioinformatics and Systems Biology at UC San Diego, co-mentored by Dr. Kyle Gaulton and Dr. Hannah Carter. His research focuses on integrating single-cell multi-omics, human genetics, and machine learning to understand gene regulation and its role in human disease. He is particularly interested in developing computational methods to connect genetic variation, gene regulatory networks, and cellular responses to perturbations.",
+  "education": [
+    "Ph.D. in Bioinformatics and Systems Biology, 2025–Present, University of California San Diego",
+    "M.S. in Computational Biology and Quantitative Genetics, 2025, Harvard University",
+    "B.S. in Computational and Systems Biology, 2023, University of California Los Angeles",
+    "B.S. in Statistics, 2023, University of California Los Angeles"
+  ],
+  "interests": [
+    "Single-cell genomics and multi-omics",
+    "Human genetics and gene regulation",
+    "Machine learning for functional genomics"
+  ],
+  "email": "juf009@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=bsuXi7YAAAAJ"
+    }
+  ],
+  "photo": "junxi_feng.png",
+  "radar_data": {
+    "labels": ["Biological curiosity", "Research rabbit holes", "Brainstorming new ideas", "Single-cell obsession", "Machine learning enthusiasm", "Debugging patience", "Figure-making perfectionism", "Number of open browser tabs"],
+    "values": [10, 10, 9.5, 9.5, 9.5, 8, 9, 10]
+  }
+}
