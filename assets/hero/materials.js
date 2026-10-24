@@ -1,8 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
 // Shared uniforms: one object, referenced by every material, updated once per frame.
-// Pure additive colour that leaves the canvas alpha untouched, so the glow composites
-// over the page background instead of occluding it.
+// Pure additive colour (alpha left untouched); everything glows over the backdrop.
 const additive = {
     transparent: true,
     depthWrite: false,

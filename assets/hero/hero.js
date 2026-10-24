@@ -19,7 +19,7 @@ if (hero && canvas) init();
 function init() {
     let renderer;
     try {
-        renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
     } catch (e) {
         return;   // no WebGL: the static fallback image stays in place
     }
@@ -28,7 +28,7 @@ function init() {
     // ?hero-t=9.5 freezes the loop at that second (handy for reviewing a single beat).
     const frozenParam = new URLSearchParams(location.search).get('hero-t');
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75));
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x050b18, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.5, 200);
@@ -39,6 +39,7 @@ function init() {
     scene.add(dna.group, network.group, cells.group);
     dna.group.rotation.set(0.2, 0, -0.36);
 
+    scene.add(createBackdrop());
     const ambient = createAmbient(mobile);
     scene.add(ambient.points);
     const bridges = createBridges();
@@ -139,13 +140,22 @@ function init() {
 
     // --- Frame ------------------------------------------------------------------------
     let elapsed = 0;
+    let failed = false;
     function draw(t, time, instant) {
-        shared.uTime.value = time;
-        dna.update(t, time);
-        network.update(t, time, instant);
-        cells.update(t, time);
-        bridges.update(t, dna, network, cells);
-        renderer.render(scene, camera);
+        try {
+            shared.uTime.value = time;
+            dna.update(t, time);
+            network.update(t, time, instant);
+            cells.update(t, time);
+            bridges.update(t, dna, network, cells);
+            renderer.render(scene, camera);
+            hero.classList.add('is-live');
+        } catch (e) {
+            console.error('Hero animation stopped:', e);
+            failed = true;
+            stop();
+            hero.classList.remove('is-live');
+        }
     }
 
     const staticMode = () => frozenParam !== null || reducedMq.matches;
@@ -165,7 +175,7 @@ function init() {
         draw(elapsed % LOOP, elapsed, false);
     }
     function start() {
-        if (raf || staticMode() || !visible || document.hidden) return;
+        if (raf || failed || staticMode() || !visible || document.hidden) return;
         last = performance.now();
         raf = requestAnimationFrame(frame);
     }
@@ -189,7 +199,32 @@ function init() {
 
     layout();
     refresh();
-    hero.classList.add('is-live');
+}
+
+// Full-screen backdrop: deep navy with soft pools of light behind each scale, dithered
+// to avoid banding. Drawn first, ignoring the camera.
+function createBackdrop() {
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
+        vertexShader: /* glsl */`
+            varying vec2 vUv;
+            void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+        fragmentShader: /* glsl */`
+            varying vec2 vUv;
+            vec3 pool(vec2 c, vec2 r, vec3 col) { return col * max(0.0, 1.0 - length((vUv - c) / r) / 0.7); }
+            void main() {
+                vec3 col = vec3(0.020, 0.043, 0.094)
+                    + pool(vec2(0.40, 0.45), vec2(0.38, 0.55), vec3(0.31, 0.36, 0.84) * 0.13)
+                    + pool(vec2(0.62, 0.55), vec2(0.45, 0.45), vec3(0.18, 0.77, 0.71) * 0.09)
+                    + pool(vec2(0.85, 0.48), vec2(0.35, 0.50), vec3(1.00, 0.44, 0.38) * 0.09);
+                col += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
+                gl_FragColor = vec4(col, 1.0);
+            }`,
+        depthTest: false,
+        depthWrite: false,
+    }));
+    mesh.frustumCulled = false;
+    mesh.renderOrder = -1;
+    return mesh;
 }
 
 // Layered background dust and a few defocused foreground motes for depth.
