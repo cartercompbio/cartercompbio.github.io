@@ -4,18 +4,19 @@
   "position": "Graduate Researcher (PhD)",
   "program": "Bioinformatics & Systems Biology",
   "affiliation": "",
-  "bio": "Ko-Han is a 3rd year Ph.D. student in the Bioinformatics and Systems Biology (BISB) program. Ko-Han's research interests are in identifying cancer neoantigens and applying deep learning on deciphering sequence of major histocompatibility complex (MHC) and T cell receptor (TCR).",
+  "bio": "Ko-Han is a Ph.D. candidate in the Bioinformatics and Systems Biology (BISB) program. Ko-Han's research interests are in identifying cancer neoantigens and applying deep learning on deciphering sequence of major histocompatibility complex (MHC) and T cell receptor (TCR).",
   "education": [],
   "interests": [
     "Cancer Genomics",
     "Cancer Immunology",
-    "Machine Learning"
+    "Machine Learning",
+    "Agentic AI"
   ],
   "email": "kol004@ucsd.edu",
   "links": [
     {
-      "type": "Twitter",
-      "url": "https://twitter.com/kohanlee1995"
+      "type": "Profile",
+      "url": "https://kohanlee1995.github.io/"
     },
     {
       "type": "Github",
