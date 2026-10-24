@@ -2,19 +2,27 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 import { pointsMaterial, linesMaterial, makePoints } from './materials.js';
 import { envelope, rng, gauss, LOOP } from './timeline.js';
 
-// Modular network in local units (x ∈ [-10, 10]). Each module is a regulatory program:
-// a primary TF hub, a secondary hub, target genes, and regulatory elements wired to
-// a single nearby gene. Modules are chained hub-to-hub, so activity flows left to right.
-const MODULES = 7;
-const CASCADE_START = 4.15;
-const CASCADE_STEP = 0.52;
+// Gene regulatory network in local units (x ∈ [-10, 10]), modelled loosely on the
+// interferon-γ antigen-presentation axis: STAT1 induces IRF1, and IRF1 induces the
+// MHC class I transactivator NLRC5 and the class II transactivator CIITA, which drive
+// HLA genes. Each program is a TF hub, a secondary regulator, target genes, and
+// regulatory elements (the TF's binding sites) wired to a nearby gene. Two unlabelled
+// programs stand for the rest of the regulatory landscape. Illustrative wiring.
+const PROGRAMS = [
+    { tf: 'STAT1', site: 'GAS', targets: ['CXCL9', 'CXCL10', 'GBP1'], c: [-8.0, 0.6, 0.8], at: 4.15 },
+    { tf: 'IRF1', site: 'ISRE', targets: ['TAP1', 'PSMB9'], c: [-3.6, -1.6, -1.2], at: 4.85, from: 0 },
+    { tf: 'NLRC5', site: 'SXY', targets: ['HLA-A', 'HLA-B', 'HLA-C', 'B2M'], c: [1.4, 2.4, 1.0], at: 5.6, from: 1 },
+    { tf: 'CIITA', site: 'SXY', targets: ['HLA-DRA', 'CD74'], c: [2.6, -2.8, -1.0], at: 6.05, from: 1 },
+    { tf: null, targets: [], c: [7.0, 1.2, -1.6], at: 6.6, from: 2 },
+    { tf: null, targets: [], c: [8.2, -1.8, 1.6], at: 7.05, from: 3 },
+];
 
 const COL = {
     hub: new THREE.Color('#c4bbff'),
     hub2: new THREE.Color('#8b7cff'),
     gene: new THREE.Color('#4fe3ff'),
     gene2: new THREE.Color('#2ec4b6'),
-    element: new THREE.Color('#4f5bd5'),
+    element: new THREE.Color('#6f7bff'),
     pulse: new THREE.Color('#d8fbff'),
 };
 
@@ -24,17 +32,18 @@ export function createNetwork({ mobile }) {
     const inner = new THREE.Group();
     group.add(inner);
 
-    const perModule = mobile ? { genes: 10, elements: 4 } : { genes: 22, elements: 10 };
+    const perModule = mobile ? { genes: 12, elements: 5 } : { genes: 26, elements: 11 };
     const nodes = [];   // { p, kind, module, color, size, base, act }
     const edges = [];   // { a, b, p0, c, p1, base, ctx }
     const hubs = [];
     const modules = [];
+    const labels = [];  // { text, node, kind }
 
     const addNode = (p, kind, module) => {
         const color = kind === 'hub' ? COL.hub : kind === 'hub2' ? COL.hub2 : kind === 'element' ? COL.element
             : (rand() < 0.65 ? COL.gene : COL.gene2);
-        const size = { hub: 0.36, hub2: 0.26, gene: 0.2 + rand() * 0.1, element: 0.12 + rand() * 0.05 }[kind];
-        const base = { hub: 0.8, hub2: 0.6, gene: 0.42, element: 0.3 }[kind];
+        const size = { hub: 0.4, hub2: 0.28, gene: 0.2 + rand() * 0.1, element: 0.13 + rand() * 0.05 }[kind];
+        const base = { hub: 0.95, hub2: 0.7, gene: 0.55, element: 0.45 }[kind];
         nodes.push({ p, kind, module, color, size, base, act: Infinity, seed: rand() });
         return nodes.length - 1;
     };
@@ -50,65 +59,64 @@ export function createNetwork({ mobile }) {
         return edges.length - 1;
     };
 
-    for (let m = 0; m < MODULES; m++) {
-        const center = new THREE.Vector3(
-            -8.5 + m * (17 / (MODULES - 1)),
-            3.3 * Math.sin(m * 1.1 + 0.4),
-            2.2 * Math.cos(m * 0.9));
+    PROGRAMS.forEach((P, m) => {
+        const center = new THREE.Vector3(...P.c);
         const jitter = (sx, sy, sz) => new THREE.Vector3(gauss(rand) * sx, gauss(rand) * sy, gauss(rand) * sz);
         const hub = addNode(center.clone().add(jitter(0.3, 0.3, 0.3)), 'hub', m);
         const hub2 = addNode(center.clone().add(jitter(0.9, 0.7, 0.7)), 'hub2', m);
         hubs.push(hub, hub2);
+        if (P.tf) labels.push({ text: P.tf, node: hub, kind: 'tf' });
         const genes = [];
-        for (let i = 0; i < perModule.genes; i++) genes.push(addNode(center.clone().add(jitter(1.4, 1.3, 1.1)), 'gene', m));
-        modules.push({ hub, hub2, genes });
+        for (let i = 0; i < perModule.genes; i++) genes.push(addNode(center.clone().add(jitter(1.35, 1.25, 1.1)), 'gene', m));
+        const named = genes.slice(0, P.targets.length);
+        named.forEach((g, i) => labels.push({ text: P.targets[i], node: g, kind: 'gene' }));
+        modules.push({ hub, hub2, genes, named });
 
-        addEdge(hub, hub2, 0.16);
+        addEdge(hub, hub2, 0.2);
         genes.forEach((g) => {
-            if (rand() < 0.68) addEdge(hub, g, 0.085);
-            else if (rand() < 0.6) addEdge(hub2, g, 0.07);
+            if (named.includes(g) || rand() < 0.68) addEdge(hub, g, 0.12);
+            else if (rand() < 0.6) addEdge(hub2, g, 0.1);
         });
         for (let i = 0; i < perModule.elements; i++) {
             const g = genes[Math.floor(rand() * genes.length)];
             const e = addNode(nodes[g].p.clone().add(jitter(0.45, 0.45, 0.45)), 'element', m);
-            addEdge(e, g, 0.08, 0.1);
+            addEdge(e, g, 0.11, 0.1);
         }
-    }
-    // Inter-module wiring: a hub-to-hub backbone plus a few long-range regulatory links.
-    const backbone = [];
-    for (let m = 0; m < MODULES - 1; m++) {
-        backbone.push(addEdge(modules[m].hub, modules[m + 1].hub, 0.15, 0.12));
-        for (let k = 0; k < 2; k++) {
-            const target = modules[Math.min(MODULES - 1, m + 1 + Math.floor(rand() * 2))];
-            addEdge(modules[m].hub, target.genes[Math.floor(rand() * target.genes.length)], 0.07, 0.22);
-        }
-        if (m < MODULES - 2 && rand() < 0.6) addEdge(modules[m].hub2, modules[m + 2].hub, 0.06, 0.25);
-    }
+    });
+    // Program-to-program regulation plus a few weaker long-range links.
+    const upstream = PROGRAMS.map((P, m) => (P.from === undefined ? -1 : addEdge(modules[P.from].hub, modules[m].hub, 0.2, 0.12)));
+    modules.forEach((mod, m) => {
+        const other = modules[(m + 1 + Math.floor(rand() * (modules.length - 1))) % modules.length];
+        addEdge(mod.hub, other.genes[Math.floor(rand() * other.genes.length)], 0.09, 0.22);
+        if (rand() < 0.6) addEdge(mod.hub2, other.hub2, 0.08, 0.25);
+    });
 
-    // Adjacency, for hover highlighting.
     const adjacentEdges = nodes.map(() => []);
     edges.forEach((e, i) => { adjacentEdges[e.a].push(i); adjacentEdges[e.b].push(i); });
 
-    // Cascade schedule: each module's hub fires in turn; pulses carry activity to a
-    // subset of its targets and on to the next module's hub.
-    const pulses = [];   // { edge, from: 0|1 direction, start, dur }
+    // Cascade: each program's hub fires when the signal from its upstream TF arrives;
+    // pulses then carry activity to its named targets and a subset of the others.
+    const pulses = [];
     const edgeAct = edges.map(() => []);
-    const schedulePulse = (ei, fromA, start, dur) => {
-        pulses.push({ edge: ei, fromA, start, dur });
+    const schedulePulse = (ei, start, dur) => {
+        pulses.push({ edge: ei, start, dur });
         edgeAct[ei].push([start, start + dur]);
-        const target = fromA ? edges[ei].b : edges[ei].a;
+        const target = edges[ei].b;
         nodes[target].act = Math.min(nodes[target].act, start + dur);
     };
-    modules.forEach((mod, m) => {
-        const t0 = CASCADE_START + m * CASCADE_STEP;
-        nodes[mod.hub].act = Math.min(nodes[mod.hub].act, t0);
-        const out = adjacentEdges[mod.hub].filter((ei) => edges[ei].a === mod.hub && nodes[edges[ei].b].module === m);
-        out.forEach((ei) => {
-            if (rand() < (mobile ? 0.6 : 0.42)) schedulePulse(ei, true, t0 + rand() * 0.3, 0.5 + edges[ei].len * 0.08);
+    PROGRAMS.forEach((P, m) => {
+        const mod = modules[m];
+        nodes[mod.hub].act = Math.min(nodes[mod.hub].act, P.at);
+        if (upstream[m] >= 0) {
+            const t0 = PROGRAMS[P.from].at + 0.05;
+            schedulePulse(upstream[m], t0, P.at - t0);
+        }
+        adjacentEdges[mod.hub].forEach((ei) => {
+            const e = edges[ei];
+            if (e.a !== mod.hub || nodes[e.b].module !== m) return;
+            if (mod.named.includes(e.b) || rand() < (mobile ? 0.5 : 0.38)) schedulePulse(ei, P.at + rand() * 0.3, 0.5 + e.len * 0.08);
         });
-        if (m < MODULES - 1) schedulePulse(backbone[m], true, t0 + 0.04, CASCADE_STEP - 0.04);
     });
-    // Regulatory elements light with the gene they are linked to.
     edges.forEach((e) => {
         if (nodes[e.a].kind === 'element' && nodes[e.b].act < Infinity) nodes[e.a].act = nodes[e.b].act + 0.15;
     });
@@ -117,7 +125,7 @@ export function createNetwork({ mobile }) {
     const SEG = mobile ? 6 : 10;
     const linePos = new Float32Array(edges.length * SEG * 6);
     const lineCol = new Float32Array(edges.length * SEG * 6);
-    const lineBase = new Float32Array(edges.length * SEG * 6);   // unit-brightness colours
+    const lineBase = new Float32Array(edges.length * SEG * 6);
     const q = new THREE.Vector3(), q2 = new THREE.Vector3(), col = new THREE.Color();
     const bezier = (e, u, out) => {
         const iu = 1 - u;
@@ -182,7 +190,9 @@ export function createNetwork({ mobile }) {
     const nodeLevel = new Float32Array(nodes.length);
 
     function update(t, time, instant = false) {
-        inner.rotation.y = Math.sin(time * 0.05) * 0.1;
+        // slow 3D turn about the network's long axis, with a gentle sway
+        inner.rotation.x = time * 0.13;
+        inner.rotation.y = Math.sin(time * 0.05) * 0.12;
         const k = instant ? 1 : 0.12;
         hoverAmt += (hoverTarget - hoverAmt) * k;
         for (let i = 0; i < nodes.length; i++) hlNode[i] += (hlNodeTarget[i] - hlNode[i]) * k;
@@ -200,8 +210,8 @@ export function createNetwork({ mobile }) {
         });
         hubs.forEach((h, i) => {
             const n = nodes[h];
-            const I = (0.1 + 0.05 * Math.sin(time * 1.2 + n.seed * 9)) * (1 - 0.4 * hoverAmt * (1 - hlNode[h]))
-                + nodeLevel[h] * 0.45 + hlNode[h] * 0.3;
+            const I = (0.14 + 0.06 * Math.sin(time * 1.2 + n.seed * 9)) * (1 - 0.4 * hoverAmt * (1 - hlNode[h]))
+                + nodeLevel[h] * 0.5 + hlNode[h] * 0.3;
             halos.color.set([n.color.r * I, n.color.g * I, n.color.b * I], i * 3);
             halos.size[i] = (n.kind === 'hub' ? 1.5 : 1.0) * (1 + 0.4 * nodeLevel[h]);
         });
@@ -211,7 +221,7 @@ export function createNetwork({ mobile }) {
             for (const [s, f] of edgeAct[i]) act = Math.max(act, envelope(t, s, 0.12, f - s, 1.8));
             const ctx = e.ctx ? 0.15 + 0.85 * (0.5 + 0.5 * Math.sin((2 * Math.PI * t / LOOP) * e.ctx.n + e.ctx.phase)) : 1;
             const dim = 1 - 0.6 * hoverAmt * (1 - hlEdge[i]);
-            const I = e.base * ctx * dim + act * 0.55 + hlEdge[i] * 0.45;
+            const I = e.base * ctx * dim + act * 0.6 + hlEdge[i] * 0.45;
             const glow = act * 0.25;
             for (let v = (i * SEG) * 6, end = v + SEG * 6; v < end; v += 3) {
                 lineCol[v] = lineBase[v] * I + COL.pulse.r * glow;
@@ -227,11 +237,11 @@ export function createNetwork({ mobile }) {
                 const o = i * TRAIL + j;
                 const uj = u - j * 0.06;
                 const on = uj >= 0 && uj <= 1;
-                bezier(e, Math.min(1, Math.max(0, p.fromA ? uj : 1 - uj)), q);
+                bezier(e, Math.min(1, Math.max(0, uj)), q);
                 pulsePts.position.set([q.x, q.y, q.z], o * 3);
                 const b = on ? (1 - j / TRAIL) * Math.sqrt(Math.sin(Math.PI * uj)) * 0.9 : 0;
                 pulsePts.color.set([COL.pulse.r * b, COL.pulse.g * b, COL.pulse.b * b], o * 3);
-                pulsePts.size[o] = 0.2 * (1 - j * 0.18);
+                pulsePts.size[o] = 0.22 * (1 - j * 0.18);
             }
         });
 
@@ -247,9 +257,9 @@ export function createNetwork({ mobile }) {
     const nodeWorld = (i, out) => inner.localToWorld(out.copy(nodes[i].p));
 
     return {
-        group, materials, update, setHover, hubs, nodeWorld,
-        entry: modules[0].hub,
-        exit: modules[MODULES - 1].hub,
-        cascadeEnd: CASCADE_START + (MODULES - 1) * CASCADE_STEP,
+        group, materials, update, setHover, hubs, nodeWorld, labels, nodeLevel, hlNode,
+        nodeAct: (i) => nodes[i].act,
+        entry: modules[0].hub,   // STAT1
+        exit: modules[2].hub,    // NLRC5: MHC class I
     };
 }

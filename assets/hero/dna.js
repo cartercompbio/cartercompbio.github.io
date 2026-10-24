@@ -18,13 +18,15 @@ const C = {
 const BASE_COLORS = [C.teal, C.cyan, C.violet, C.indigo];
 
 // Variant base pairs and when (seconds into the loop) each one lights up.
+// Gold: inherited (germline) variants. Cyan: somatic mutations acquired in the tumour.
 const VARIANTS = [
-    { bp: 8, at: 0.5, color: C.cyan },
-    { bp: 15, at: 1.2, color: C.gold },
-    { bp: 21, at: 1.9, color: C.cyan },
-    { bp: 27, at: 2.6, color: C.gold },
-    { bp: 32, at: 3.15, color: C.cyan },
-];
+    { bp: 8, at: 0.5, kind: 'germline', change: 'A>G' },
+    { bp: 15, at: 1.2, kind: 'somatic', change: 'C>T' },
+    { bp: 21, at: 1.9, kind: 'germline', change: 'G>A' },
+    { bp: 27, at: 2.6, kind: 'somatic', change: 'C>A' },
+    { bp: 32, at: 3.15, kind: 'somatic', change: 'C>T' },
+].map((v) => ({ ...v, color: v.kind === 'germline' ? C.gold : C.cyan }));
+const variantEnvelope = (t, v) => envelope(t, v.at, 0.35, 0.9, 3.6);
 
 const endFade = (y) => smoothstep(LENGTH / 2, LENGTH / 2 - 2.8, Math.abs(y));
 
@@ -50,7 +52,7 @@ export function createDNA({ mobile }) {
             const y = -LENGTH / 2 + (i / (perStrand - 1)) * LENGTH;
             strandPoint(y, s * GROOVE, v);
             backbone.position.set([v.x + (rand() - 0.5) * 0.05, v.y, v.z + (rand() - 0.5) * 0.05], k * 3);
-            tmp.copy(C.teal).lerp(C.indigo, i / perStrand).multiplyScalar(0.55 * endFade(y));
+            tmp.copy(C.teal).lerp(C.indigo, i / perStrand).multiplyScalar(0.8 * endFade(y));
             backbone.color.set([tmp.r, tmp.g, tmp.b], k * 3);
             backbone.size[k] = 0.075 + rand() * 0.05;
         }
@@ -113,7 +115,7 @@ export function createDNA({ mobile }) {
 
         variantLevel.fill(0);
         VARIANTS.forEach((vt, i) => {
-            const e = envelope(t, vt.at, 0.35, 0.9, 3.6);
+            const e = variantEnvelope(t, vt);
             variantLevel[vt.bp] = e;
             variantColor[vt.bp] = vt.color;
             const h = e * 0.9;
@@ -123,7 +125,7 @@ export function createDNA({ mobile }) {
         for (let k = 0; k < nbp; k++) {
             const r = rungs[k], e = variantLevel[k], f = r.fade;
             for (let end = 0; end < 2; end++) {
-                tmp.copy(end ? r.c2 : r.c1).multiplyScalar(0.28 * f);
+                tmp.copy(end ? r.c2 : r.c1).multiplyScalar(0.4 * f);
                 if (e > 0) tmp.lerp(variantColor[k], e).multiplyScalar(1 + e * 2.2);
                 rungCol.set([tmp.r, tmp.g, tmp.b], k * 6 + end * 3);
                 bases.color.set([tmp.r * 1.6, tmp.g * 1.6, tmp.b * 1.6], k * 6 + end * 3);
@@ -141,5 +143,10 @@ export function createDNA({ mobile }) {
         return helix.localToWorld(out.copy(rungs[VARIANTS[VARIANTS.length - 1].bp].mid));
     }
 
-    return { group, materials, update, signalOrigin, length: LENGTH };
+    // For on-screen labels: each variant's notation, timing and current world position.
+    const variants = VARIANTS.map((v) => ({ text: v.change, kind: v.kind, at: v.at, color: v.color }));
+    const levelOf = (i, t) => variantEnvelope(t, VARIANTS[i]);
+    const variantWorld = (i, out) => helix.localToWorld(out.copy(rungs[VARIANTS[i].bp].mid));
+
+    return { group, materials, update, signalOrigin, variants, variantLevel: levelOf, variantWorld, length: LENGTH };
 }

@@ -65,7 +65,7 @@ body {
         radial-gradient(38% 55% at 40% 55%, rgba(79, 91, 213, 0.13), transparent 70%),
         radial-gradient(45% 45% at 62% 45%, rgba(46, 196, 182, 0.09), transparent 70%),
         radial-gradient(35% 50% at 85% 52%, rgba(255, 111, 97, 0.09), transparent 70%),
-        #050b18;
+        #0c162c;
 }
 
 .hero__fallback,
@@ -96,9 +96,49 @@ body {
 .hero__scrim {
     pointer-events: none;
     background:
-        linear-gradient(90deg, rgba(5, 11, 24, 0.85) 0%, rgba(5, 11, 24, 0.5) 26%, rgba(5, 11, 24, 0) 46%),
-        linear-gradient(0deg, rgba(5, 11, 24, 0.8) 0%, rgba(5, 11, 24, 0) 18%);
+        linear-gradient(90deg, rgba(12, 22, 44, 0.85) 0%, rgba(12, 22, 44, 0.5) 24%, rgba(12, 22, 44, 0) 40%),
+        linear-gradient(0deg, rgba(12, 22, 44, 0.6) 0%, rgba(12, 22, 44, 0) 8%);
 }
+
+/* Scale titles and labels pinned to the scene; the script positions them. */
+.hero__annotations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+}
+
+.hero.is-live .hero__annotations { opacity: 1; }
+
+.hero__scale,
+.hero__ml-title {
+    position: absolute;
+    left: 0;
+    top: 7%;
+    margin: 0;
+    color: #edf3fb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow: 0 0 8px #0c162c, 0 0 3px #0c162c;
+}
+
+.hero__ml-title { top: 0; color: #cdd6ff; }
+
+.hero__lbl { position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform, opacity; }
+.hero__lbl span { position: absolute; white-space: nowrap; padding: 1px 7px; border-radius: 9px; background: rgba(12, 22, 44, 0.74); font-size: 0.75rem; line-height: 1.5; }
+.hero__lbl--germline span, .hero__lbl--somatic span { transform: translate(16px, -50%); font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+.hero__lbl--germline span { color: #ffc857; }
+.hero__lbl--somatic span { color: #4fe3ff; }
+.hero__lbl--tf span { transform: translate(-50%, -175%); font-size: 0.8rem; font-weight: 600; color: #b3a8ff; }
+.hero__lbl--gene span { transform: translate(9px, -50%); padding: 0; background: none; font-style: italic; color: #bdf5ff; text-shadow: 0 0 8px #0c162c, 0 0 3px #0c162c; }
+.hero__lbl--tumor span { transform: translate(-50%, -50%); font-weight: 500; color: #ff8a78; }
+.hero__lbl--immune span { transform: translate(-50%, 0); font-weight: 500; color: #bfeaff; }
+.hero__lbl--synapse span { transform: translate(-50%, -160%); font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: #ffdc8c; }
+.hero__lbl--ml span { transform: translate(16px, -50%); font-weight: 600; color: #effcff; }
 
 .hero__content {
     position: absolute;
@@ -173,13 +213,23 @@ body {
     }
 
     .hero__scrim {
-        background: linear-gradient(180deg, rgba(5, 11, 24, 0.85) 0%, rgba(5, 11, 24, 0.45) 40%, rgba(5, 11, 24, 0) 58%);
+        background: linear-gradient(180deg, rgba(12, 22, 44, 0.85) 0%, rgba(12, 22, 44, 0.45) 30%, rgba(12, 22, 44, 0) 42%);
     }
+
+    /* phones: no scale titles; only TF names, variant tags and the prediction stay */
+    .hero__scale,
+    .hero__lbl--gene,
+    .hero__lbl--tumor,
+    .hero__lbl--immune,
+    .hero__lbl--synapse { display: none; }
+
+    .hero__ml-title { font-size: 0.65rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .hero__fallback,
     .hero__canvas,
+    .hero__annotations,
     .hero__cta,
     .hero__cta span { transition: none; }
 }

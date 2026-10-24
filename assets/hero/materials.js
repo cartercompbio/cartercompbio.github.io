@@ -18,6 +18,7 @@ export const shared = {
     uViewHeight: { value: 800 },
     uFocus: { value: 30 },      // camera distance to the focal plane
     uDof: { value: 0.045 },     // circle-of-confusion growth per unit of defocus
+    uGain: { value: 1.45 },     // overall exposure
 };
 
 // Soft glowing point sprites with fake depth of field: points away from the focal
@@ -47,6 +48,7 @@ const pointVert = /* glsl */`
     }
 `;
 const pointFrag = /* glsl */`
+    uniform float uGain;
     varying vec3 vColor;
     varying float vSoft;
     void main() {
@@ -55,7 +57,7 @@ const pointFrag = /* glsl */`
         if (r2 > 1.0) discard;
         float core = exp(-r2 * mix(18.0, 4.0, vSoft));
         float halo = exp(-r2 * 3.5) * 0.35;
-        gl_FragColor = vec4(vColor * (core + halo), 1.0);
+        gl_FragColor = vec4(vColor * (core + halo) * uGain, 1.0);
     }
 `;
 
@@ -103,9 +105,10 @@ const cellVert = /* glsl */`
     attribute float aKind;      // 0 tumor, 1 immune
     attribute vec3 aColor;
     attribute float aState;     // 0 rest .. 1 fully engaged
+    attribute float aMhc;       // MHC-I surface display, 0 none .. 1 high
     varying vec2 vUv;
     varying vec3 vColor;
-    varying float vSeed, vKind, vState, vBlur;
+    varying float vSeed, vKind, vState, vBlur, vMhc;
     void main() {
         float breath = 1.0 + 0.025 * sin(uTime * 0.6 + aSeed * 40.0);
         vec4 mv = modelViewMatrix * vec4(aCenter + aMove, 1.0);
@@ -114,15 +117,15 @@ const cellVert = /* glsl */`
         vBlur = clamp(coc * 0.9, 0.0, 1.0);
         vUv = position.xy * 2.6;     // cell radius maps to |vUv| = 1
         vColor = aColor;
-        vSeed = aSeed; vKind = aKind; vState = aState;
+        vSeed = aSeed; vKind = aKind; vState = aState; vMhc = aMhc;
         gl_Position = projectionMatrix * mv;
     }
 `;
 const cellFrag = /* glsl */`
-    uniform float uTime;
+    uniform float uTime, uGain;
     varying vec2 vUv;
     varying vec3 vColor;
-    varying float vSeed, vKind, vState, vBlur;
+    varying float vSeed, vKind, vState, vBlur, vMhc;
 
     float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
     float noise(vec2 p) {
@@ -162,11 +165,18 @@ const cellFrag = /* glsl */`
         float nucRim = exp(-(nd * nd) / (nw * nw)) * 0.45;
         float nucFill = (1.0 - smoothstep(-nw, nw, nd)) * (0.10 + 0.10 * noise(nc * 9.0 + s));
 
-        float energy = 0.42 + 0.3 * vKind + 0.6 * vState;
+        float energy = 0.55 + 0.3 * vKind + 0.6 * vState;
         vec3 rimCol = mix(vColor, vec3(1.0, 0.95, 0.9), 0.18 * vState);
         vec3 col = rimCol * (rim * 0.85 + glow) + vColor * (cyto + nucRim + nucFill) * 0.85;
-        col *= energy * (1.0 - 0.45 * vBlur);
-        gl_FragColor = vec4(col, 1.0);
+        col *= energy;
+
+        // MHC-I complexes: evenly spaced bright puncta just outside the membrane
+        float stepA = 6.2831853 / 18.0;
+        float k = floor((a - s) / stepA + 0.5) * stepA + s;
+        vec2 dp = vUv - R * 1.03 * vec2(cos(k), sin(k));
+        col += vec3(1.0, 0.86, 0.55) * exp(-dot(dp, dp) / 0.0018) * vMhc * 1.4;
+
+        gl_FragColor = vec4(col * (1.0 - 0.45 * vBlur) * uGain, 1.0);
     }
 `;
 

@@ -12,19 +12,21 @@ const COL = {
     synapse: new THREE.Color('#d8f6ff'),
 };
 
-// Tumour clusters, each in its own molecular state; `shift` is the state each drifts
-// toward between 8 and 12 s.
+// Tumour clusters in different molecular states. `mhc` is MHC class I surface display:
+// cluster 0 responds to interferon signalling by raising it (and is seen by a CD8+
+// T cell); cluster 1 has lost it (immune escape) and draws an NK cell instead.
 const CLUSTERS = [
-    { c: [-1.4, 1.9, 0.3], n: 7, color: COL.coral, shift: COL.magenta, at: 8.1 },
-    { c: [2.2, -1.2, -1.2], n: 6, color: COL.magenta, shift: COL.orange, at: 8.8 },
-    { c: [-0.9, -3.3, 1.4], n: 5, color: COL.orange, shift: COL.coral, at: 9.5 },
-    { c: [3.4, 3.6, -4.5], n: 5, color: COL.coral, shift: COL.orange, at: 9.0 },   // deep, out of focus
+    { c: [-1.4, 1.9, 0.3], n: 7, color: COL.coral, shift: COL.magenta, at: 8.1, mhc: [0.25, 1.0, 7.9], label: 'Tumor cells · MHC-I high', tag: [-1.6, 5.2, 0.3] },
+    { c: [2.2, -1.2, -1.2], n: 6, color: COL.magenta, shift: COL.orange, at: 8.8, mhc: [0.04, 0.04, 0], label: 'MHC-I low · immune escape', tag: [2.6, -4.0, -1.2] },
+    { c: [-0.9, -3.3, 1.4], n: 5, color: COL.orange, shift: COL.coral, at: 9.5, mhc: [0.2, 0.6, 8.4] },
+    { c: [3.4, 3.6, -4.5], n: 5, color: COL.coral, shift: COL.orange, at: 9.0, mhc: [0.3, 0.3, 0] },   // deep, out of focus
 ];
+const mhcLevel = (cl, t) => cl.mhc[0] + (cl.mhc[1] - cl.mhc[0]) * envelope(t, cl.mhc[2], 1.0, 3.6, 2.0);
 
 export function createCells({ mobile }) {
     const rand = rng(23);
     const group = new THREE.Group();
-    const cells = [];   // { p, r, kind, color, shift?, at?, seed }
+    const cells = [];   // { p, r, kind, color, cluster?, seed }
 
     CLUSTERS.forEach((cl, ci) => {
         const n = mobile ? Math.ceil(cl.n * 0.6) : cl.n;
@@ -46,8 +48,9 @@ export function createCells({ mobile }) {
         }
     });
 
-    // Immune cells patrol the gaps between nests.
-    const immuneSpots = [[0.6, 0.6, 0.8], [-3.0, -0.6, 0.2], [3.6, 0.9, 0.0], [0.9, -4.6, -0.4], [-2.8, 4.2, -0.8],
+    // Immune cells patrol the gaps between nests. The first is a CD8+ T cell (cyan),
+    // the second an NK cell (electric blue); the rest are a mix.
+    const immuneSpots = [[0.6, 0.6, 0.8], [3.6, 0.9, 0.0], [-3.0, -0.6, 0.2], [0.9, -4.6, -0.4], [-2.8, 4.2, -0.8],
         [1.6, 3.4, 0.9], [-3.6, -3.6, -1.6], [4.0, -3.9, 0.5], [-0.2, 4.9, 1.2]];
     const nImmune = mobile ? 5 : immuneSpots.length;
     const immune = [];
@@ -55,13 +58,13 @@ export function createCells({ mobile }) {
         const s = immuneSpots[i];
         immune.push(cells.length);
         cells.push({
-            p: new THREE.Vector3(s[0], s[1], s[2]), r: 0.4 + rand() * 0.16, kind: 1,
-            color: rand() < 0.55 ? COL.cyan : COL.blue, seed: rand(),
+            p: new THREE.Vector3(s[0], s[1], s[2]), r: i === 1 ? 0.55 : 0.4 + rand() * 0.14, kind: 1,
+            color: i === 0 ? COL.cyan : i === 1 ? COL.blue : (rand() < 0.55 ? COL.cyan : COL.blue), seed: rand(),
         });
     }
 
-    // Two immune–tumour engagements: the immune cell crawls to the nearest tumour
-    // cell of a cluster, holds contact, then withdraws before the loop ends.
+    // Two engagements: the T cell docks on the MHC-I-high nest, the NK cell on the
+    // MHC-I-low nest. Each crawls in, holds contact, then withdraws before the loop ends.
     const engagements = [[0, 0], [1, 1]].map(([ii, ci]) => {
         const im = cells[immune[ii]];
         let best = -1, bestD = Infinity;
@@ -74,6 +77,8 @@ export function createCells({ mobile }) {
         const contact = tumor.p.clone().add(dir.multiplyScalar(tumor.r * 0.98));
         return { immune: immune[ii], tumor: best, dock, contact, at: 8.0 + ii * 0.7 };
     });
+    const approachOf = (en, t) => envelope(t, en.at, 1.7, 2.1, 3.2);
+    const contactOf = (en, t) => envelope(t, en.at + 1.5, 0.5, 1.4, 1.6);
 
     // --- Instanced cell quads ------------------------------------------------------
     const n = cells.length;
@@ -93,12 +98,13 @@ export function createCells({ mobile }) {
     geom.setAttribute('aKind', attr(1, (arr, i, c) => { arr[i] = c.kind; }));
     geom.setAttribute('aColor', attr(3, (arr, i, c) => arr.set([c.color.r, c.color.g, c.color.b], i * 3)));
     geom.setAttribute('aState', attr(1, () => {}));
+    geom.setAttribute('aMhc', attr(1, () => {}));
     geom.instanceCount = n;
     const mesh = new THREE.Mesh(geom, cellsMaterial());
     mesh.frustumCulled = false;
     group.add(mesh);
 
-    // Synapse glow + granules travelling across each contact.
+    // Synapse glow + cytotoxic granules (perforin/granzyme) crossing each contact.
     const GRANULES = mobile ? 5 : 10;
     const sparks = makePoints(engagements.length * (1 + GRANULES), pointsMaterial());
     group.add(sparks.points);
@@ -109,7 +115,7 @@ export function createCells({ mobile }) {
     const tmp = new THREE.Color();
     for (let i = 0; i < nHaze; i++) {
         haze.position.set([(rand() - 0.5) * 11, (rand() - 0.5) * 12, -3 + rand() * 5], i * 3);
-        tmp.copy(rand() < 0.5 ? COL.coral : COL.cyan).multiplyScalar(0.08 + rand() * 0.14);
+        tmp.copy(rand() < 0.5 ? COL.coral : COL.cyan).multiplyScalar(0.1 + rand() * 0.16);
         haze.color.set([tmp.r, tmp.g, tmp.b], i * 3);
         haze.size[i] = 0.035 + rand() * 0.05;
         haze.drift[i] = 0.3 + rand() * 0.5;
@@ -120,6 +126,7 @@ export function createCells({ mobile }) {
     const move = geom.attributes.aMove.array;
     const color = geom.attributes.aColor.array;
     const state = geom.attributes.aState.array;
+    const mhc = geom.attributes.aMhc.array;
     const v = new THREE.Vector3();
 
     function update(t, time) {
@@ -134,14 +141,15 @@ export function createCells({ mobile }) {
                 const e = envelope(t, cl.at + c.seed * 0.5, 1.2, 1.4, 2.2);
                 tmp.lerp(cl.shift, e * 0.7);
                 st = e * 0.45;
+                mhc[i] = mhcLevel(cl, t);
             }
             color.set([tmp.r, tmp.g, tmp.b], i * 3);
             state[i] = st;
         });
 
         engagements.forEach((en, k) => {
-            const approach = envelope(t, en.at, 1.7, 2.1, 3.2);
-            const contact = envelope(t, en.at + 1.5, 0.5, 1.4, 1.6);
+            const approach = approachOf(en, t);
+            const contact = contactOf(en, t);
             const im = cells[en.immune];
             v.copy(en.dock).sub(im.p).multiplyScalar(approach);
             move[en.immune * 3] += v.x;
@@ -168,13 +176,41 @@ export function createCells({ mobile }) {
             }
         });
 
-        for (const name of ['aMove', 'aColor', 'aState']) geom.attributes[name].needsUpdate = true;
+        for (const name of ['aMove', 'aColor', 'aState', 'aMhc']) geom.attributes[name].needsUpdate = true;
         const sg = sparks.points.geometry;
         sg.attributes.position.needsUpdate = sg.attributes.color.needsUpdate = sg.attributes.size.needsUpdate = true;
     }
 
-    // World position of the first engaging immune cell (where the network signal lands).
-    const signalTarget = (out) => group.localToWorld(out.copy(cells[engagements[0].immune].p));
+    // Where the network's MHC-I signal lands: the tumour cell the T cell will meet.
+    const signalTarget = (out) => group.localToWorld(out.copy(cells[engagements[0].tumor].p));
 
-    return { group, materials: [mesh.material, sparks.points.material, haze.points.material], update, signalTarget };
+    // On-screen labels: text, a world-space anchor, and how visible it is at time t.
+    const immunePos = (en, t, dy, out) => {
+        const im = cells[en.immune], a = approachOf(en, t);
+        out.copy(en.dock).sub(im.p).multiplyScalar(a).add(im.p);
+        out.y += dy;
+        return group.localToWorld(out);
+    };
+    const labels = [
+        ...CLUSTERS.filter((cl) => cl.label).map((cl) => ({
+            text: cl.label, kind: 'tumor',
+            world: (t, out) => group.localToWorld(out.set(...cl.tag)),
+            level: (t) => 0.6 + 0.4 * envelope(t, cl.at - 0.5, 0.6, 3.5, 1.5),
+        })),
+        { text: 'CD8⁺ T cell', kind: 'immune', world: (t, out) => immunePos(engagements[0], t, -0.95, out),
+            level: (t) => 0.6 + 0.4 * approachOf(engagements[0], t) },
+        { text: 'NK cell', kind: 'immune', world: (t, out) => immunePos(engagements[1], t, -1.05, out),
+            level: (t) => 0.6 + 0.4 * approachOf(engagements[1], t) },
+        { text: 'TCR · peptide–MHC-I', kind: 'synapse',
+            world: (t, out) => group.localToWorld(out.copy(engagements[0].contact).add(v.set(0.9, 0.6, 0))),
+            level: (t) => contactOf(engagements[0], t) },
+    ];
+
+    // n cells spread across nests and immune cells, as data sources for the model.
+    const samples = (n) => Array.from({ length: n }, (_, k) => {
+        const c = cells[Math.floor((k * cells.length) / n)];
+        return { from: (out) => group.localToWorld(out.copy(c.p)), color: c.color };
+    });
+
+    return { group, materials: [mesh.material, sparks.points.material, haze.points.material], update, signalTarget, labels, samples };
 }

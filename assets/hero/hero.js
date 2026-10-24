@@ -1,12 +1,14 @@
 // Hero animation: "From Genome to Cancer Ecosystem".
 // Genetic variation (helix) -> regulatory network -> tumour/immune microenvironment,
-// choreographed on a 16 s loop (see timeline.js). Illustrative, not a causal model.
+// with a machine-learning model beneath that integrates all three, choreographed on a
+// 16 s loop (see timeline.js). Illustrative research themes, not a causal model.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { shared, pointsMaterial, makePoints } from './materials.js';
 import { LOOP, envelope, rng } from './timeline.js';
 import { createDNA } from './dna.js';
 import { createNetwork } from './network.js';
 import { createCells } from './cells.js';
+import { createModel } from './model.js';
 
 const FOV = 35;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -23,12 +25,15 @@ function init() {
     } catch (e) {
         return;   // no WebGL: the static fallback image stays in place
     }
+    const labelLayer = hero.querySelector('.hero__labels');
+    const scaleEls = [...hero.querySelectorAll('.hero__scale')];
+    const mlTitle = hero.querySelector('.hero__ml-title');
     const mobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
     const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
     // ?hero-t=9.5 freezes the loop at that second (handy for reviewing a single beat).
     const frozenParam = new URLSearchParams(location.search).get('hero-t');
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75));
-    renderer.setClearColor(0x050b18, 1);
+    renderer.setClearColor(0x0c162c, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.5, 200);
@@ -39,13 +44,26 @@ function init() {
     scene.add(dna.group, network.group, cells.group);
     dna.group.rotation.set(0.2, 0, -0.36);
 
+    // The model's inputs: data packets from each scale during its phase.
+    const perGroup = mobile ? 6 : 10;
+    const genes = network.labels.filter((l) => l.kind === 'gene');
+    const model = createModel({
+        mobile,
+        sources: [
+            dna.variants.flatMap((v, i) => [0.4, 0.65].map((d) => ({ at: v.at + d, color: v.color, from: (out) => dna.variantWorld(i, out) }))),
+            genes.map((l) => ({ at: network.nodeAct(l.node) + 0.3, color: new THREE.Color('#b3a8ff'), from: (out) => network.nodeWorld(l.node, out) })),
+            cells.samples(perGroup).map((s, k) => ({ ...s, at: 8.6 + k * (2.4 / perGroup) })),
+        ],
+    });
+    scene.add(model.group);
+
     scene.add(createBackdrop());
     const ambient = createAmbient(mobile);
     scene.add(ambient.points);
     const bridges = createBridges();
     scene.add(bridges.points);
 
-    // --- Layout: fit the three scales into the space right of (or below) the heading.
+    // --- Layout: biology right of (or below) the heading, the model along the bottom.
     let distance = 30, halfW = 1, halfH = 1;
     const setScale = (obj, materials, s) => {
         obj.scale.setScalar(s);
@@ -67,31 +85,34 @@ function init() {
 
         const heroRect = hero.getBoundingClientRect();
         const r = copy.getBoundingClientRect();
+        let left, right, bioY, bioH, modelTop, modelGap;
         if (!portrait) {
-            const left = ((r.right - heroRect.left) / w * 2 - 1) * halfW + 0.8;
-            const right = halfW - 0.6;
-            const span = right - left;
-            const sDna = (halfH * 2 * 0.78) / dna.length;
-            dna.group.position.set(left + span * 0.08, -0.4, 0);
-            setScale(dna.group, dna.materials, sDna);
-            const sNet = Math.min((span * 0.72) / 20, (halfH * 2 * 0.62) / 10);
-            network.group.position.set(left + span * 0.45, 0.3, -0.5);
-            setScale(network.group, network.materials, sNet);
-            const sCells = Math.min((halfH * 2 * 0.86) / 12, (span * 0.42) / 11);
-            cells.group.position.set(right - 5.0 * sCells, 0, 0);
-            setScale(cells.group, cells.materials, sCells);
+            left = ((r.right - heroRect.left) / w * 2 - 1) * halfW + 0.8;
+            right = halfW - 1.2;
+            bioY = halfH * 0.24; bioH = halfH * 2 * 0.58;
+            modelTop = -halfH * 0.36; modelGap = halfH * 0.13;
         } else {
-            const bottom = (1 - (r.bottom - heroRect.top) / h * 2) * halfH;   // world y of text bottom
-            const top = bottom - 0.4, floor = -halfH + 0.3;
-            const band = top - floor, cy = (top + floor) / 2;
-            setScale(dna.group, dna.materials, (band * 0.62) / dna.length);
-            dna.group.position.set(-halfW * 0.6, cy, 0);
-            setScale(network.group, network.materials, Math.min((halfW * 2 * 0.62) / 20, band * 0.75 / 10));
-            network.group.position.set(-halfW * 0.05, cy, -0.5);
-            const sCells = Math.min(band * 0.9 / 12, (halfW * 2 * 0.4) / 11);
-            setScale(cells.group, cells.materials, sCells);
-            cells.group.position.set(halfW - 5.0 * sCells, cy, 0);
+            const textBottom = (1 - (r.bottom - heroRect.top) / h * 2) * halfH;
+            const band = textBottom - 0.5 + halfH;   // space below the heading
+            left = -halfW + 0.6; right = halfW - 0.6;
+            bioY = textBottom - 0.5 - band * 0.3; bioH = band * 0.5;
+            modelTop = textBottom - 0.5 - band * 0.66; modelGap = band * 0.09;
         }
+        const span = right - left;
+        const sDna = Math.min(bioH / dna.length, span * 0.2 / 6);
+        dna.group.position.set(left + span * 0.09, bioY, 0);
+        setScale(dna.group, dna.materials, sDna);
+        const sNet = Math.min((span * 0.6) / 20, (bioH * 0.84) / 10);
+        network.group.position.set(left + span * 0.46, bioY, -0.5);
+        setScale(network.group, network.materials, sNet);
+        const sCells = Math.min((bioH * 1.04) / 12, (span * 0.34) / 11);
+        cells.group.position.set(right - 5.0 * sCells, bioY, 0);
+        setScale(cells.group, cells.materials, sCells);
+        model.layout({
+            groupX: [dna.group.position.x, network.group.position.x, cells.group.position.x],
+            groupW: span * 0.2, centerX: network.group.position.x,
+            top: modelTop, gap: modelGap, width: span,
+        });
         placeCamera(true);
     }
 
@@ -138,6 +159,52 @@ function init() {
         if (staticMode()) { pickHub(); renderStatic(); }
     });
 
+    // --- Labels tied to the 3D scene ------------------------------------------------
+    const tracked = [];
+    const addLabel = (text, kind, world, level) => {
+        const el = document.createElement('div');
+        el.className = 'hero__lbl hero__lbl--' + kind;
+        el.append(document.createElement('span'));
+        el.firstChild.textContent = text;
+        labelLayer.append(el);
+        tracked.push({ el, kind, world, level });
+    };
+    dna.variants.forEach((v, i) => addLabel(v.text + ' · ' + v.kind, v.kind,
+        (t, out) => dna.variantWorld(i, out), (t) => dna.variantLevel(i, t)));
+    network.labels.forEach((l) => addLabel(l.text, l.kind,
+        (t, out) => network.nodeWorld(l.node, out),
+        (t) => l.kind === 'tf' ? 0.55 + 0.45 * network.nodeLevel[l.node]
+            : Math.max(network.nodeLevel[l.node], network.hlNode[l.node])));
+    cells.labels.forEach((l) => addLabel(l.text, l.kind, l.world, l.level));
+    addLabel('Prediction', 'ml', (t, out) => model.outputWorld(out), () => 0.55 + 0.45 * model.outputLevel());
+
+    const lp = new THREE.Vector3(), lv = new THREE.Vector3(), center = new THREE.Vector3();
+    function placeLabels(t) {
+        const w = hero.clientWidth, h = hero.clientHeight;
+        network.group.getWorldPosition(center).applyMatrix4(camera.matrixWorldInverse);
+        const depthSpan = 4 * network.group.scale.x;
+        for (const L of tracked) {
+            let a = L.level(t);
+            L.world(t, lp);
+            if (L.kind === 'tf' || L.kind === 'gene') {
+                // labels on the far side of the turning network recede
+                lv.copy(lp).applyMatrix4(camera.matrixWorldInverse);
+                a *= 0.5 + 0.5 * Math.min(1, Math.max(0, 0.5 + (lv.z - center.z) / depthSpan));
+            }
+            lp.project(camera);
+            L.el.style.transform = `translate(${((lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px)`;
+            L.el.style.opacity = a.toFixed(3);
+        }
+        model.inputWorld(lp).project(camera);
+        mlTitle.style.transform = `translate(${Math.max(16, (lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h - 34).toFixed(1)}px)`;
+        [dna.group, network.group, cells.group].forEach((g, i) => {
+            g.getWorldPosition(lp).project(camera);
+            const el = scaleEls[i], bw = el.offsetWidth;
+            const x = Math.min(w - 16 - bw, Math.max(16, (lp.x * 0.5 + 0.5) * w - bw / 2));
+            el.style.transform = `translateX(${x.toFixed(1)}px)`;
+        });
+    }
+
     // --- Frame ------------------------------------------------------------------------
     let elapsed = 0;
     let failed = false;
@@ -147,8 +214,10 @@ function init() {
             dna.update(t, time);
             network.update(t, time, instant);
             cells.update(t, time);
+            model.update(t);
             bridges.update(t, dna, network, cells);
             renderer.render(scene, camera);
+            placeLabels(t);
             hero.classList.add('is-live');
         } catch (e) {
             console.error('Hero animation stopped:', e);
@@ -160,7 +229,7 @@ function init() {
 
     const staticMode = () => frozenParam !== null || reducedMq.matches;
     function renderStatic() {
-        const t = frozenParam !== null ? Number(frozenParam) % LOOP : 9.4;   // network afterglow + engaged cells
+        const t = frozenParam !== null ? Number(frozenParam) % LOOP : 10.6;   // network afterglow, engaged cells, model inputs lit
         placeCamera(true);
         draw(t, t, true);
     }
@@ -168,7 +237,7 @@ function init() {
     let raf = 0, last = 0, visible = true;
     function frame(now) {
         raf = requestAnimationFrame(frame);
-        elapsed += Math.min(0.1, (now - last) / 1000);
+        elapsed += Math.max(0, Math.min(0.1, (now - last) / 1000));
         last = now;
         placeCamera(false);
         pickHub();
@@ -212,10 +281,10 @@ function createBackdrop() {
             varying vec2 vUv;
             vec3 pool(vec2 c, vec2 r, vec3 col) { return col * max(0.0, 1.0 - length((vUv - c) / r) / 0.7); }
             void main() {
-                vec3 col = vec3(0.020, 0.043, 0.094)
-                    + pool(vec2(0.40, 0.45), vec2(0.38, 0.55), vec3(0.31, 0.36, 0.84) * 0.13)
-                    + pool(vec2(0.62, 0.55), vec2(0.45, 0.45), vec3(0.18, 0.77, 0.71) * 0.09)
-                    + pool(vec2(0.85, 0.48), vec2(0.35, 0.50), vec3(1.00, 0.44, 0.38) * 0.09);
+                vec3 col = vec3(0.047, 0.086, 0.172)
+                    + pool(vec2(0.18, 0.50), vec2(0.30, 0.60), vec3(0.31, 0.36, 0.84) * 0.20)
+                    + pool(vec2(0.48, 0.50), vec2(0.45, 0.55), vec3(0.18, 0.77, 0.71) * 0.14)
+                    + pool(vec2(0.82, 0.50), vec2(0.32, 0.55), vec3(1.00, 0.44, 0.38) * 0.15);
                 col += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
                 gl_FragColor = vec4(col, 1.0);
             }`,
@@ -239,7 +308,7 @@ function createAmbient(mobile) {
         const z = isNear ? 6 + rand() * 10 : -30 + rand() * 24;
         const spread = isNear ? 1 : 1 + (-z) / 30;
         p.position.set([(rand() - 0.5) * 44 * spread, (rand() - 0.5) * 24 * spread, z], i * 3);
-        c.copy(palette[Math.floor(rand() * palette.length)]).multiplyScalar(isNear ? 0.05 + rand() * 0.05 : 0.08 + rand() * 0.22);
+        c.copy(palette[Math.floor(rand() * palette.length)]).multiplyScalar(isNear ? 0.06 + rand() * 0.06 : 0.12 + rand() * 0.26);
         p.color.set([c.r, c.g, c.b], i * 3);
         p.size[i] = isNear ? 0.25 + rand() * 0.35 : 0.05 + rand() * 0.12;
         p.drift[i] = isNear ? 0.6 : 0.4 + rand() * 0.8;
