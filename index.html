@@ -11,14 +11,18 @@
     <script src="publications.js"></script>
 </head>
 <body>
-    <header class="site-header">
-        <!-- TODO: Upload cover image to assets/images/leadimage4.jpg -->
-        <div class="header-image" style="background-image: url('assets/images/homepage.webp');">
-            <div class="header-overlay">
-                <h1 class="site-title">The Carter Lab</h1>
-            </div>
+    <!-- Animated hero (assets/hero/). Falls back to the static cover image without WebGL. -->
+    <header class="hero">
+        <div class="hero__fallback" style="background-image: url('assets/images/homepage.webp');"></div>
+        <canvas class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__scrim"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Carter Lab</h1>
+            <p class="hero__subtitle">Computational Cancer Genomics</p>
+            <a class="hero__cta" href="#research">Explore Our Research <span aria-hidden="true">→</span></a>
         </div>
     </header>
+    <script type="module" src="assets/hero/hero.js"></script>
 
     <nav class="main-nav">
         <a href="#home">Home</a>
