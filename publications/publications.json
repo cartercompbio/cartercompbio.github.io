@@ -1,7 +1,7 @@
 {
   "2025": [
     {
-      "citation": "Pagadala M, Teerlink C, Jasuja GK, Palnati M, Lynch J, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Seibert TM, Rose BS, Carter H, Pridgen K, Panizzon MS, Hauger RL Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. Nat Comm. May 2;16(1):4104. 2025",
+      "citation": "Pagadala M, Teerlink C, Jasuja GK, Palnati M, Lynch J, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Seibert TM, Rose BS, Carter H, Pridgen K, Panizzon MS, Hauger RL Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. Nat Comm. May 2;16(1):4104. 2025. PMID: 40316537.",
       "journal": "Nat Comm.",
       "labAuthors": ["Carter H"],
       "url": null
@@ -9,31 +9,31 @@
   ],
   "2024": [
     {
-      "citation": "Talwar JV, Klie A, Pagadala MS, Carter H. GRIEVOUS: your command-line general for resolving cross-dataset genotype inconsistencies. Bioinformatics. 2024 Aug;40(8).",
+      "citation": "Talwar JV, Klie A, Pagadala MS, Carter H. GRIEVOUS: your command-line general for resolving cross-dataset genotype inconsistencies. Bioinformatics. 2024 Aug;40(8). PMID: 39078222.",
       "journal": "Bioinformatics",
       "labAuthors": ["Talwar JV", "Klie A", "Pagadala MS", "Carter H"],
       "url": null
     },
     {
-      "citation": "Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. Cell Reports. 2024 Jul 23;43(7).",
+      "citation": "Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. Cell Reports. 2024 Jul 23;43(7). PMID: 38968069.",
       "journal": "Cell Reports",
       "labAuthors": ["Ozturk K"],
       "url": null
     },
     {
-      "citation": "Jado JC, Dow M, Carolino K, Klie A, Fonseca GJ, Ideker T, Carter H, Winzeler EA. In vitro evolution and whole genome analysis to study chemotherapy drug resistance in haploid human cells. Scientific Reports. 2024 Jun 18;14(1):13989.",
+      "citation": "Jado JC, Dow M, Carolino K, Klie A, Fonseca GJ, Ideker T, Carter H, Winzeler EA. In vitro evolution and whole genome analysis to study chemotherapy drug resistance in haploid human cells. Scientific Reports. 2024 Jun 18;14(1):13989. PMID: 38886371.",
       "journal": "Scientific Reports",
       "labAuthors": ["Dow M", "Klie A", "Carter H"],
       "url": null
     },
     {
-      "citation": "Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. Genome Biology. 2024 Apr 2;25(1):82.",
+      "citation": "Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. Genome Biology. 2024 Apr 2;25(1):82. PMID: 38566187.",
       "journal": "Genome Biology",
       "labAuthors": ["Mah CK"],
       "url": null
     },
     {
-      "citation": "Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated germline and somatic features reveal divergent immune pathways driving ICB response. Cancer Immunology Research. 2024 Sep 10.",
+      "citation": "Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated germline and somatic features reveal divergent immune pathways driving ICB response. Cancer Immunology Research. 2024 Sep 10. PMID: 39255339.",
       "journal": "Cancer Immunology Research",
       "labAuthors": ["Sears TJ", "Pagadala MS", "Castro A", "Lee K", "Carter H"],
       "url": null
@@ -41,7 +41,7 @@
   ],
   "2023": [
     {
-      "citation": "Klie A, Laub D, Talwar JV, Stites H, Jores T, Solvason JJ, Farley EK, Carter H. Predictive analyses of regulatory sequences with EUGENe. Nature Computational Science. 2023 Nov;3(11):946-56.",
+      "citation": "Klie A, Laub D, Talwar JV, Stites H, Jores T, Solvason JJ, Farley EK, Carter H. Predictive analyses of regulatory sequences with EUGENe. Nature Computational Science. 2023 Nov;3(11):946-56. PMID: 38177592.",
       "journal": "Nature Computational Science",
       "labAuthors": ["Klie A", "Laub D", "Talwar JV", "Carter H"],
       "url": null
@@ -229,7 +229,7 @@
   ],
   "protocols": [
     {
-      "citation": "Chen K, Ozturk K, Liefeld T, Reich M, Mesirov JP, Carter H, Fraley SI. A phenotypically supervised single-cell analysis protocol to study within-cell-type heterogeneity of cultured mammalian cells. STAR Protocols. 2021 Jun 18;2(2):100561.",
+      "citation": "Chen K, Ozturk K, Liefeld T, Reich M, Mesirov JP, Carter H, Fraley SI. A phenotypically supervised single-cell analysis protocol to study within-cell-type heterogeneity of cultured mammalian cells. STAR Protocols. 2021 Jun 18;2(2):100561. PMID: 34095869.",
       "journal": "STAR Protocols",
       "labAuthors": ["Ozturk K", "Carter H"],
       "url": null
