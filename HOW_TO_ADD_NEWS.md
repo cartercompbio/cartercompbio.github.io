@@ -41,7 +41,7 @@ Edit `latest_news/news_data.json` and add your entry at the top.
 |-------|----------|-------------|
 | `id` | ✅ Yes | Unique identifier (lowercase-with-dashes) |
 | `title` | ✅ Yes | News headline |
-| `date` | ✅ Yes | Date in YYYY-MM-DD format |
+| `date` | ✅ Yes | Date in YYYY-MM-DD format, or YYYY-MM if only the month is known |
 | `dateEnd` | ❌ Optional | End date for events/conferences |
 | `paper` | ❌ Optional | Paper object with title and url |
 | `github` | ❌ Optional | GitHub repository URL |
@@ -51,5 +51,5 @@ Edit `latest_news/news_data.json` and add your entry at the top.
 
 - Add new items at the top of the array
 - Use unique IDs (check existing ones first)
-- Date format: YYYY-MM-DD only
+- Date format: YYYY-MM-DD, or YYYY-MM to show just the month (e.g. "July 2024")
 - News appears on homepage (6 most recent) and archive page
