@@ -5,7 +5,7 @@
   "program": ",             // Optional
   "affiliation": "",                     // Optional
   "interests": ["Interest 1", "..."],    // Recommended
-  "photo": "firstname_lastname.jpg",     // Optional
+  "photo": "ginger_and_spice.jpg",     // Optional
   "radar_data": {                        // Optional
     "labels": ["Moral support", "Drinking Water", "Sleeping", "Airshows", "Fighting each other", "Cuteness", "Sniffing laptops"],
     "values": [10, 3, 8, 1, 8, 10, 9]             // 0-10 scale
