@@ -27,7 +27,7 @@
       "url": null
     },
     {
-      "citation": "Pagadala M, Teerlink C, Jasuja GK, Palnati M, Lynch J, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Seibert TM, Rose BS, Carter H, Pridgen K, Panizzon MS, Hauger RL Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. Nat Comm. May 2;16(1):4104. 2025. PMID: 40316537.",
+      "citation": "Pagadala M, Teerlink C, Jasuja GK, Palnati M, Anglin-Foote T, Chang N, Deka R, Lee KM, Agiri FY, Amariuta T, Seibert TM, Rose BS, Pridgen K, Lynch J, Carter H, Panizzon MS, Hauger RL. Discovery of novel ancestry specific genes for androgens and hypogonadism in Million Veteran Program Men. Nat Comm. May 2;16(1):4104. 2025. PMID: 40316537.",
       "journal": "Nat Comm.",
       "labAuthors": ["Carter H"],
       "url": null
@@ -41,9 +41,9 @@
       "url": null
     },
     {
-      "citation": "Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. Cell Reports. 2024 Jul 23;43(7). PMID: 38968069.",
+      "citation": "Ozturk K, Panwala R, Sheen J, Ford K, Jayne N, Portell A, Zhang DE, Hutter S, Haferlach T, Ideker T, Mali P, Carter H. Interface-guided phenotyping of coding variants in the transcription factor RUNX1. Cell Reports. 2024 Jul 23;43(7). PMID: 38968069.",
       "journal": "Cell Reports",
-      "labAuthors": ["Ozturk K"],
+      "labAuthors": ["Ozturk K", "Carter H"],
       "url": null
     },
     {
@@ -53,13 +53,13 @@
       "url": null
     },
     {
-      "citation": "Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. Genome Biology. 2024 Apr 2;25(1):82. PMID: 38566187.",
+      "citation": "Mah CK, Ahmed N, Lopez NA, Lam DC, Pong A, Monell A, Kern C, Han Y, Prasad G, Cesnik AJ, Lundberg E, Zhu Q, Carter H, Yeo GW. Bento: a toolkit for subcellular analysis of spatial transcriptomics data. Genome Biology. 2024 Apr 2;25(1):82. PMID: 38566187.",
       "journal": "Genome Biology",
-      "labAuthors": ["Mah CK"],
+      "labAuthors": ["Mah CK", "Carter H"],
       "url": null
     },
     {
-      "citation": "Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated germline and somatic features reveal divergent immune pathways driving ICB response. Cancer Immunology Research. 2024 Sep 10. PMID: 39255339.",
+      "citation": "Sears TJ, Pagadala MS, Castro A, Lee K, Kong JH, Tanaka K, Lippman S, Zanetti M, Carter H. Integrated Germline and Somatic Features Reveal Divergent Immune Pathways Driving Response to Immune Checkpoint Blockade. Cancer Immunology Research. 2024 Sep 10. PMID: 39255339.",
       "journal": "Cancer Immunology Research",
       "labAuthors": ["Sears TJ", "Pagadala MS", "Castro A", "Lee K", "Carter H"],
       "url": null
@@ -73,7 +73,7 @@
       "url": null
     },
     {
-      "citation": "Pagadala M, Sears T, Wu VH, Perez-Guijarro E, Kim H, Castro A, Talwar J, Gonzalez-Colin C, Cao S, Schmiedel B, Goudarzi S, Kirani D, Au J, Zhang T, Landi T, Salem RM, Morris GP, Harsimendy H, Patel SP, Alexandrov L, Mesirov JP, Zanetti M, Day CP, Fan CC, Thompson WK, Merlino G, Gutkind SJ, Vijayanand P, Carter H. Germline modifiers of the tumor immune microenvironment implicate drivers of cancer risk and immunotherapy response. Nature Communications. 2023 May 12;14(1):2744. PMID: 37173324.",
+      "citation": "Pagadala M, Sears T, Wu VH, Perez-Guijarro E, Kim H, Castro A, Talwar J, Gonzalez-Colin C, Cao S, Schmiedel B, Goudarzi S, Kirani D, Au J, Zhang T, Landi T, Salem RM, Morris GP, Harismendy O, Patel SP, Alexandrov L, Mesirov JP, Zanetti M, Day CP, Fan CC, Thompson WK, Merlino G, Gutkind JS, Vijayanand P, Carter H. Germline modifiers of the tumor immune microenvironment implicate drivers of cancer risk and immunotherapy response. Nature Communications. 2023 May 12;14(1):2744. PMID: 37173324.",
       "journal": "Nature Communications",
       "labAuthors": ["Pagadala M", "Sears T", "Castro A", "Talwar J", "Kirani D", "Carter H"],
       "url": null
@@ -93,7 +93,7 @@
   ],
   "2022": [
     {
-      "citation": "Castro A, Kaabinejadian S, Hildebrand W, Zanetti M, Carter H. Immunogenic potential of neopeptides depends on parent protein subcellular location. The EMBO Journal. 2022 Dec 15. PMID: 36314681.",
+      "citation": "Castro A, Kaabinejadian S, Yari H, Hildebrand W, Zanetti M, Carter H. Subcellular location of source proteins improves prediction of neoantigens for immunotherapy. The EMBO Journal. 2022 Dec 15. PMID: 36314681.",
       "journal": "The EMBO Journal",
       "labAuthors": ["Castro A", "Carter H"],
       "url": null
@@ -159,13 +159,13 @@
   ],
   "2019": [
     {
-      "citation": "Castro A, Ozturk K, Pyke RM, Xian Su, Zanetti M, Carter H. Elevated neoantigen levels in tumors with somatic mutations to B2M and HLA. BMC Medical Genomics. 2019;12(6):107. PMID: 31345234.",
+      "citation": "Castro A, Ozturk K, Pyke RM, Xian S, Zanetti M, Carter H. Elevated neoantigen levels in tumors with somatic mutations in the HLA-A, HLA-B, HLA-C and B2M genes. BMC Medical Genomics. 2019;12(6):107. PMID: 31345234.",
       "journal": "BMC Medical Genomics",
       "labAuthors": ["Castro A", "Ozturk K", "Pyke RM", "Carter H"],
       "url": null
     },
     {
-      "citation": "Marty R, Gfeller D, Genolet R, Harari A, Carter H. Computational KIR copy number discovery reveals interaction between inhibitory receptor burden and survival. Pacific Symposium on Biocomputing. 2019;24:148-159. PMID: 30864318.",
+      "citation": "Marty R, Genolet R, Harari A, Coukos G, Gfeller D, Carter H. Computational KIR copy number discovery reveals interaction between inhibitory receptor burden and survival. Pacific Symposium on Biocomputing. 2019;24:148-159. PMID: 30864318.",
       "journal": "Pacific Symposium on Biocomputing",
       "labAuthors": ["Carter H"],
       "url": null
@@ -179,13 +179,13 @@
   ],
   "2018": [
     {
-      "citation": "Dow M, Marty R, Tsui B, Alexandrov LB, Nakagawa H, Taniguchi K, Ekihiro S, Harismendy O, Shalapour S, Karin M, Carter H, Font-Burgada J. Integrative genomic analysis of mouse and human hepatocellular carcinoma. Proceedings of the National Academy of Sciences. 2018 Oct 16;115(42). PMID: 30287485.",
+      "citation": "Dow M, Marty R, Tsui B, Alexandrov LB, Nakagawa H, Taniguchi K, Seki E, Harismendy O, Shalapour S, Karin M, Carter H, Font-Burgada J. Integrative genomic analysis of mouse and human hepatocellular carcinoma. Proceedings of the National Academy of Sciences. 2018 Oct 16;115(42). PMID: 30287485.",
       "journal": "Proceedings of the National Academy of Sciences",
       "labAuthors": ["Dow M", "Tsui B", "Carter H"],
       "url": null
     },
     {
-      "citation": "Pyke RM, Thomson WK, Salem RM, Font-Burgada J, Zanetti M, Carter H. Evolutionary pressure against MHC class II binding cancer mutations. Cell. 2018 Oct 4;175(2):416-28. PMID: 30245014.",
+      "citation": "Pyke RM, Thompson WK, Salem RM, Font-Burgada J, Zanetti M, Carter H. Evolutionary pressure against MHC class II binding cancer mutations. Cell. 2018 Oct 4;175(2):416-28. PMID: 30245014.",
       "journal": "Cell",
       "labAuthors": ["Pyke RM", "Carter H"],
       "url": null
@@ -205,7 +205,7 @@
       "url": null
     },
     {
-      "citation": "Carter H, Marty R, Hofree M, Gross A, Jensen J, Fisch K, Wu X, DeBoever C, Van Nostrand E, Song Y, Wheeler E, Kreisberg J, Lippman S, Yeo G, Gutkind S, Ideker T. Interaction landscape of inherited polymorphisms with somatic events in cancer. Cancer Discovery. 2017 Apr 1;7(4):410-23. PMID: 28188128.",
+      "citation": "Carter H, Marty R, Hofree M, Gross A, Jensen J, Fisch K, Wu X, DeBoever C, Van Nostrand E, Song Y, Wheeler E, Kreisberg J, Lippman S, Yeo G, Gutkind JS, Ideker T. Interaction landscape of inherited polymorphisms with somatic events in cancer. Cancer Discovery. 2017 Apr 1;7(4):410-23. PMID: 28188128.",
       "journal": "Cancer Discovery",
       "labAuthors": ["Carter H"],
       "url": null
