@@ -282,6 +282,14 @@ export function createCells({ mobile }) {
     const labels = [
         { text: 'T cell', kind: 'immune', world: below(engagements[0].immune, -0.95), level: (t) => 0.6 + 0.4 * approachOf(engagements[0], t) },
         { text: 'NK cell', kind: 'immune', world: below(engagements[1].immune, -1.05), level: (t) => 0.6 + 0.4 * approachOf(engagements[1], t) },
+        // event labels: shown only while the cytokine release and the cell death play,
+        // pinned just left of the nests (clear background) at the height of the event
+        { text: 'Cytokines', kind: 'cytokine',
+            world: (t, out) => inner.localToWorld(out.set(-3.6, cur[engagements[0].immune].y + 0.3, cur[engagements[0].immune].z)),
+            level: (t) => envelope(t, 9.8, 0.4, 1.4, 0.8) },
+        { text: 'Cell death', kind: 'death',
+            world: (t, out) => inner.localToWorld(out.set(-3.6, cur[target].y + 0.2, cur[target].z)),
+            level: (t) => envelope(t, 10.8, 0.5, 1.6, 1.2) },
     ];
 
     return { group, materials: [sparks.points.material, haze.points.material, mhcPts.points.material], update, signalTarget, labels, samples };

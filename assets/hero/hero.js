@@ -49,7 +49,7 @@ function init() {
     dna.group.rotation.set(0.2, 0, -0.36);
 
     // The model's inputs: data packets from each scale during its phase.
-    const perGroup = mobile ? 6 : 10;
+    const perGroup = mobile ? 5 : 7;
     const genes = network.labels.filter((l) => l.kind === 'gene');
     const model = createModel({
         mobile,
@@ -125,10 +125,13 @@ function init() {
         const sCells = Math.min((bioH * 1.04) / 12, (span * 0.34) / 11);
         cells.group.position.set(right - 5.0 * sCells, bioY, 0);
         setScale(cells.group, cells.materials, sCells);
+        // the model is narrower than the biology: input groups sit close together,
+        // in the same order as the three scales above them
+        const modelX = network.group.position.x;
         model.layout({
-            groupX: [dna.group.position.x, network.group.position.x, cells.group.position.x],
-            groupW: span * 0.2, centerX: network.group.position.x,
-            top: modelTop, gap: modelGap, width: span,
+            groupX: [modelX - span * 0.21, modelX, modelX + span * 0.21],
+            groupW: span * 0.15, centerX: modelX,
+            top: modelTop, gap: modelGap, width: span * 0.75,
         });
         cohort.layout({ centerX: (left + right) / 2, y: cohortY, width: span * 0.9, rowGap: cohortGap, source: model.outputWorld(new THREE.Vector3()) });
         placeCamera(true);

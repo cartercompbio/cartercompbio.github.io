@@ -94,6 +94,8 @@ body {
     --lbl-tf: #5b4bd1;
     --lbl-gene: #0f6f8a;
     --lbl-immune: #1d5fd6;
+    --lbl-cytokine: #0f8f7a;
+    --lbl-death: #c2412f;
     --lbl-ml: #0c162c;
     --lbl-attr: #b7791f;
 }
@@ -122,6 +124,8 @@ body {
     --lbl-tf: #b3a8ff;
     --lbl-gene: #bdf5ff;
     --lbl-immune: #bfeaff;
+    --lbl-cytokine: #9ff5e0;
+    --lbl-death: #ff8a78;
     --lbl-ml: #effcff;
     --lbl-attr: #ffc857;
 }
@@ -212,6 +216,9 @@ body {
 .hero__lbl--tf span { transform: translate(-50%, -165%); font-weight: 600; color: var(--lbl-tf); }
 .hero__lbl--gene span { transform: translate(9px, -50%); font-style: italic; color: var(--lbl-gene); }   /* gene symbols in italics */
 .hero__lbl--immune span { transform: translate(-50%, 0); color: var(--lbl-immune); }
+/* event labels sit to the left of what they name */
+.hero__lbl--cytokine span { transform: translate(-100%, -50%); color: var(--lbl-cytokine); }
+.hero__lbl--death span { transform: translate(-100%, -50%); color: var(--lbl-death); }
 .hero__lbl--ml span { transform: translate(14px, -50%); font-weight: 600; color: var(--lbl-ml); }
 .hero__lbl--attr span { transform: translate(-50%, -100%); font-weight: 600; color: var(--lbl-attr); }
 
@@ -311,7 +318,9 @@ body {
     /* phones: no scale titles; only TF names, variant tags and the prediction stay */
     .hero__scale,
     .hero__lbl--gene,
-    .hero__lbl--immune { display: none; }
+    .hero__lbl--immune,
+    .hero__lbl--cytokine,
+    .hero__lbl--death { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

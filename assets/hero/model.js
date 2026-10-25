@@ -25,8 +25,8 @@ const COL = {
 export function createModel({ mobile, sources }) {
     const rand = rng(31);
     const group = new THREE.Group();
-    const perGroup = mobile ? 6 : 10;
-    const layers = [perGroup * 3, mobile ? 10 : 16, mobile ? 6 : 8, 1];
+    const perGroup = mobile ? 5 : 7;
+    const layers = [perGroup * 3, mobile ? 8 : 12, mobile ? 5 : 6, 1];
     const offsets = [];
     let total = 0;
     layers.forEach((n) => { offsets.push(total); total += n; });
@@ -71,7 +71,7 @@ export function createModel({ mobile, sources }) {
     ribbons.frustumCulled = false;
     group.add(ribbons);
 
-    const nodes = makePoints(total, pointsMaterial());
+    const nodes = makePoints(total, pointsMaterial({ disc: true }));
     group.add(nodes.points);
     const P = Array.from({ length: total }, () => new THREE.Vector3());   // node positions
 
@@ -163,11 +163,11 @@ export function createModel({ mobile, sources }) {
             }
             const back = L < 3 ? envelope(t, BACKWARD[2 - L], 0.2, 0.5, 1.0) * importance[i] : 0;
             const gold = Math.max(back, L === 0 ? explain * importance[i] : 0);
-            const size = L === 3 ? 0.6 : L === 0 ? 0.24 : 0.28;
+            const size = L === 3 ? 1.05 : L === 0 ? 0.58 : 0.66;
             const I = 0.6 + level[i] * (L === 3 ? 1.8 : 1.1) + gold * 0.9;
             tmp.copy(nodeColor(i)).lerp(COL.hot, level[i] * 0.5).lerp(COL.gold, gold);
             nodes.color.set([tmp.r * I, tmp.g * I, tmp.b * I], i * 3);
-            nodes.size[i] = size * (1 + 0.5 * level[i] + 0.4 * gold);
+            nodes.size[i] = size * (1 + 0.2 * level[i] + 0.15 * gold);
         }
         edges.forEach(([L, i, j, seed], e) => {
             const pass = envelope(t, FORWARD[L] - 0.45, 0.3, 0.5, 1.2) * Math.max(level[i], 0.3);

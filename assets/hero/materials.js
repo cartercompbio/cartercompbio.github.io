@@ -67,7 +67,7 @@ const pointVert = /* glsl */`
     }
 `;
 const pointFrag = /* glsl */`
-    uniform float uGain;
+    uniform float uGain, uDisc;
     ${INK}
     varying vec3 vColor;
     varying float vSoft;
@@ -75,15 +75,22 @@ const pointFrag = /* glsl */`
         vec2 d = gl_PointCoord - 0.5;
         float r2 = dot(d, d) * 4.0;
         if (r2 > 1.0) discard;
-        float core = exp(-r2 * mix(18.0, 4.0, vSoft));
-        float halo = exp(-r2 * 3.5) * 0.35;
-        gl_FragColor = inkOut(vColor * (core + halo) * uGain);
+        float shape;
+        if (uDisc > 0.5) {
+            // a solid node with a slightly stronger rim, as in neural-network diagrams
+            float body = 1.0 - smoothstep(0.72, 0.95, r2);
+            shape = body * (0.7 + 0.5 * smoothstep(0.35, 0.8, r2));
+        } else {
+            shape = exp(-r2 * mix(18.0, 4.0, vSoft)) + exp(-r2 * 3.5) * 0.35;   // soft glow
+        }
+        gl_FragColor = inkOut(vColor * shape * uGain);
     }
 `;
 
-export function pointsMaterial() {
+// Glowing points by default; { disc: true } draws solid circular nodes instead.
+export function pointsMaterial({ disc = false } = {}) {
     return new THREE.ShaderMaterial({
-        uniforms: { ...shared, uScale: { value: 1 } },
+        uniforms: { ...shared, uScale: { value: 1 }, uDisc: { value: disc ? 1 : 0 } },
         vertexShader: pointVert,
         fragmentShader: pointFrag,
         ...blending(),
