@@ -7,7 +7,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 100px; /* Offset for sticky nav */
+    scroll-padding-top: var(--nav-offset); /* where a jumped-to section lands */
 }
 
 body {
@@ -17,44 +17,9 @@ body {
     background-color: var(--page-bg);
 }
 
-/* Header */
-.site-header {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-}
-
-.header-image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-color: var(--accent);
-}
-
-.header-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.site-title {
-    color: white;
-    font-size: 4rem;
-    font-weight: 700;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
 /* Site palette, shared with the hero so the whole page reads as one design. */
 :root {
+    --nav-offset: 79px;   /* sticky nav + 20px gap; matches scrollToSection() in navigation.js */
     --page-bg: #f8fafc;
     --ink: #0c162c;
     --text: #2b3a52;
@@ -106,7 +71,6 @@ body {
     background: var(--hero-bg);
 }
 
-.hero__fallback,
 .hero__canvas,
 .hero__scrim {
     position: absolute;
@@ -115,20 +79,12 @@ body {
     height: 100%;
 }
 
-.hero__fallback {
-    background-size: cover;
-    background-position: center;
-    opacity: 0.35;
-    transition: opacity 1.2s ease;
-}
-
 .hero__canvas {
     display: block;
     opacity: 0;
     transition: opacity 1.6s ease;
 }
 
-.hero.is-live .hero__fallback { opacity: 0; }
 .hero.is-live .hero__canvas { opacity: 1; }
 
 .hero__scrim {
@@ -320,7 +276,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .hero__fallback,
     .hero__canvas,
     .hero__annotations,
     .hero__cta,
@@ -410,6 +365,21 @@ body {
     white-space: nowrap;
 }
 
+/* Lab name and logo on the left of the nav (inner pages, which have no hero) */
+.main-nav.main-nav--top .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: auto;
+    padding-left: 0;
+    color: var(--ink);
+    font-weight: 650;
+    font-size: 1.05rem;
+}
+
+.main-nav.main-nav--top .nav-brand:hover { background: none; text-decoration: none; }
+.nav-brand img { width: 28px; height: 28px; }
+
 @media (max-width: 768px) {
     .main-nav.main-nav--top {
         flex-wrap: wrap;
@@ -418,6 +388,10 @@ body {
     }
 
     .main-nav.main-nav--top a { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+
+    .main-nav.main-nav--top .nav-brand { flex-basis: 100%; justify-content: center; margin-right: 0; }
+
+    :root { --nav-offset: 108px; }   /* the nav wraps to two rows */
 }
 
 /* People tabs and lab photos */
@@ -466,7 +440,6 @@ body {
 /* Section styles */
 section {
     margin-bottom: 4rem;
-    scroll-margin-top: 100px; /* Offset for sticky nav when jumping to sections */
 }
 
 .section-title {
@@ -477,6 +450,23 @@ section {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--line);
     padding-bottom: 0.75rem;
+}
+
+/* Title block at the top of inner pages (News, news items, profiles) */
+.page-header {
+    margin: 1rem 0 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.page-header h1 { margin-bottom: 0.25rem; }
+.page-header p { margin: 0; color: var(--muted); }
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    font-weight: 600;
 }
 
 h1 {
@@ -787,7 +777,11 @@ a:hover {
     color: var(--accent);
 }
 
-/* Contact section */
+/* Contact section: at least a screen tall, so as the last section it can still scroll up under the nav */
+.contact-section {
+    min-height: calc(100vh - var(--nav-offset));
+}
+
 .contact-info {
     background-color: var(--surface-alt);
     padding: 2rem;
@@ -816,10 +810,6 @@ a:hover {
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .site-title {
-        font-size: 2.5rem;
-    }
-
     .main-nav {
         text-align: center;
     }
@@ -861,10 +851,6 @@ a:hover {
         padding: 1rem;
     }
 
-    .site-title {
-        font-size: 2rem;
-    }
-
     .person-card img {
         width: 120px;
         height: 120px;
@@ -883,115 +869,6 @@ img[src*="assets/images/people"] {
 /* Software logos should NOT have the grid pattern */
 .software-logo {
     background-image: none !important;
-}
-
-/* Modal styles */
-.person-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.person-modal.active {
-    display: block;
-}
-
-.modal-content {
-    background-color: var(--surface);
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 600px;
-    position: relative;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    animation: modalSlideIn 0.3s ease-out;
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.modal-close {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s;
-    background: none;
-    border: none;
-    line-height: 1;
-}
-
-.modal-close:hover {
-    color: var(--text);
-}
-
-.modal-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--accent);
-}
-
-.modal-header img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #e0e0e0;
-}
-
-.modal-header h2 {
-    color: var(--ink);
-    margin: 0.5rem 0;
-}
-
-.modal-header .position {
-    color: var(--muted);
-    font-style: italic;
-    font-size: 1.1rem;
-}
-
-.modal-body {
-    line-height: 1.8;
-}
-
-.modal-section {
-    margin-bottom: 1.5rem;
-}
-
-.modal-section h3 {
-    color: var(--ink);
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-}
-
-.modal-section p {
-    color: var(--text);
-    margin: 0;
-}
-
-.modal-section a {
-    color: var(--accent);
-    word-break: break-all;
 }
 
 /* Make person cards clickable */

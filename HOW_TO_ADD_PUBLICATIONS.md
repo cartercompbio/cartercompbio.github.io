@@ -28,7 +28,7 @@ Edit `publications/publications.json` and add your publication entry.
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `citation` | ✅ Yes | Full citation text (copy from PubMed/Scholar) |
+| `citation` | ✅ Yes | Full citation text (copy from PubMed/Scholar); a `PMID: 12345678` in it becomes a PubMed link |
 | `journal` | ❌ Optional | Journal name → gets italicized |
 | `labAuthors` | ❌ Optional | Array of lab member names → get bolded |
 | `url` | ❌ Optional | Direct paper link (DOI, PubMed, etc.) |
@@ -65,6 +65,7 @@ Publications grouped by:
 ## Notes
 
 - Citations display as-is, with highlighting applied
+- Include `PMID: <number>` in the citation (PubMed citations already have it): it is linked to `https://pubmed.ncbi.nlm.nih.gov/<number>/` automatically
 - Journal name must match exactly what's in citation text
 - Lab author names must match exactly (including initials)
 - Add to top of year array for most recent first

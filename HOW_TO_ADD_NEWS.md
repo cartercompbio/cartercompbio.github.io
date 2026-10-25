@@ -1,6 +1,6 @@
 # Adding News Items
 
-Edit `latest_news/news_data.json` and add your entry at the top.
+Edit `news/news_data.json` and add your entry.
 
 ## Minimal Example
 
@@ -27,7 +27,7 @@ Edit `latest_news/news_data.json` and add your entry at the top.
     "title": "Full paper title",
     "url": "https://doi.org/..."
   },
-  "github": "https://github.com/carterlab/project",
+  "github": "https://github.com/cartercompbio/project",
   "links": [
     {"type": "Press Release", "url": "https://..."},
     {"type": "Twitter", "url": "https://..."}
@@ -49,7 +49,7 @@ Edit `latest_news/news_data.json` and add your entry at the top.
 
 ## Notes
 
-- Add new items at the top of the array
+- Items are sorted by date automatically, so position in the file doesn't matter (adding at the top keeps it easy to read)
 - Use unique IDs (check existing ones first)
 - Date format: YYYY-MM-DD, or YYYY-MM to show just the month (e.g. "July 2024")
-- News appears on homepage (6 most recent) and archive page
+- News appears on homepage (6 most recent) and the News page (`news/`)

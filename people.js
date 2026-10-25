@@ -143,12 +143,9 @@ function setupPeopleTabs() {
         });
     });
 
-    // a link to People or straight to a tab (e.g. #people-alumni); scroll once images above have loaded
+    // a link straight to a tab (e.g. #people-alumni) opens it; navigation.js scrolls there
     const panelId = location.hash.slice(1);
     if (panelId.startsWith('people-') && document.getElementById(panelId)) showPeopleTab(panelId);
-    if (panelId === 'people' || panelId.startsWith('people-')) {
-        window.addEventListener('load', () => scrollToSection(document.getElementById('people'), 'instant'));
-    }
 }
 
 // Load people when page loads

@@ -11,7 +11,7 @@ Edit `people/profiles/your-name.json` and commit.
 1. Copy `people/profiles/_TEMPLATE.json` to `people/profiles/firstname-lastname.json`
 2. Fill in the fields (see template for structure)
 3. Add photo to `assets/images/people/firstname_lastname.jpg`
-4. Add your ID to `people/index.json` in the `"current"` array
+4. Add your ID to `people/index.json` in the `"current"` array (members are shown in the order listed)
 5. Commit all changes
 
 ## Field Reference
@@ -78,6 +78,8 @@ The People section's **Lab Photos** tab shows the photos listed in `people/photo
 - Profile ID: `firstname-lastname` (hyphens, lowercase)
 - JSON file: `firstname-lastname.json`
 - Photo file: `firstname_lastname.jpg` (underscores, lowercase)
+
+The PI card at the top of Current Team is the profile with ID `hannah-carter`.
 
 ## Troubleshooting
 
