@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Member - Carter Lab</title>
+    <link rel="icon" type="image/png" href="../../assets/images/logo/favicon.png">
     <link rel="stylesheet" href="../../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
@@ -17,7 +18,7 @@
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 2rem;
-            border-bottom: 3px solid #1e748a;
+            border-bottom: 1px solid var(--line);
         }
 
         .member-photo {
@@ -33,26 +34,26 @@
 
         .member-name {
             font-size: 2.5rem;
-            color: #1e748a;
+            color: var(--ink);
             margin-bottom: 0.5rem;
         }
 
         .member-position {
             font-size: 1.3rem;
-            color: #666;
+            color: var(--muted);
             font-style: italic;
             margin-bottom: 0.5rem;
         }
 
         .member-program {
             font-size: 1.1rem;
-            color: #1e748a;
+            color: var(--accent);
             margin-bottom: 0.5rem;
         }
 
         .member-affiliation {
             font-size: 1.1rem;
-            color: #888;
+            color: var(--muted);
         }
 
         .member-links {
@@ -65,7 +66,7 @@
         .member-link-badge {
             display: inline-block;
             padding: 0.5rem 1rem;
-            background: #1e748a;
+            background: var(--accent);
             color: white;
             text-decoration: none;
             border-radius: 4px;
@@ -75,21 +76,23 @@
         }
 
         .member-link-badge:hover {
-            background: #26a3ba;
+            background: var(--accent-strong);
             transform: translateY(-2px);
             text-decoration: none;
         }
 
         .member-section {
-            background: #f8f9fa;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
             padding: 2rem;
             border-radius: 8px;
             margin-bottom: 2rem;
         }
 
         .member-section h2 {
-            color: #1e748a;
-            font-size: 1.8rem;
+            margin-top: 0;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -110,7 +113,7 @@
 
         .member-section li:before {
             content: "▸";
-            color: #1e748a;
+            color: var(--accent);
             font-weight: bold;
             position: absolute;
             left: 0;
@@ -119,13 +122,13 @@
         .member-bio {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #333;
+            color: var(--text);
         }
 
         .member-contact {
             text-align: center;
             padding: 1.5rem;
-            background: #1e748a;
+            background: var(--accent);
             color: white;
             border-radius: 8px;
         }
@@ -141,26 +144,10 @@
             text-decoration: underline;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: #1e748a;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .back-link:before {
-            content: "← ";
-        }
-
         .loading {
             text-align: center;
             padding: 4rem;
-            color: #666;
+            color: var(--muted);
         }
 
         .error {
@@ -183,26 +170,26 @@
     </style>
 </head>
 <body>
-    <header class="site-header" style="height: 200px;">
-        <div class="header-image" style="background-image: url('../../assets/images/homepage.webp'); height: 200px;">
-            <div class="header-overlay">
-                <h1 class="site-title" style="font-size: 2.5rem;">Carter Lab</h1>
+    <nav class="main-nav main-nav--top">
+        <a class="nav-brand" href="../../"><img src="../../assets/images/logo/favicon.png" alt=""> Carter Lab</a>
+        <a href="../../#home">Home</a>
+        <a href="../../#research">Research</a>
+        <div class="nav-item has-menu">
+            <a href="../../#people" aria-haspopup="true">People</a>
+            <div class="nav-menu">
+                <a href="../../#people-current">Current Team</a>
+                <a href="../../#people-alumni">Alumni</a>
+                <a href="../../#people-photos">Lab Photos</a>
             </div>
         </div>
-    </header>
-
-    <nav class="main-nav">
-        <a href="../../index.html#home">Home</a>
-        <a href="../../index.html#research">Research</a>
-        <a href="../../index.html#people">People</a>
-        <a href="../../index.html#software">Software</a>
-        <a href="../../index.html#publications">Publications</a>
-        <a href="../../index.html#contact">Contact</a>
+        <a href="../../#software">Software</a>
+        <a href="../../#publications">Publications</a>
+        <a href="../../#contact">Contact</a>
     </nav>
 
     <div class="container">
         <div class="member-detail">
-            <a href="../../#people-current" class="back-link" id="back-link">Back to People</a>
+            <a href="../../#people-current" class="back-link" id="back-link">← Back to People</a>
 
             <div id="member-content">
                 <div class="loading">Loading member information...</div>
@@ -357,13 +344,13 @@
                                 label: member.name,
                                 data: member.radar_data.values,
                                 fill: true,
-                                backgroundColor: 'rgba(30, 116, 138, 0.2)',
-                                borderColor: 'rgba(30, 116, 138, 1)',
+                                backgroundColor: 'rgba(19, 120, 143, 0.2)',
+                                borderColor: 'rgba(19, 120, 143, 1)',
                                 borderWidth: 2,
-                                pointBackgroundColor: 'rgba(30, 116, 138, 1)',
+                                pointBackgroundColor: 'rgba(19, 120, 143, 1)',
                                 pointBorderColor: '#fff',
                                 pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: 'rgba(30, 116, 138, 1)'
+                                pointHoverBorderColor: 'rgba(19, 120, 143, 1)'
                             }]
                         },
                         options: {

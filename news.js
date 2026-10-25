@@ -1,7 +1,7 @@
 // Load and display news from unified JSON data file
 async function loadNews() {
     try {
-        const response = await fetch('latest_news/news_data.json');
+        const response = await fetch('news/news_data.json');
         const newsItems = await response.json();
 
         // Sort by date (newest first)
@@ -16,8 +16,6 @@ async function loadNews() {
 
     } catch (error) {
         console.error('Error loading news:', error);
-        // Fallback to hardcoded news if JSON fails to load
-        displayFallbackNews();
     }
 }
 
@@ -40,7 +38,7 @@ function displayNews(newsItems) {
 
         // Create link to detail page using ID
         const link = document.createElement('a');
-        link.href = `latest_news/detail/index.html?id=${item.id}`;
+        link.href = `news/item/?id=${item.id}`;
         link.textContent = item.title;
         link.className = 'news-link';
 
@@ -56,50 +54,6 @@ function formatNewsDate(item) {
         return `${formatNewsDateString(item.date, 'short')} - ${formatNewsDateString(item.dateEnd, 'short')}`;
     }
     return formatNewsDateString(item.date, 'long');
-}
-
-function formatDate(dateStr) {
-    // Return the date as-is if it contains a range
-    if (dateStr.includes('→')) {
-        return dateStr;
-    }
-
-    // Otherwise parse and format nicely
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return dateStr;
-
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-function displayFallbackNews() {
-    // This is the current hardcoded news (as fallback)
-    const fallbackNews = [
-        { date: "July 30, 2024", content: "GRIEVOUS now published in Bioinformatics!" },
-        { date: "July 23, 2024", content: "RUNX1 now published in Cell Reports!" },
-        { date: "November 16, 2023", content: "EUGENe now published in Nature Computation Science!" },
-        { date: "November 3, 2023", content: "Clarence Mah successfully defends his thesis!" },
-        { date: "December 1, 2022", content: "Kivilcim Ozturk successfully defends her thesis and graduates from the Carter Lab. Congratulations Dr. Ozturk!" },
-        { date: "July 10-14, 2022", content: "Kivil and Meghana give talks at ISMB 2022, Madison, WI." }
-    ];
-
-    const newsGrid = document.querySelector('.news-grid');
-    if (!newsGrid) return;
-
-    newsGrid.innerHTML = '';
-
-    fallbackNews.forEach(item => {
-        const newsDiv = document.createElement('div');
-        newsDiv.className = 'news-item';
-        newsDiv.innerHTML = `
-            <div class="news-date">${item.date}</div>
-            <div class="news-content">${item.content}</div>
-        `;
-        newsGrid.appendChild(newsDiv);
-    });
 }
 
 // Load news when page loads

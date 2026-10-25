@@ -25,6 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Arriving from another page (e.g. ../#research): the browser's own jump happens before the
+// news, people and publications content loads, so scroll again once the page has loaded
+window.addEventListener('load', () => {
+    const id = location.hash.slice(1);
+    const target = document.getElementById(id.startsWith('people-') ? 'people' : id);
+    if (target) scrollToSection(target, 'instant');
+});
+
 /**
  * Scroll so the section sits just below the sticky nav
  */

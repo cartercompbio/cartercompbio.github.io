@@ -36,9 +36,8 @@
         <a href="#contact">Contact</a>
     </nav>
 
-    <!-- Animated hero (assets/hero/). Falls back to the static cover image without WebGL. -->
+    <!-- Animated hero (assets/hero/). Without WebGL it stays a plain background behind the logo and title. -->
     <header class="hero">
-        <div class="hero__fallback" style="background-image: url('assets/images/homepage.webp');"></div>
         <canvas class="hero__canvas" aria-hidden="true"></canvas>
         <div class="hero__scrim"></div>
         <div class="hero__annotations" aria-hidden="true">
@@ -72,10 +71,10 @@
         <section id="news" class="news-section">
             <h2 class="section-title">Latest News</h2>
             <div class="news-grid">
-                <!-- News items loaded dynamically from CSV via news.js -->
+                <!-- Latest news items loaded from news/news_data.json by news.js -->
             </div>
             <div class="view-all-news">
-                <a href="latest_news/archive.html" class="view-all-button">View All News →</a>
+                <a href="news/" class="view-all-button">View All News →</a>
             </div>
         </section>
 
@@ -86,7 +85,6 @@
             <div class="research-area">
                 <div class="research-content">
                     <div class="research-image">
-                        <!-- TODO: Upload image to assets/images/research1.png -->
                         <img src="assets/images/research_immune_trait.png" alt="Genetic determinants research" />
                     </div>
                     <div class="research-text">
@@ -108,7 +106,6 @@
                         <p>Cancer develops on an individual's unique genetic background. While some inherited mutations are known to predispose individuals to developing tumors, little is known about the effects of such inherited genetic variation on the evolution of the tumor genome. We are working to uncover new regions of the genome that influence the probability that certain mutations will occur during tumor development. We previously described multiple loci that influence mutation rates of known cancer genes and the site at which a tumor will occur.</p>
                     </div>
                     <div class="research-image">
-                        <!-- TODO: Upload image to assets/images/research2.png -->
                         <img src="assets/images/research_germline_interaction.png" alt="Inherited genome interactions" />
                     </div>
                 </div>
@@ -117,7 +114,6 @@
             <div class="research-area">
                 <div class="research-content">
                     <div class="research-image">
-                        <!-- TODO: Upload image to assets/images/research3.png -->
                         <img src="assets/images/research_cancer_drivers.png" alt="Cancer drivers research" />
                     </div>
                     <div class="research-text">
@@ -164,7 +160,6 @@
 
             <div class="software-grid">
                 <div class="software-card">
-                    <!-- TODO: Upload image to assets/images/software/bento.png -->
                     <img src="assets/images/software/bento.png" alt="Bento" class="software-logo" />
                     <h3>Bento</h3>
                     <p>A Python toolkit for subcellular analysis of spatial transcriptomics data</p>
@@ -176,7 +171,6 @@
                 </div>
 
                 <div class="software-card">
-                    <!-- TODO: Upload image to assets/images/software/grievous.png -->
                     <img src="assets/images/software/grievous.png" alt="GRIEVOUS" class="software-logo" />
                     <h3>GRIEVOUS</h3>
                     <p>Generalized Realignment of Innocuous and Essential Variants Otherwise Utilized as Skewed</p>
@@ -188,7 +182,6 @@
                 </div>
 
                 <div class="software-card">
-                    <!-- TODO: Upload image to assets/images/software/eugene.png -->
                     <img src="assets/images/software/eugene.png" alt="EUGENe" class="software-logo" />
                     <h3>EUGENe</h3>
                     <p>Elucidating the Utility of Genomic Elements with Neural Nets</p>
@@ -200,7 +193,6 @@
                 </div>
 
                 <div class="software-card">
-                    <!-- TODO: Upload image to assets/images/software/genvarloader.png -->
                     <img src="assets/images/software/genvarloader.png" alt="GenVarLoader" class="software-logo" />
                     <h3>GenVarLoader</h3>
                     <p>Pipeline for efficient genomic data processing</p>

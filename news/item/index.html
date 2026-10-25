@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">News - Carter Lab</title>
+    <link rel="icon" type="image/png" href="../../assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .news-page {
+            max-width: 800px;
+        }
+        .item-date {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .item-section {
+            margin: 2rem 0;
+        }
+        .item-section h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.3rem;
+        }
+        .paper-link, .github-link {
+            display: block;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            color: inherit;
+            transition: box-shadow 0.3s ease;
+        }
+        .paper-link:hover, .github-link:hover {
+            box-shadow: var(--shadow-hover);
+            text-decoration: none;
+        }
+        .link-title {
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.35rem;
+        }
+        .link-url {
+            font-size: 0.9rem;
+            color: var(--muted);
+            word-break: break-all;
+        }
+        .additional-links {
+            list-style: none;
+            padding: 0;
+        }
+        .additional-links li {
+            margin: 0.5rem 0;
+        }
+    </style>
+    <script src="../../news-dates.js"></script>
+    <script>
+        // Load news data and populate page
+        async function loadNewsDetail() {
+            // Get news ID from URL
+            const params = new URLSearchParams(window.location.search);
+            const newsId = params.get('id');
+
+            if (!newsId) {
+                document.getElementById('news-title').textContent = 'News item not found.';
+                return;
+            }
+
+            try {
+                const response = await fetch('../news_data.json');
+                const newsData = await response.json();
+                const newsItem = newsData.find(item => item.id === newsId);
+
+                if (!newsItem) {
+                    document.getElementById('news-title').textContent = 'News item not found.';
+                    return;
+                }
+
+                // Populate page
+                document.getElementById('page-title').textContent = `${newsItem.title} - Carter Lab`;
+                document.getElementById('news-title').textContent = newsItem.title;
+                document.getElementById('news-date').textContent = formatDate(newsItem);
+
+                // Paper section
+                if (newsItem.paper) {
+                    document.getElementById('paper-section').style.display = 'block';
+                    const paperLink = document.getElementById('paper-link');
+                    paperLink.href = newsItem.paper.url;
+                    document.getElementById('paper-title').textContent = newsItem.paper.title;
+                    document.getElementById('paper-url').textContent = newsItem.paper.url;
+                }
+
+                // GitHub section
+                if (newsItem.github) {
+                    document.getElementById('github-section').style.display = 'block';
+                    const githubLink = document.getElementById('github-link');
+                    githubLink.href = newsItem.github;
+                    document.getElementById('github-url').textContent = newsItem.github;
+                }
+
+                // Additional links
+                if (newsItem.links && newsItem.links.length > 0) {
+                    document.getElementById('links-section').style.display = 'block';
+                    const linksList = document.getElementById('links-list');
+                    newsItem.links.forEach(link => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.textContent = `${link.type}: ${link.url}`;
+                        a.target = '_blank';
+                        li.appendChild(a);
+                        linksList.appendChild(li);
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error loading news:', error);
+                document.getElementById('news-title').textContent = 'Error loading news item.';
+            }
+        }
+
+        function formatDate(newsItem) {
+            if (newsItem.dateEnd) {
+                return `${formatNewsDateString(newsItem.date, 'long')} - ${formatNewsDateString(newsItem.dateEnd, 'long')}`;
+            }
+            return formatNewsDateString(newsItem.date, 'long');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadNewsDetail);
+    </script>
+</head>
+<body>
+    <nav class="main-nav main-nav--top">
+        <a class="nav-brand" href="../../"><img src="../../assets/images/logo/favicon.png" alt=""> Carter Lab</a>
+        <a href="../../#home">Home</a>
+        <a href="../../#research">Research</a>
+        <div class="nav-item has-menu">
+            <a href="../../#people" aria-haspopup="true">People</a>
+            <div class="nav-menu">
+                <a href="../../#people-current">Current Team</a>
+                <a href="../../#people-alumni">Alumni</a>
+                <a href="../../#people-photos">Lab Photos</a>
+            </div>
+        </div>
+        <a href="../../#software">Software</a>
+        <a href="../../#publications">Publications</a>
+        <a href="../../#contact">Contact</a>
+    </nav>
+
+    <main class="container news-page">
+        <a href="../" class="back-link">← Back to News</a>
+
+        <div class="page-header">
+            <h1 id="news-title">Loading...</h1>
+            <div class="item-date" id="news-date"></div>
+        </div>
+
+        <div id="paper-section" class="item-section" style="display: none;">
+            <h2>Paper</h2>
+            <a id="paper-link" class="paper-link" href="#" target="_blank">
+                <div class="link-title" id="paper-title"></div>
+                <div class="link-url" id="paper-url"></div>
+            </a>
+        </div>
+
+        <div id="github-section" class="item-section" style="display: none;">
+            <h2>GitHub Repository</h2>
+            <a id="github-link" class="github-link" href="#" target="_blank">
+                <div class="link-title">View on GitHub</div>
+                <div class="link-url" id="github-url"></div>
+            </a>
+        </div>
+
+        <div id="links-section" class="item-section" style="display: none;">
+            <h2>Additional Links</h2>
+            <ul id="links-list" class="additional-links"></ul>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Carter Lab, UC San Diego. All rights reserved.</p>
+    </footer>
+</body>
+</html>
