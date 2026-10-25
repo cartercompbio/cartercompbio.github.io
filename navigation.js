@@ -19,18 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (targetSection) {
-                // Get the height of the sticky nav
-                const navHeight = document.querySelector('.main-nav').offsetHeight;
-
-                // Calculate position with offset
-                const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-
-                // Smooth scroll to position
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                scrollToSection(targetSection);
             }
         });
     });
 });
+
+/**
+ * Scroll so the section sits just below the sticky nav
+ */
+function scrollToSection(section, behavior = 'smooth') {
+    const navHeight = document.querySelector('.main-nav').offsetHeight;
+    const targetPosition = section.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+    window.scrollTo({ top: targetPosition, behavior });
+}

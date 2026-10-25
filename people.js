@@ -126,6 +126,8 @@ function showPeopleTab(panelId) {
         tab.tabIndex = selected ? 0 : -1;
         document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
     });
+    // keep the open tab in the URL (no new history entry), so refreshing or sharing keeps it
+    history.replaceState(null, '', '#' + panelId);
 }
 
 function setupPeopleTabs() {
@@ -141,11 +143,11 @@ function setupPeopleTabs() {
         });
     });
 
-    // a link straight to a tab (e.g. index.html#people-alumni); scroll once images above have loaded
+    // a link to People or straight to a tab (e.g. #people-alumni); scroll once images above have loaded
     const panelId = location.hash.slice(1);
-    if (panelId.startsWith('people-') && document.getElementById(panelId)) {
-        showPeopleTab(panelId);
-        window.addEventListener('load', () => document.getElementById('people').scrollIntoView());
+    if (panelId.startsWith('people-') && document.getElementById(panelId)) showPeopleTab(panelId);
+    if (panelId === 'people' || panelId.startsWith('people-')) {
+        window.addEventListener('load', () => scrollToSection(document.getElementById('people'), 'instant'));
     }
 }
 

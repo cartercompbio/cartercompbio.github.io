@@ -202,7 +202,7 @@
 
     <div class="container">
         <div class="member-detail">
-            <a href="../../index.html#people" class="back-link" id="back-link">Back to People</a>
+            <a href="../../#people-current" class="back-link" id="back-link">Back to People</a>
 
             <div id="member-content">
                 <div class="loading">Loading member information...</div>
@@ -243,7 +243,7 @@
                     .then(r => r.json())
                     .then(index => {
                         if (index.alumni.includes(memberId)) {
-                            document.getElementById('back-link').href = '../../index.html#people-alumni';
+                            document.getElementById('back-link').href = '../../#people-alumni';
                         }
                     })
                     .catch(() => {});
