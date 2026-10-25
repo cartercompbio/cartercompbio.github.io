@@ -42,7 +42,6 @@ export function createCohort({ mobile, light, layer }) {
     const rings = GROUPS.map(() => make('hero__ring', ''));
     const title = make('hero__cohort-title', '');
     title.textContent = 'Patients';
-    title.style.setProperty('--dot', 'var(--dot-patients)');
     const tag = make('hero__therapy-tag', '');
     tag.textContent = 'Therapeutics';
 

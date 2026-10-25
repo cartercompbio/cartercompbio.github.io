@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { pointsMaterial, linesMaterial, makePoints } from './materials.js';
+import { theme, pointsMaterial, linesMaterial, makePoints } from './materials.js';
 import { envelope, rng } from './timeline.js';
 
 // A machine-learning model drawn as a flat, layered neural network beneath the biology.
@@ -36,10 +36,10 @@ export function createModel({ mobile, sources }) {
         return L === 0 ? COL.groups[Math.floor(i / perGroup)] : L === 3 ? COL.output : COL.hidden[L - 1];
     };
 
-    // sparse connections: each node feeds a few nodes of the next layer, nearest first
+    // sparse connections: each node feeds two nodes of the next layer, nearest first
     const edges = [];   // [layer, from, to, seed]
     for (let L = 0; L < layers.length - 1; L++) {
-        const n = layers[L], m = layers[L + 1], fan = Math.min(m, 3);
+        const n = layers[L], m = layers[L + 1], fan = Math.min(m, 2);
         for (let i = 0; i < n; i++) {
             const near = Math.round((i / Math.max(1, n - 1)) * (m - 1));
             const picks = new Set([near]);
@@ -59,14 +59,17 @@ export function createModel({ mobile, sources }) {
         edges.forEach(([l, a, b]) => { if (l === L - 1) importance[b] = Math.max(importance[b], importance[a] * (0.75 + rand() * 0.25)); });
     }
 
-    const linePos = new Float32Array(edges.length * 6);
-    const lineCol = new Float32Array(edges.length * 6);
-    const lineGeom = new THREE.BufferGeometry();
-    lineGeom.setAttribute('position', new THREE.BufferAttribute(linePos, 3));
-    lineGeom.setAttribute('color', new THREE.BufferAttribute(lineCol, 3));
-    const lines = new THREE.LineSegments(lineGeom, linesMaterial());
-    lines.frustumCulled = false;
-    group.add(lines);
+    // Connections as thin flat ribbons (WebGL lines are always 1 px): a quad per edge.
+    const ribbonPos = new Float32Array(edges.length * 12);
+    const ribbonCol = new Float32Array(edges.length * 12);
+    const ribbonGeom = new THREE.BufferGeometry();
+    ribbonGeom.setAttribute('position', new THREE.BufferAttribute(ribbonPos, 3));
+    ribbonGeom.setAttribute('color', new THREE.BufferAttribute(ribbonCol, 3));
+    ribbonGeom.setIndex(edges.flatMap((_, e) => [e * 4, e * 4 + 1, e * 4 + 2, e * 4 + 2, e * 4 + 1, e * 4 + 3]));
+    const ribbons = new THREE.Mesh(ribbonGeom, linesMaterial());
+    ribbons.material.side = THREE.DoubleSide;
+    ribbons.frustumCulled = false;
+    group.add(ribbons);
 
     const nodes = makePoints(total, pointsMaterial());
     group.add(nodes.points);
@@ -117,11 +120,17 @@ export function createModel({ mobile, sources }) {
         row(3, centerX, 0);
         titleAnchor.set(centerX + width * 0.26, top - gap * 1.5, 0);   // right of the hidden layers
         P.forEach((p, i) => nodes.position.set([p.x, p.y, 0], i * 3));
-        edges.forEach(([, a, b], e) => linePos.set([P[a].x, P[a].y, 0, P[b].x, P[b].y, 0], e * 6));
+        const hw = unit * 0.035;   // half the ribbon width, about 2 px on a laptop screen
+        edges.forEach(([, a, b], e) => {
+            const dx = P[b].x - P[a].x, dy = P[b].y - P[a].y, len = Math.hypot(dx, dy) || 1;
+            const nx = (-dy / len) * hw, ny = (dx / len) * hw;
+            ribbonPos.set([P[a].x + nx, P[a].y + ny, 0, P[a].x - nx, P[a].y - ny, 0,
+                P[b].x + nx, P[b].y + ny, 0, P[b].x - nx, P[b].y - ny, 0], e * 12);
+        });
         for (let i = 0; i < perGroup * 3; i++) {
             for (let k = 0; k < BAR; k++) bars.position.set([P[i].x, P[i].y + gap * (0.25 + k * 0.15), 0], (i * BAR + k) * 3);
         }
-        lineGeom.attributes.position.needsUpdate = true;
+        ribbonGeom.attributes.position.needsUpdate = true;
         nodes.points.geometry.attributes.position.needsUpdate = true;
         bars.points.geometry.attributes.position.needsUpdate = true;
         for (const m of [nodes, parts, bars]) m.points.material.uniforms.uScale.value = unit;
@@ -165,8 +174,9 @@ export function createModel({ mobile, sources }) {
             const back = envelope(t, BACKWARD[2 - L] - 0.35, 0.2, 0.5, 1.0) * (importance[i] > 0.55 ? 1 : 0);
             const glint = Math.pow(Math.max(0, Math.sin(time * 1.7 + seed * 40)), 24) * 0.35;   // idle "training" shimmer
             const I = 0.13 + glint + pass * 0.6 + back * 0.5;
-            tmp.copy(nodeColor(i)).lerp(nodeColor(j), 0.5).lerp(COL.hot, pass * 0.6).lerp(COL.gold, back);
-            lineCol.set([tmp.r * I, tmp.g * I, tmp.b * I, tmp.r * I, tmp.g * I, tmp.b * I], e * 6);
+            // on white, the forward pass deepens a connection's own colour rather than whitening it
+            tmp.copy(nodeColor(i)).lerp(nodeColor(j), 0.5).lerp(COL.hot, theme.light ? 0 : pass * 0.6).lerp(COL.gold, back);
+            for (let k = 0; k < 4; k++) ribbonCol.set([tmp.r * I, tmp.g * I, tmp.b * I], e * 12 + k * 3);
         });
 
         o = 0;
@@ -222,7 +232,7 @@ export function createModel({ mobile, sources }) {
             }
         }
 
-        lineGeom.attributes.color.needsUpdate = true;
+        ribbonGeom.attributes.color.needsUpdate = true;
         for (const pts of [nodes, parts, bars]) {
             const g = pts.points.geometry;
             g.attributes.color.needsUpdate = g.attributes.size.needsUpdate = true;
