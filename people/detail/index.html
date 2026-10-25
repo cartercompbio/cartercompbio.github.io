@@ -267,6 +267,18 @@
                     `;
                 }
 
+                // Positions section
+                if (member.positions && member.positions.length > 0) {
+                    html += `
+                        <div class="member-section">
+                            <h2>💼 Positions</h2>
+                            <ul>
+                                ${member.positions.map(position => `<li>${position}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
                 // Interests section
                 if (member.interests && member.interests.length > 0) {
                     html += `
