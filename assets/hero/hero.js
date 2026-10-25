@@ -2,8 +2,8 @@
 // Genetic variation (helix) -> regulatory network -> tumour/immune microenvironment,
 // with a machine-learning model beneath that integrates and explains, and patients who are
 // stratified and treated, choreographed on a 24 s loop (see timeline.js). Illustrative research themes, not a causal model.
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { shared, theme, pointsMaterial, makePoints } from './materials.js';
+import * as THREE from 'three';
+import { shared, pointsMaterial, makePoints } from './materials.js';
 import { LOOP, envelope, rng, smoothstep } from './timeline.js';
 import { createDNA } from './dna.js';
 import { createNetwork } from './network.js';
@@ -30,9 +30,6 @@ function init() {
     } catch (e) {
         return;   // no WebGL: the static fallback image stays in place
     }
-    // light theme unless the page asked for dark (see the script in index.html's head)
-    theme.light = !document.documentElement.classList.contains('theme-dark');
-    shared.uLight.value = theme.light ? 1 : 0;
     const labelLayer = hero.querySelector('.hero__labels');
     const scaleEls = [...hero.querySelectorAll('.hero__scale')];
     const mlTitle = hero.querySelector('.hero__ml-title');
@@ -41,7 +38,7 @@ function init() {
     // ?hero-t=9.5 freezes the loop at that second (handy for reviewing a single beat).
     const frozenParam = new URLSearchParams(location.search).get('hero-t');
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75));
-    renderer.setClearColor(theme.light ? 0xf8fafc : 0x0c162c, 1);
+    renderer.setClearColor(0xf8fafc, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.5, 200);
@@ -64,8 +61,8 @@ function init() {
         ],
     });
     scene.add(model.group);
-    const cohort = createCohort({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
-    const outputs = createOutputs({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
+    const cohort = createCohort({ mobile, layer: hero.querySelector('.hero__cohort') });
+    const outputs = createOutputs({ mobile, layer: hero.querySelector('.hero__cohort') });
     const outputAnchor = new THREE.Vector3();
     // Section titles fade out as their part of the loop finishes, and return before it restarts.
     const titleFades = [
@@ -312,27 +309,22 @@ function init() {
     refresh();
 }
 
-// Full-screen backdrop: deep navy with soft pools of light behind each scale, dithered
+// Full-screen backdrop: near-white with faint tinted pools behind each scale, dithered
 // to avoid banding. Drawn first, ignoring the camera.
 function createBackdrop() {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
         vertexShader: /* glsl */`
             varying vec2 vUv;
             void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
-        uniforms: { uLight: shared.uLight },
         fragmentShader: /* glsl */`
-            uniform float uLight;
             varying vec2 vUv;
             float pool(vec2 c, vec2 r) { return max(0.0, 1.0 - length((vUv - c) / r) / 0.7); }
             void main() {
                 float a = pool(vec2(0.18, 0.50), vec2(0.30, 0.60));
                 float b = pool(vec2(0.48, 0.50), vec2(0.45, 0.55));
                 float c = pool(vec2(0.82, 0.50), vec2(0.32, 0.55));
-                vec3 dark = vec3(0.047, 0.086, 0.172) + vec3(0.31, 0.36, 0.84) * 0.20 * a
-                    + vec3(0.18, 0.77, 0.71) * 0.14 * b + vec3(1.00, 0.44, 0.38) * 0.15 * c;
-                vec3 light = vec3(0.973, 0.98, 0.988) - vec3(0.05, 0.04, 0.0) * a
+                vec3 col = vec3(0.973, 0.98, 0.988) - vec3(0.05, 0.04, 0.0) * a
                     - vec3(0.05, 0.0, 0.015) * b - vec3(0.0, 0.04, 0.045) * c;
-                vec3 col = mix(dark, light, uLight);
                 col += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
                 gl_FragColor = vec4(col, 1.0);
             }`,

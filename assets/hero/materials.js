@@ -1,26 +1,13 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
 
-// Theme, set by hero.js before any material is made. Dark: pure additive light over a
-// navy backdrop. Light: ordinary alpha blending over white, colours turned to ink.
-export const theme = { light: false };
-const additive = {
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.CustomBlending,
-    blendSrc: THREE.OneFactor,
-    blendDst: THREE.OneFactor,
-    blendSrcAlpha: THREE.ZeroFactor,
-    blendDstAlpha: THREE.OneFactor,
-};
-const blending = () => (theme.light ? { transparent: true, depthWrite: false, blending: THREE.NormalBlending } : additive);
+// Everything is drawn with ordinary alpha blending over the white backdrop.
+const blending = () => ({ transparent: true, depthWrite: false, blending: THREE.NormalBlending });
 
-// Every fragment shader ends in inkOut(): in the dark theme the colour is added as light;
-// in the light theme its hue is deepened (near-whites become navy) and its brightness
-// becomes opacity, so the same scene reads as ink on paper.
+// Every fragment shader ends in inkOut(): colours are authored as light (brightness baked
+// in); inkOut deepens the hue (near-whites become navy) and turns brightness into
+// opacity, so the scene reads as ink on paper.
 const INK = /* glsl */`
-    uniform float uLight;
     vec4 inkOut(vec3 c) {
-        if (uLight < 0.5) return vec4(c, 1.0);
         float I = max(max(c.r, c.g), c.b);
         vec3 hue = c / max(I, 1e-4);
         vec3 ink = pow(hue, vec3(1.35)) * 0.82;
@@ -31,7 +18,6 @@ const INK = /* glsl */`
 
 // Shared uniforms: one object, referenced by every material, updated once per frame.
 export const shared = {
-    uLight: { value: 0 },
     uTime: { value: 0 },
     uPixelRatio: { value: 1 },
     uViewHeight: { value: 800 },
@@ -101,7 +87,7 @@ export function pointsMaterial({ shape = 'glow' } = {}) {
     });
 }
 
-// Line segments with per-vertex colour (brightness baked in); thin lines get more weight on white.
+// Line segments with per-vertex colour (brightness baked in), given extra weight so thin lines read on white.
 export function linesMaterial() {
     return new THREE.ShaderMaterial({
         uniforms: { ...shared },
@@ -112,7 +98,7 @@ export function linesMaterial() {
         fragmentShader: /* glsl */`
             ${INK}
             varying vec3 vColor;
-            void main() { gl_FragColor = inkOut(vColor * (uLight > 0.5 ? 2.4 : 1.0)); }`,
+            void main() { gl_FragColor = inkOut(vColor * 2.4); }`,
         ...blending(),
     });
 }
@@ -193,14 +179,13 @@ const cellFrag = /* glsl */`
         float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.2);
         vec3 L = normalize(vec3(-0.4, 0.7, 0.6));
         float diff = max(dot(N, L), 0.0);
-        float spec = pow(max(dot(reflect(-L, N), V), 0.0), 28.0);
         float tex = 0.8 + 0.4 * noise3(vObj * 6.0);
         vec3 col;
         if (vKind > 1.5 && vKind < 2.5) {   // nucleus: a dim inner shell
             col = vColor * (0.05 + 0.45 * fres) * tex * 0.8;
         } else {
             float energy = 0.6 + 0.6 * vState;
-            col = vColor * (0.08 + 0.2 * diff + 1.15 * fres) * tex * energy + vec3(1.0) * spec * 0.22 * (1.0 - uLight);
+            col = vColor * (0.08 + 0.2 * diff + 1.15 * fres) * tex * energy;
         }
         gl_FragColor = inkOut(col * uGain);
     }

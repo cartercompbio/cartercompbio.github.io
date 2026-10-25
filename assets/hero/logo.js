@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
 
 // The lab's cat-helix emblem as a slowly spinning 3D relief. The artwork is mapped onto
 // a dense plane whose vertices are pushed out by a depth map (the silhouette "inflated"

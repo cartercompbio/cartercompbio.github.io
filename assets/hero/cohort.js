@@ -1,15 +1,12 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
 import { envelope, rng, smoothstep } from './timeline.js';
 
 // Patients and therapeutics, drawn as SVG icons in an overlay and placed from world
 // coordinates each frame. The model's prediction stratifies a uniform cohort into three
 // colour-coded groups (16–20 s); a therapy then reaches each group (20–23 s) before the
 // cohort merges back into one row.
-// palettes for the dark and light themes: neutral patients, then the three groups
-export const PALETTES = {
-    dark: { neutral: '#cdd6ff', groups: ['#2ec4b6', '#b3a8ff', '#ff8a78'] },
-    light: { neutral: '#9aa8c0', groups: ['#0f9488', '#6d5fd8', '#e2554a'] },
-};
+// neutral patients, then the three groups
+export const PALETTE = { neutral: '#9aa8c0', groups: ['#0f9488', '#6d5fd8', '#e2554a'] };
 const SCAN = 16.3, SPLIT = [17.2, 18.6], MERGE = [22.6, 23.7];
 const DOSE = 20.0;   // pills set off, one group after another
 
@@ -18,10 +15,9 @@ const PERSON = '<svg viewBox="0 0 20 24" aria-hidden="true"><circle cx="10" cy="
 const PILL = '<svg viewBox="0 0 48 20" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="17" rx="8.5" fill="none" stroke="currentColor" stroke-width="2.4"/>' +
     '<path d="M10 1.5h14v17H10a8.5 8.5 0 0 1 0-17z"/></svg>';
 
-export function createCohort({ mobile, light, layer }) {
-    const palette = PALETTES[light ? 'light' : 'dark'];
-    const NEUTRAL = new THREE.Color(palette.neutral);
-    const GROUPS = palette.groups.map((c) => new THREE.Color(c));
+export function createCohort({ mobile, layer }) {
+    const NEUTRAL = new THREE.Color(PALETTE.neutral);
+    const GROUPS = PALETTE.groups.map((c) => new THREE.Color(c));
     const rand = rng(41);
     const n = mobile ? 12 : 24;
     const make = (cls, html) => {

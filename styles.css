@@ -68,7 +68,7 @@ body {
     --shadow-hover: 0 2px 4px rgba(12, 22, 44, 0.06), 0 10px 24px rgba(12, 22, 44, 0.08);
 }
 
-/* Animated hero (homepage). Light theme by default; ?theme=dark adds .theme-dark to <html>. */
+/* Animated hero (homepage) */
 :root {
     --hero-bg: #f8fafc;
     --hero-bg-rgb: 248, 250, 252;
@@ -96,34 +96,6 @@ body {
     --lbl-immune: #1d5fd6;
     --lbl-ml: #0c162c;
     --lbl-attr: #b7791f;
-}
-
-.theme-dark {
-    --hero-bg: #0c162c;
-    --hero-bg-rgb: 12, 22, 44;
-    --hero-ink: #edf3fb;
-    --hero-sub: #9fdcef;
-    --hero-muted: #8ea3bf;
-    --hero-title-glow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.3);
-    --hero-rule: rgba(255, 255, 255, 0.14);
-    --hero-title-shadow: 0 2px 24px rgba(5, 11, 24, 0.6);
-    --hero-cta-rgb: 79, 227, 255;
-    --hero-cta-ink: #e8f9ff;
-    --hero-icon-filter: drop-shadow(0 0 5px currentColor);
-    --nav-ink: #d6e2f3;
-    --nav-ink-hover: #ffffff;
-    --nav-hover: rgba(255, 255, 255, 0.08);
-    --nav-border: rgba(255, 255, 255, 0.06);
-    --nav-menu-bg: #0c162c;
-    --nav-menu-border: rgba(255, 255, 255, 0.1);
-    --nav-menu-shadow: rgba(0, 0, 0, 0.35);
-    --lbl-germline: #ffc857;
-    --lbl-somatic: #4fe3ff;
-    --lbl-tf: #b3a8ff;
-    --lbl-gene: #bdf5ff;
-    --lbl-immune: #bfeaff;
-    --lbl-ml: #effcff;
-    --lbl-attr: #ffc857;
 }
 
 .hero {

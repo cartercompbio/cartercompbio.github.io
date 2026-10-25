@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
 import { cell3dMaterial, pointsMaterial, makePoints } from './materials.js';
 import { envelope, rng, gauss } from './timeline.js';
 

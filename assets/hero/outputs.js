@@ -1,5 +1,5 @@
 import { rng, smoothstep } from './timeline.js';
-import { PALETTES } from './cohort.js';
+import { PALETTE } from './cohort.js';
 
 // What the model outputs, shown in sequence beside its output node (SVG overlay):
 //   1. a molecular profile: a small heatmap (genes × patients) that fills in, then
@@ -17,10 +17,7 @@ const T = {
 const PROBS = [0.64, 0.25, 0.11];
 const HAZARD = [0.35, 0.9, 1.9];   // per group: lower hazard, higher survival
 // diverging scale for the heatmap: low → mid → high
-const SCALE = {
-    light: ['#3b6fd8', '#eef1f6', '#d6453d'],
-    dark: ['#4fa8ff', '#1a2745', '#ff7a6b'],
-};
+const SCALE = ['#3b6fd8', '#eef1f6', '#d6453d'];
 const NS = 'http://www.w3.org/2000/svg';
 
 const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
@@ -32,10 +29,10 @@ const el = (name, attrs, parent) => {
     return e;
 };
 
-export function createOutputs({ mobile, light, layer }) {
+export function createOutputs({ mobile, layer }) {
     const rand = rng(53);
-    const [lo, mid, hi] = SCALE[light ? 'light' : 'dark'].map(hex);
-    const groups = PALETTES[light ? 'light' : 'dark'].groups;
+    const [lo, mid, hi] = SCALE.map(hex);
+    const groups = PALETTE.groups;
     const cell = mobile ? 7 : 11, gap = 1, barH = mobile ? 3 : 4;
     const H = ROWS * (cell + gap) + barH + 3;          // shared panel height
     const panels = [];

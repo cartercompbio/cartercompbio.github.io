@@ -3,28 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Carter Lab - Computational Cancer Genomics</title>
+    <title>Carter Lab - Computational Cancer Genomics</title>
     <link rel="icon" type="image/png" href="assets/images/logo/favicon.png">
-    <link rel="stylesheet" href="styles.css?v=2026-10-25k">
-    <!-- Cache busting: bump v (here, in the import map and on hero.js below) whenever the
-         hero or the styles change, so browsers fetch fresh copies instead of cached ones. -->
+    <link rel="stylesheet" href="styles.css">
     <script type="importmap">
     {
         "imports": {
-            "./assets/hero/timeline.js": "./assets/hero/timeline.js?v=2026-10-25k",
-            "./assets/hero/materials.js": "./assets/hero/materials.js?v=2026-10-25k",
-            "./assets/hero/dna.js": "./assets/hero/dna.js?v=2026-10-25k",
-            "./assets/hero/network.js": "./assets/hero/network.js?v=2026-10-25k",
-            "./assets/hero/cells.js": "./assets/hero/cells.js?v=2026-10-25k",
-            "./assets/hero/model.js": "./assets/hero/model.js?v=2026-10-25k",
-            "./assets/hero/cohort.js": "./assets/hero/cohort.js?v=2026-10-25k",
-            "./assets/hero/outputs.js": "./assets/hero/outputs.js?v=2026-10-25k",
-            "./assets/hero/logo.js": "./assets/hero/logo.js?v=2026-10-25k"
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js"
         }
     }
     </script>
-    <!-- Hero theme: light by default, ?theme=dark for the navy version -->
-    <script>if (/[?&]theme=dark\b/.test(location.search)) document.documentElement.classList.add('theme-dark');</script>
     <script src="news-dates.js"></script>
     <script src="news.js"></script>
     <script src="navigation.js"></script>
@@ -72,7 +60,7 @@
             <a class="hero__cta" href="#research">Explore Our Research <span aria-hidden="true">→</span></a>
         </div>
     </header>
-    <script type="module" src="assets/hero/hero.js?v=2026-10-25k"></script>
+    <script type="module" src="assets/hero/hero.js"></script>
 
 
     <main class="container">
@@ -241,7 +229,7 @@
     </main>
 
     <footer class="site-footer">
-        <p>&copy; 2025 The Carter Lab, UC San Diego. All rights reserved.</p>
+        <p>&copy; 2025 Carter Lab, UC San Diego. All rights reserved.</p>
     </footer>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# The Carter Lab Website
+# Carter Lab Website
 
 Official website for the Carter Lab at UC San Diego - Computational Cancer Genomics
 

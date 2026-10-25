@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { theme, pointsMaterial, linesMaterial, makePoints } from './materials.js';
+import * as THREE from 'three';
+import { pointsMaterial, linesMaterial, makePoints } from './materials.js';
 import { envelope, rng } from './timeline.js';
 
 // A machine-learning model drawn as a flat, layered neural network beneath the biology.
@@ -174,8 +174,8 @@ export function createModel({ mobile, sources }) {
             const back = envelope(t, BACKWARD[2 - L] - 0.35, 0.2, 0.5, 1.0) * (importance[i] > 0.55 ? 1 : 0);
             const glint = Math.pow(Math.max(0, Math.sin(time * 1.7 + seed * 40)), 24) * 0.35;   // idle "training" shimmer
             const I = 0.13 + glint + pass * 0.6 + back * 0.5;
-            // on white, the forward pass deepens a connection's own colour rather than whitening it
-            tmp.copy(nodeColor(i)).lerp(nodeColor(j), 0.5).lerp(COL.hot, theme.light ? 0 : pass * 0.6).lerp(COL.gold, back);
+            // the forward pass deepens a connection's own colour (whitening would read as navy ink)
+            tmp.copy(nodeColor(i)).lerp(nodeColor(j), 0.5).lerp(COL.gold, back);
             for (let k = 0; k < 4; k++) ribbonCol.set([tmp.r * I, tmp.g * I, tmp.b * I], e * 12 + k * 3);
         });
 
