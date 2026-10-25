@@ -25,6 +25,7 @@ Edit `people/profiles/your-name.json` and commit.
   "affiliation": "",                     // Optional (for alumni: where they are now)
   "affiliationUrl": "",                  // Optional: links the affiliation
   "bio": "Brief bio...",                 // Recommended
+  "positions": ["Title, Organization"],  // Optional: appointments shown in a Positions section
   "education": ["Degree, Year, School"], // Recommended
   "interests": ["Interest 1", "..."],    // Recommended
   "email": "you@ucsd.edu",               // Required
