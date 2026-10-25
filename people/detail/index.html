@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Member - The Carter Lab</title>
+    <title>Team Member - Carter Lab</title>
     <link rel="stylesheet" href="../../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
@@ -186,7 +186,7 @@
     <header class="site-header" style="height: 200px;">
         <div class="header-image" style="background-image: url('../../assets/images/homepage.webp'); height: 200px;">
             <div class="header-overlay">
-                <h1 class="site-title" style="font-size: 2.5rem;">The Carter Lab</h1>
+                <h1 class="site-title" style="font-size: 2.5rem;">Carter Lab</h1>
             </div>
         </div>
     </header>
@@ -202,7 +202,7 @@
 
     <div class="container">
         <div class="member-detail">
-            <a href="../../index.html#people" class="back-link">Back to People</a>
+            <a href="../../#people-current" class="back-link" id="back-link">Back to People</a>
 
             <div id="member-content">
                 <div class="loading">Loading member information...</div>
@@ -211,7 +211,7 @@
     </div>
 
     <footer class="site-footer">
-        <p>&copy; 2025 The Carter Lab, UC San Diego. All rights reserved.</p>
+        <p>&copy; 2025 Carter Lab, UC San Diego. All rights reserved.</p>
     </footer>
 
     <script>
@@ -238,8 +238,18 @@
 
                 const member = await response.json();
 
+                // Alumni go back to the Alumni tab on the homepage
+                fetch(`../index.json?_=${Date.now()}`)
+                    .then(r => r.json())
+                    .then(index => {
+                        if (index.alumni.includes(memberId)) {
+                            document.getElementById('back-link').href = '../../#people-alumni';
+                        }
+                    })
+                    .catch(() => {});
+
                 // Update page title
-                document.title = `${member.name} - The Carter Lab`;
+                document.title = `${member.name} - Carter Lab`;
 
                 // Generate photo path
                 const photoPath = member.photo

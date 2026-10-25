@@ -56,6 +56,23 @@ Edit `people/index.json`:
 - Move your ID from `"current"` to `"alumni"` array
 - Set `affiliation` (and optionally `affiliationUrl`) to your current position; it shows on your alumni card
 
+## Lab Photos
+
+The People section's **Lab Photos** tab shows the photos listed in `people/photos.json`.
+
+1. Add the image to `assets/images/lab_photos/` (e.g. `retreat_2025.jpg`)
+2. Add an entry to `people/photos.json`:
+
+```json
+{
+  "photos": [
+    { "file": "retreat_2025.jpg", "caption": "Lab retreat", "date": "2025" }
+  ]
+}
+```
+
+`caption` and `date` are optional. Photos appear in the order listed.
+
 ## Naming Conventions
 
 - Profile ID: `firstname-lastname` (hyphens, lowercase)

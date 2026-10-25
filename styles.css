@@ -13,8 +13,8 @@ html {
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    color: var(--text);
+    background-color: var(--page-bg);
 }
 
 /* Header */
@@ -30,7 +30,7 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-color: #1e748a;
+    background-color: var(--accent);
 }
 
 .header-overlay {
@@ -53,19 +53,293 @@ body {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
+/* Site palette, shared with the hero so the whole page reads as one design. */
+:root {
+    --page-bg: #f8fafc;
+    --ink: #0c162c;
+    --text: #2b3a52;
+    --muted: #5b6b82;
+    --accent: #13788f;
+    --accent-strong: #0e5f72;
+    --surface: #ffffff;
+    --surface-alt: #f1f5f9;
+    --line: #e2e8f0;
+    --shadow: 0 1px 2px rgba(12, 22, 44, 0.05), 0 4px 14px rgba(12, 22, 44, 0.05);
+    --shadow-hover: 0 2px 4px rgba(12, 22, 44, 0.06), 0 10px 24px rgba(12, 22, 44, 0.08);
+}
+
+/* Animated hero (homepage) */
+:root {
+    --hero-bg: #f8fafc;
+    --hero-bg-rgb: 248, 250, 252;
+    --hero-ink: #0c162c;
+    --hero-sub: #13788f;
+    --hero-muted: #7a889c;
+    --hero-title-glow: 0 1px 2px rgba(12, 22, 44, 0.45), 0 0 10px rgba(12, 22, 44, 0.2);
+    --hero-rule: rgba(12, 22, 44, 0.12);
+    --hero-title-shadow: none;
+    --hero-cta-rgb: 19, 120, 143;
+    --hero-cta-ink: #0c162c;
+    --hero-icon-filter: drop-shadow(0 1px 1.5px rgba(12, 22, 44, 0.25));
+    --nav-bg: var(--hero-bg);
+    --nav-ink: #24324a;
+    --nav-ink-hover: #0c162c;
+    --nav-hover: rgba(12, 22, 44, 0.06);
+    --nav-border: rgba(12, 22, 44, 0.08);
+    --nav-menu-bg: #ffffff;
+    --nav-menu-border: #dde4ee;
+    --nav-menu-shadow: rgba(12, 22, 44, 0.12);
+    --lbl-germline: #b7791f;
+    --lbl-somatic: #0b84a5;
+    --lbl-tf: #5b4bd1;
+    --lbl-gene: #0f6f8a;
+    --lbl-immune: #1d5fd6;
+    --lbl-ml: #0c162c;
+    --lbl-attr: #b7791f;
+}
+
+.hero {
+    position: relative;
+    height: max(720px, calc(100vh - 3.6rem));
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--hero-bg);
+}
+
+.hero__fallback,
+.hero__canvas,
+.hero__scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero__fallback {
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35;
+    transition: opacity 1.2s ease;
+}
+
+.hero__canvas {
+    display: block;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+}
+
+.hero.is-live .hero__fallback { opacity: 0; }
+.hero.is-live .hero__canvas { opacity: 1; }
+
+.hero__scrim {
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(var(--hero-bg-rgb), 0.85) 0%, rgba(var(--hero-bg-rgb), 0.5) 24%, rgba(var(--hero-bg-rgb), 0) 40%),
+        linear-gradient(0deg, rgba(var(--hero-bg-rgb), 0.6) 0%, rgba(var(--hero-bg-rgb), 0) 8%);
+}
+
+/* Section titles and labels pinned to the scene; the script positions them. */
+.hero__annotations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+}
+
+.hero.is-live .hero__annotations { opacity: 1; }
+
+/* Section titles: faint white capitals with a soft shadow. The script fades each one
+   out as its part of the loop finishes and brings them back before the loop restarts. */
+.hero__scale,
+.hero__ml-title,
+.hero__cohort-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow: var(--hero-title-glow);
+}
+
+.hero__lbl { position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform, opacity; }
+/* One label style everywhere: plain text, coloured by what it names, with a soft halo. */
+.hero__lbl span,
+.hero__therapy-tag,
+.hero__output-tag {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-shadow: 0 0 6px var(--hero-bg), 0 0 3px var(--hero-bg), 0 0 1px var(--hero-bg);
+}
+.hero__lbl--germline span, .hero__lbl--somatic span { transform: translate(14px, -50%); }
+.hero__lbl--germline span { color: var(--lbl-germline); }
+.hero__lbl--somatic span { color: var(--lbl-somatic); }
+.hero__lbl--tf span { transform: translate(-50%, -165%); font-weight: 600; color: var(--lbl-tf); }
+.hero__lbl--gene span { transform: translate(9px, -50%); font-style: italic; color: var(--lbl-gene); }   /* gene symbols in italics */
+.hero__lbl--immune span { transform: translate(-50%, 0); color: var(--lbl-immune); }
+.hero__lbl--attr span { transform: translate(-50%, -100%); font-weight: 600; color: var(--lbl-attr); }
+
+/* Patient cohort and therapeutics (assets/hero/cohort.js positions them). */
+.hero__cohort { position: absolute; inset: 0; }
+.hero__patient,
+.hero__pill,
+.hero__ring,
+.hero__therapy-tag { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+.hero__patient { width: 20px; height: 24px; filter: var(--hero-icon-filter); }
+.hero__pill { width: 20px; height: 8px; opacity: 0; filter: var(--hero-icon-filter); }
+.hero__patient svg,
+.hero__pill svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+.hero__ring { width: 70px; height: 70px; border: 1.5px solid; border-radius: 50%; opacity: 0; }
+.hero__therapy-tag { color: var(--lbl-ml); font-weight: 600; opacity: 0; }
+
+/* The model's outputs: molecular profile, class probabilities, survival (assets/hero/outputs.js). */
+.hero__output { position: absolute; left: 0; top: 0; overflow: visible; opacity: 0; will-change: transform, opacity; filter: var(--hero-icon-filter); }
+.hero__output-tag { left: 0; top: 0; color: var(--lbl-ml); font-weight: 600; opacity: 0; will-change: transform, opacity; }
+.hero__output-axis { stroke: var(--hero-muted); stroke-width: 1; opacity: 0.7; }
+
+.hero__content {
+    position: absolute;
+    left: clamp(1.25rem, 7vw, 7rem);
+    top: 46%;
+    transform: translateY(-50%);
+    width: max-content;
+    max-width: min(34rem, 86vw);
+    pointer-events: none;
+}
+
+/* Lab emblem above the heading: a 3D canvas over the flat image it replaces once live. */
+.hero__logo {
+    position: relative;
+    width: 128px;
+    height: 176px;
+    margin: 0 0 0.75rem -14px;
+}
+
+.hero__logo img,
+.hero__logo canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero__logo img {
+    object-fit: contain;
+    padding: 10px 26px;
+    transition: opacity 0.6s ease;
+}
+
+.hero__logo canvas { opacity: 0; transition: opacity 0.6s ease; }
+.hero__logo.is-live img { opacity: 0; }
+.hero__logo.is-live canvas { opacity: 1; }
+
+.hero__title {
+    margin: 0;
+    color: var(--hero-ink);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 650;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-shadow: var(--hero-title-shadow);
+}
+
+.hero__subtitle {
+    margin-top: 1rem;
+    color: var(--hero-sub);
+    font-size: clamp(0.95rem, 1.6vw, 1.3rem);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.hero__cta {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 2.2rem;
+    padding: 0.7rem 1.4rem;
+    border: 1px solid rgba(var(--hero-cta-rgb), 0.45);
+    border-radius: 999px;
+    background: rgba(var(--hero-cta-rgb), 0.06);
+    color: var(--hero-cta-ink);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.hero__cta span { transition: transform 0.3s ease; }
+
+.hero__cta:hover,
+.hero__cta:focus-visible {
+    background: rgba(var(--hero-cta-rgb), 0.14);
+    border-color: rgba(var(--hero-cta-rgb), 0.8);
+}
+
+.hero__cta:hover span { transform: translateX(3px); }
+
+.hero__cta:focus-visible {
+    outline: 2px solid rgb(var(--hero-cta-rgb));
+    outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 165svh;
+    }
+
+    .hero__content {
+        top: 6svh;
+        transform: none;
+    }
+
+    .hero__logo { width: 88px; height: 120px; margin-left: -10px; }
+
+    .hero__patient { width: 14px; height: 17px; }
+    .hero__pill { width: 16px; height: 7px; }
+    .hero__ml-title,
+    .hero__cohort-title { font-size: 0.72rem; }
+
+    .hero__scrim {
+        background: linear-gradient(180deg, rgba(var(--hero-bg-rgb), 0.85) 0%, rgba(var(--hero-bg-rgb), 0.45) 30%, rgba(var(--hero-bg-rgb), 0) 42%);
+    }
+
+    /* phones: no scale titles; only TF names, variant tags and the prediction stay */
+    .hero__scale,
+    .hero__lbl--gene,
+    .hero__lbl--immune { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__fallback,
+    .hero__canvas,
+    .hero__annotations,
+    .hero__cta,
+    .hero__cta span { transition: none; }
+}
+
 /* Navigation */
 .main-nav {
-    background-color: #1e748a;
+    background-color: var(--nav-bg);
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 0 var(--nav-border);
     text-align: center;
 }
 
 .main-nav a {
-    color: white;
+    color: var(--nav-ink);
     text-decoration: none;
     padding: 0.75rem 1.5rem;
     display: inline-block;
@@ -73,8 +347,114 @@ body {
 }
 
 .main-nav a:hover {
-    background-color: #26a3ba;
+    background-color: var(--nav-hover);
 }
+
+/* Homepage nav: continuous with the hero's background, links on the right */
+.main-nav.main-nav--top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem clamp(1rem, 4vw, 3rem);
+    background-color: var(--nav-bg);
+    box-shadow: none;
+    border-bottom: 1px solid var(--nav-border);
+}
+
+.main-nav.main-nav--top a {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border-radius: 6px;
+    color: var(--nav-ink);
+    font-size: 0.95rem;
+}
+
+.main-nav.main-nav--top a:hover,
+.main-nav.main-nav--top a:focus-visible {
+    background-color: var(--nav-hover);
+    color: var(--nav-ink-hover);
+}
+
+.nav-item { position: relative; }
+
+.has-menu > a::after {
+    content: '';
+    display: inline-block;
+    width: 0.4em;
+    height: 0.4em;
+    margin-left: 0.45em;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-0.2em) rotate(45deg);
+}
+
+.nav-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 11rem;
+    padding: 0.35rem;
+    background-color: var(--nav-menu-bg);
+    border: 1px solid var(--nav-menu-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px var(--nav-menu-shadow);
+}
+
+.has-menu:hover .nav-menu,
+.has-menu:focus-within .nav-menu { display: block; }
+
+.main-nav.main-nav--top .nav-menu a {
+    display: block;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .main-nav.main-nav--top {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0.35rem 0.5rem;
+    }
+
+    .main-nav.main-nav--top a { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+}
+
+/* People tabs and lab photos */
+.people-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 2rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.people-tab {
+    padding: 0.6rem 1.1rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.people-tab:hover { color: var(--accent); }
+.people-tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.people-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.lab-photo { margin: 0; }
+.lab-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block; }
+.lab-photo figcaption { margin-top: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+.lab-photo figcaption span { color: var(--muted); }
+.photos-empty { color: var(--muted); }
 
 /* Container */
 .container {
@@ -90,40 +470,49 @@ section {
 }
 
 .section-title {
-    color: #1e748a;
+    color: var(--ink);
     font-size: 2rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
     margin-bottom: 1rem;
-    border-bottom: 3px solid #1e748a;
-    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
 }
 
 h1 {
     font-size: 2.5rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
     margin-bottom: 1rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h2 {
     font-size: 1.8rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
     margin: 2rem 0 1rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h3 {
     font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     margin: 1.5rem 0 0.5rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h4 {
     font-size: 1.1rem;
+    font-weight: 600;
     margin: 0.5rem 0;
-    color: #333;
+    color: var(--ink);
 }
 
 hr {
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--line);
     margin: 1.5rem 0;
 }
 
@@ -133,7 +522,7 @@ p {
 }
 
 a {
-    color: #1e748a;
+    color: var(--accent);
     text-decoration: none;
 }
 
@@ -143,7 +532,7 @@ a:hover {
 
 /* News section */
 .news-section {
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     padding: 2rem;
     border-radius: 8px;
     margin-bottom: 3rem;
@@ -160,35 +549,36 @@ a:hover {
     background: white;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .news-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .news-date {
-    color: #1e748a;
+    color: var(--accent);
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
 }
 
 .news-content {
-    color: #333;
+    color: var(--text);
     line-height: 1.6;
 }
 
 .news-link {
-    color: #333;
+    color: var(--text);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .news-link:hover {
-    color: #1e748a;
+    color: var(--accent);
     text-decoration: underline;
 }
 
@@ -199,18 +589,19 @@ a:hover {
 
 .view-all-button {
     display: inline-block;
-    padding: 0.75rem 2rem;
-    background: #1e748a;
-    color: white;
+    padding: 0.7rem 1.6rem;
+    border: 1px solid rgba(19, 120, 143, 0.45);
+    border-radius: 999px;
+    background: rgba(19, 120, 143, 0.06);
+    color: var(--ink);
     text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.3s;
+    letter-spacing: 0.02em;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .view-all-button:hover {
-    background: #26a3ba;
-    transform: translateY(-2px);
+    background: rgba(19, 120, 143, 0.14);
+    border-color: rgba(19, 120, 143, 0.8);
     text-decoration: none;
 }
 
@@ -250,7 +641,7 @@ a:hover {
     text-align: center;
     margin-bottom: 3rem;
     padding: 2rem;
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     border-radius: 8px;
 }
 
@@ -265,7 +656,7 @@ a:hover {
 }
 
 .person-title {
-    color: #666;
+    color: var(--muted);
     font-style: italic;
 }
 
@@ -281,13 +672,14 @@ a:hover {
     padding: 1rem;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .person-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .person-card img {
@@ -311,14 +703,15 @@ a:hover {
     background: white;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .software-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .software-logo {
@@ -330,23 +723,23 @@ a:hover {
     background-color: white;
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #e8e8e8;
+    border: 1px solid var(--line);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .software-card:hover .software-logo {
-    border-color: #1e748a;
-    box-shadow: 0 4px 8px rgba(30, 116, 138, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(19, 120, 143, 0.15);
 }
 
 .software-card h3 {
-    color: #1e748a;
+    color: var(--ink);
     margin: 1rem 0;
 }
 
 .software-card p {
-    color: #666;
+    color: var(--muted);
     font-size: 0.95rem;
     margin-bottom: 1rem;
     min-height: 60px;
@@ -355,11 +748,11 @@ a:hover {
 .software-links {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--line);
 }
 
 .software-links a {
-    color: #1e748a;
+    color: var(--accent);
     margin: 0 0.5rem;
     font-size: 0.9rem;
 }
@@ -379,7 +772,7 @@ a:hover {
 
 .publications-section li:before {
     content: "•";
-    color: #1e748a;
+    color: var(--accent);
     font-weight: bold;
     font-size: 1.2rem;
     position: absolute;
@@ -387,16 +780,16 @@ a:hover {
 }
 
 .publications-section em {
-    color: #666;
+    color: var(--muted);
 }
 
 .publications-section strong {
-    color: #1e748a;
+    color: var(--accent);
 }
 
 /* Contact section */
 .contact-info {
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     padding: 2rem;
     border-radius: 8px;
     max-width: 600px;
@@ -408,13 +801,14 @@ a:hover {
 }
 
 .contact-info a {
-    color: #1e748a;
+    color: var(--accent);
 }
 
 /* Footer */
 .site-footer {
-    background-color: #1e748a;
-    color: white;
+    background-color: var(--surface-alt);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
     text-align: center;
     padding: 2rem;
     margin-top: 4rem;
@@ -509,7 +903,7 @@ img[src*="assets/images/people"] {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--surface);
     margin: 5% auto;
     padding: 2rem;
     border-radius: 12px;
@@ -545,14 +939,14 @@ img[src*="assets/images/people"] {
 }
 
 .modal-close:hover {
-    color: #333;
+    color: var(--text);
 }
 
 .modal-header {
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #1e748a;
+    border-bottom: 2px solid var(--accent);
 }
 
 .modal-header img {
@@ -566,12 +960,12 @@ img[src*="assets/images/people"] {
 }
 
 .modal-header h2 {
-    color: #1e748a;
+    color: var(--ink);
     margin: 0.5rem 0;
 }
 
 .modal-header .position {
-    color: #666;
+    color: var(--muted);
     font-style: italic;
     font-size: 1.1rem;
 }
@@ -585,18 +979,18 @@ img[src*="assets/images/people"] {
 }
 
 .modal-section h3 {
-    color: #1e748a;
+    color: var(--ink);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
 .modal-section p {
-    color: #333;
+    color: var(--text);
     margin: 0;
 }
 
 .modal-section a {
-    color: #1e748a;
+    color: var(--accent);
     word-break: break-all;
 }
 

@@ -9,21 +9,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get the target section ID from the href
             const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
+            let targetSection = document.getElementById(targetId);
+
+            // People menu entries open their tab, then scroll to the People section
+            if (targetId.startsWith('people-') && typeof showPeopleTab === 'function') {
+                showPeopleTab(targetId);
+                targetSection = document.getElementById('people');
+                this.blur();   // close the menu
+            }
 
             if (targetSection) {
-                // Get the height of the sticky nav
-                const navHeight = document.querySelector('.main-nav').offsetHeight;
-
-                // Calculate position with offset
-                const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-
-                // Smooth scroll to position
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                scrollToSection(targetSection);
             }
         });
     });
 });
+
+/**
+ * Scroll so the section sits just below the sticky nav
+ */
+function scrollToSection(section, behavior = 'smooth') {
+    const navHeight = document.querySelector('.main-nav').offsetHeight;
+    const targetPosition = section.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+    window.scrollTo({ top: targetPosition, behavior });
+}
