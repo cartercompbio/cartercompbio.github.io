@@ -20,7 +20,7 @@ const COL = {
 // nest 0 raises it after interferon signalling and is attacked by a CD8+ T cell;
 // nest 1 has lost it (immune escape) and draws an NK cell instead.
 const CLUSTERS = [
-    { c: [-1.4, 1.9, 0.3], n: 7, color: COL.coral, shift: COL.magenta, at: 8.1, mhc: [0.25, 1.0, 7.9], label: 'Cancer cells', tag: [-1.6, 4.9, 0.3] },
+    { c: [-1.4, 1.9, 0.3], n: 7, color: COL.coral, shift: COL.magenta, at: 8.1, mhc: [0.25, 1.0, 7.9] },
     { c: [2.2, -1.2, -1.2], n: 6, color: COL.magenta, shift: COL.orange, at: 8.6, mhc: [0.04, 0.04, 0] },
     { c: [-0.9, -3.3, 1.4], n: 5, color: COL.orange, shift: COL.coral, at: 9.2, mhc: [0.2, 0.6, 8.4] },
     { c: [3.4, 3.6, -4.5], n: 5, color: COL.coral, shift: COL.orange, at: 9.0, mhc: [0.3, 0.3, 0] },   // deep
@@ -280,11 +280,6 @@ export function createCells({ mobile }) {
     // On-screen labels: text, a world-space anchor, and how visible it is at time t.
     const below = (i, dy) => (t, out) => inner.localToWorld(out.copy(cur[i]).add(v.set(0, dy, 0)));
     const labels = [
-        ...CLUSTERS.filter((cl) => cl.label).map((cl) => ({
-            text: cl.label, kind: 'tumor',
-            world: (t, out) => inner.localToWorld(out.set(...cl.tag)),
-            level: (t) => 0.6 + 0.4 * envelope(t, cl.at - 0.5, 0.6, 3.5, 1.5),
-        })),
         { text: 'T cell', kind: 'immune', world: below(engagements[0].immune, -0.95), level: (t) => 0.6 + 0.4 * approachOf(engagements[0], t) },
         { text: 'NK cell', kind: 'immune', world: below(engagements[1].immune, -1.05), level: (t) => 0.6 + 0.4 * approachOf(engagements[1], t) },
     ];

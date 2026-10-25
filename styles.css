@@ -13,8 +13,8 @@ html {
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    color: var(--text);
+    background-color: var(--page-bg);
 }
 
 /* Header */
@@ -30,7 +30,7 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-color: #1e748a;
+    background-color: var(--accent);
 }
 
 .header-overlay {
@@ -53,6 +53,21 @@ body {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
+/* Site palette, shared with the hero so the whole page reads as one design. */
+:root {
+    --page-bg: #f8fafc;
+    --ink: #0c162c;
+    --text: #2b3a52;
+    --muted: #5b6b82;
+    --accent: #13788f;
+    --accent-strong: #0e5f72;
+    --surface: #ffffff;
+    --surface-alt: #f1f5f9;
+    --line: #e2e8f0;
+    --shadow: 0 1px 2px rgba(12, 22, 44, 0.05), 0 4px 14px rgba(12, 22, 44, 0.05);
+    --shadow-hover: 0 2px 4px rgba(12, 22, 44, 0.06), 0 10px 24px rgba(12, 22, 44, 0.08);
+}
+
 /* Animated hero (homepage). Light theme by default; ?theme=dark adds .theme-dark to <html>. */
 :root {
     --hero-bg: #f8fafc;
@@ -60,7 +75,6 @@ body {
     --hero-ink: #0c162c;
     --hero-sub: #13788f;
     --hero-title-shadow: none;
-    --hero-pill: rgba(255, 255, 255, 0.86);
     --hero-cta-rgb: 19, 120, 143;
     --hero-cta-ink: #0c162c;
     --hero-icon-filter: drop-shadow(0 1px 1.5px rgba(12, 22, 44, 0.25));
@@ -76,7 +90,6 @@ body {
     --lbl-somatic: #0b84a5;
     --lbl-tf: #5b4bd1;
     --lbl-gene: #0f6f8a;
-    --lbl-tumor: #c2412f;
     --lbl-immune: #1d5fd6;
     --lbl-ml: #0c162c;
     --lbl-attr: #b7791f;
@@ -93,7 +106,6 @@ body {
     --hero-ink: #edf3fb;
     --hero-sub: #9fdcef;
     --hero-title-shadow: 0 2px 24px rgba(5, 11, 24, 0.6);
-    --hero-pill: rgba(12, 22, 44, 0.74);
     --hero-cta-rgb: 79, 227, 255;
     --hero-cta-ink: #e8f9ff;
     --hero-icon-filter: drop-shadow(0 0 5px currentColor);
@@ -108,7 +120,6 @@ body {
     --lbl-somatic: #4fe3ff;
     --lbl-tf: #b3a8ff;
     --lbl-gene: #bdf5ff;
-    --lbl-tumor: #ff8a78;
     --lbl-immune: #bfeaff;
     --lbl-ml: #effcff;
     --lbl-attr: #ffc857;
@@ -199,15 +210,23 @@ body {
 }
 
 .hero__lbl { position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform, opacity; }
-.hero__lbl span { position: absolute; white-space: nowrap; padding: 1px 7px; border-radius: 9px; background: var(--hero-pill); font-size: 0.75rem; line-height: 1.5; }
-.hero__lbl--germline span, .hero__lbl--somatic span { transform: translate(16px, -50%); font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+/* One label style everywhere: plain text, coloured by what it names, with a soft halo. */
+.hero__lbl span,
+.hero__therapy-tag {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-shadow: 0 0 6px var(--hero-bg), 0 0 3px var(--hero-bg), 0 0 1px var(--hero-bg);
+}
+.hero__lbl--germline span, .hero__lbl--somatic span { transform: translate(14px, -50%); }
 .hero__lbl--germline span { color: var(--lbl-germline); }
 .hero__lbl--somatic span { color: var(--lbl-somatic); }
-.hero__lbl--tf span { transform: translate(-50%, -175%); font-size: 0.8rem; font-weight: 600; color: var(--lbl-tf); }
-.hero__lbl--gene span { transform: translate(9px, -50%); padding: 0; background: none; font-style: italic; color: var(--lbl-gene); text-shadow: 0 0 8px var(--hero-bg), 0 0 3px var(--hero-bg); }
-.hero__lbl--tumor span { transform: translate(-50%, -50%); font-weight: 500; color: var(--lbl-tumor); }
-.hero__lbl--immune span { transform: translate(-50%, 0); font-weight: 500; color: var(--lbl-immune); }
-.hero__lbl--ml span { transform: translate(16px, -50%); font-weight: 600; color: var(--lbl-ml); }
+.hero__lbl--tf span { transform: translate(-50%, -165%); font-weight: 600; color: var(--lbl-tf); }
+.hero__lbl--gene span { transform: translate(9px, -50%); font-style: italic; color: var(--lbl-gene); }   /* gene symbols in italics */
+.hero__lbl--immune span { transform: translate(-50%, 0); color: var(--lbl-immune); }
+.hero__lbl--ml span { transform: translate(14px, -50%); font-weight: 600; color: var(--lbl-ml); }
 .hero__lbl--attr span { transform: translate(-50%, -100%); font-weight: 600; color: var(--lbl-attr); }
 
 /* Patient cohort and therapeutics (assets/hero/cohort.js positions them). */
@@ -217,21 +236,11 @@ body {
 .hero__ring,
 .hero__therapy-tag { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
 .hero__patient { width: 20px; height: 24px; filter: var(--hero-icon-filter); }
-.hero__pill { width: 36px; height: 15px; opacity: 0; filter: var(--hero-icon-filter); }
+.hero__pill { width: 20px; height: 8px; opacity: 0; filter: var(--hero-icon-filter); }
 .hero__patient svg,
 .hero__pill svg { display: block; width: 100%; height: 100%; fill: currentColor; }
-.hero__ring { width: 90px; height: 90px; border: 2px solid; border-radius: 50%; opacity: 0; }
-.hero__therapy-tag {
-    padding: 2px 10px;
-    border-radius: 10px;
-    background: var(--hero-pill);
-    color: var(--lbl-ml);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    opacity: 0;
-}
+.hero__ring { width: 70px; height: 70px; border: 1.5px solid; border-radius: 50%; opacity: 0; }
+.hero__therapy-tag { color: var(--lbl-ml); font-weight: 600; opacity: 0; }
 
 .hero__content {
     position: absolute;
@@ -305,7 +314,7 @@ body {
     }
 
     .hero__patient { width: 14px; height: 17px; }
-    .hero__pill { width: 26px; height: 11px; }
+    .hero__pill { width: 16px; height: 7px; }
     .hero__ml-title,
     .hero__cohort-title { font-size: 0.8rem; }
 
@@ -316,7 +325,6 @@ body {
     /* phones: no scale titles; only TF names, variant tags and the prediction stay */
     .hero__scale,
     .hero__lbl--gene,
-    .hero__lbl--tumor,
     .hero__lbl--immune { display: none; }
 }
 
@@ -330,17 +338,17 @@ body {
 
 /* Navigation */
 .main-nav {
-    background-color: #1e748a;
+    background-color: var(--nav-bg);
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 0 var(--nav-border);
     text-align: center;
 }
 
 .main-nav a {
-    color: white;
+    color: var(--nav-ink);
     text-decoration: none;
     padding: 0.75rem 1.5rem;
     display: inline-block;
@@ -348,7 +356,7 @@ body {
 }
 
 .main-nav a:hover {
-    background-color: #26a3ba;
+    background-color: var(--nav-hover);
 }
 
 /* Homepage nav: continuous with the hero's background, links on the right */
@@ -427,7 +435,7 @@ body {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin: 1.5rem 0 2rem;
-    border-bottom: 1px solid #d9e3ea;
+    border-bottom: 1px solid var(--line);
 }
 
 .people-tab {
@@ -435,15 +443,15 @@ body {
     border: 0;
     border-bottom: 3px solid transparent;
     background: none;
-    color: #4a5b66;
+    color: var(--muted);
     font: inherit;
     font-weight: 500;
     cursor: pointer;
 }
 
-.people-tab:hover { color: #1e748a; }
-.people-tab[aria-selected="true"] { color: #1e748a; border-bottom-color: #1e748a; }
-.people-tab:focus-visible { outline: 2px solid #1e748a; outline-offset: 2px; }
+.people-tab:hover { color: var(--accent); }
+.people-tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.people-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .photo-grid {
     display: grid;
@@ -453,9 +461,9 @@ body {
 
 .lab-photo { margin: 0; }
 .lab-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block; }
-.lab-photo figcaption { margin-top: 0.5rem; color: #4a5b66; font-size: 0.95rem; }
-.lab-photo figcaption span { color: #8a99a3; }
-.photos-empty { color: #4a5b66; }
+.lab-photo figcaption { margin-top: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+.lab-photo figcaption span { color: var(--muted); }
+.photos-empty { color: var(--muted); }
 
 /* Container */
 .container {
@@ -471,40 +479,49 @@ section {
 }
 
 .section-title {
-    color: #1e748a;
+    color: var(--ink);
     font-size: 2rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
     margin-bottom: 1rem;
-    border-bottom: 3px solid #1e748a;
-    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
 }
 
 h1 {
     font-size: 2.5rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
     margin-bottom: 1rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h2 {
     font-size: 1.8rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
     margin: 2rem 0 1rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h3 {
     font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     margin: 1.5rem 0 0.5rem;
-    color: #1e748a;
+    color: var(--ink);
 }
 
 h4 {
     font-size: 1.1rem;
+    font-weight: 600;
     margin: 0.5rem 0;
-    color: #333;
+    color: var(--ink);
 }
 
 hr {
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--line);
     margin: 1.5rem 0;
 }
 
@@ -514,7 +531,7 @@ p {
 }
 
 a {
-    color: #1e748a;
+    color: var(--accent);
     text-decoration: none;
 }
 
@@ -524,7 +541,7 @@ a:hover {
 
 /* News section */
 .news-section {
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     padding: 2rem;
     border-radius: 8px;
     margin-bottom: 3rem;
@@ -541,35 +558,36 @@ a:hover {
     background: white;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .news-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .news-date {
-    color: #1e748a;
+    color: var(--accent);
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
 }
 
 .news-content {
-    color: #333;
+    color: var(--text);
     line-height: 1.6;
 }
 
 .news-link {
-    color: #333;
+    color: var(--text);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .news-link:hover {
-    color: #1e748a;
+    color: var(--accent);
     text-decoration: underline;
 }
 
@@ -580,18 +598,19 @@ a:hover {
 
 .view-all-button {
     display: inline-block;
-    padding: 0.75rem 2rem;
-    background: #1e748a;
-    color: white;
+    padding: 0.7rem 1.6rem;
+    border: 1px solid rgba(19, 120, 143, 0.45);
+    border-radius: 999px;
+    background: rgba(19, 120, 143, 0.06);
+    color: var(--ink);
     text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.3s;
+    letter-spacing: 0.02em;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .view-all-button:hover {
-    background: #26a3ba;
-    transform: translateY(-2px);
+    background: rgba(19, 120, 143, 0.14);
+    border-color: rgba(19, 120, 143, 0.8);
     text-decoration: none;
 }
 
@@ -631,7 +650,7 @@ a:hover {
     text-align: center;
     margin-bottom: 3rem;
     padding: 2rem;
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     border-radius: 8px;
 }
 
@@ -646,7 +665,7 @@ a:hover {
 }
 
 .person-title {
-    color: #666;
+    color: var(--muted);
     font-style: italic;
 }
 
@@ -662,13 +681,14 @@ a:hover {
     padding: 1rem;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .person-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .person-card img {
@@ -692,14 +712,15 @@ a:hover {
     background: white;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .software-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-hover);
 }
 
 .software-logo {
@@ -711,23 +732,23 @@ a:hover {
     background-color: white;
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #e8e8e8;
+    border: 1px solid var(--line);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .software-card:hover .software-logo {
-    border-color: #1e748a;
-    box-shadow: 0 4px 8px rgba(30, 116, 138, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(19, 120, 143, 0.15);
 }
 
 .software-card h3 {
-    color: #1e748a;
+    color: var(--ink);
     margin: 1rem 0;
 }
 
 .software-card p {
-    color: #666;
+    color: var(--muted);
     font-size: 0.95rem;
     margin-bottom: 1rem;
     min-height: 60px;
@@ -736,11 +757,11 @@ a:hover {
 .software-links {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--line);
 }
 
 .software-links a {
-    color: #1e748a;
+    color: var(--accent);
     margin: 0 0.5rem;
     font-size: 0.9rem;
 }
@@ -760,7 +781,7 @@ a:hover {
 
 .publications-section li:before {
     content: "•";
-    color: #1e748a;
+    color: var(--accent);
     font-weight: bold;
     font-size: 1.2rem;
     position: absolute;
@@ -768,16 +789,16 @@ a:hover {
 }
 
 .publications-section em {
-    color: #666;
+    color: var(--muted);
 }
 
 .publications-section strong {
-    color: #1e748a;
+    color: var(--accent);
 }
 
 /* Contact section */
 .contact-info {
-    background-color: #f8f9fa;
+    background-color: var(--surface-alt);
     padding: 2rem;
     border-radius: 8px;
     max-width: 600px;
@@ -789,13 +810,14 @@ a:hover {
 }
 
 .contact-info a {
-    color: #1e748a;
+    color: var(--accent);
 }
 
 /* Footer */
 .site-footer {
-    background-color: #1e748a;
-    color: white;
+    background-color: var(--surface-alt);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
     text-align: center;
     padding: 2rem;
     margin-top: 4rem;
@@ -890,7 +912,7 @@ img[src*="assets/images/people"] {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--surface);
     margin: 5% auto;
     padding: 2rem;
     border-radius: 12px;
@@ -926,14 +948,14 @@ img[src*="assets/images/people"] {
 }
 
 .modal-close:hover {
-    color: #333;
+    color: var(--text);
 }
 
 .modal-header {
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #1e748a;
+    border-bottom: 2px solid var(--accent);
 }
 
 .modal-header img {
@@ -947,12 +969,12 @@ img[src*="assets/images/people"] {
 }
 
 .modal-header h2 {
-    color: #1e748a;
+    color: var(--ink);
     margin: 0.5rem 0;
 }
 
 .modal-header .position {
-    color: #666;
+    color: var(--muted);
     font-style: italic;
     font-size: 1.1rem;
 }
@@ -966,18 +988,18 @@ img[src*="assets/images/people"] {
 }
 
 .modal-section h3 {
-    color: #1e748a;
+    color: var(--ink);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
 .modal-section p {
-    color: #333;
+    color: var(--text);
     margin: 0;
 }
 
 .modal-section a {
-    color: #1e748a;
+    color: var(--accent);
     word-break: break-all;
 }
 

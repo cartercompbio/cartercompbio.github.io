@@ -82,8 +82,8 @@ export function createCohort({ mobile, light, layer }) {
             place(p.el, s.x, s.y, ` scale(${(1 + 0.25 * scan + 0.18 * dose).toFixed(3)})`);
         });
 
-        // pills travel from the model's prediction to above each group, turning as they
-        // fly, then drop in and dissolve
+        // pills drift from the model's prediction to above each group with a gentle
+        // tilt, then settle in and dissolve
         pills.forEach((el, g) => {
             const start = DOSE + g * 0.35;
             const travel = smoothstep(start, start + 1.3, t);
@@ -93,12 +93,12 @@ export function createCohort({ mobile, light, layer }) {
             project(v, s);
             el.style.color = css(GROUPS[g]);
             el.style.opacity = vis.toFixed(3);
-            place(el, s.x, s.y - 40 + drop * 26, ` rotate(${(-35 + 360 * travel).toFixed(1)}deg) scale(${(1 - 0.5 * drop).toFixed(3)})`);
+            place(el, s.x, s.y - 30 + drop * 16, ` rotate(${(-30 + 10 * Math.sin(travel * Math.PI)).toFixed(1)}deg) scale(${(1 - 0.5 * drop).toFixed(3)})`);
             const pulse = Math.max(0, Math.min(1, (t - start - 1.45) / 1.1));
             project(groupCenter[g], s);
             rings[g].style.borderColor = css(GROUPS[g]);
             rings[g].style.opacity = (pulse > 0 && pulse < 1 ? (1 - pulse) * 0.9 : 0).toFixed(3);
-            place(rings[g], s.x, s.y, ` scale(${(0.4 + pulse * 2.2).toFixed(3)})`);
+            place(rings[g], s.x, s.y, ` scale(${(0.4 + pulse * 1.6).toFixed(3)})`);
         });
 
         project(rowLeft, s);

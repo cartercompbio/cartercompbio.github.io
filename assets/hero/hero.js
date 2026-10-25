@@ -186,7 +186,7 @@ function init() {
         (t, out) => dna.variantWorld(i, out), (t) => dna.variantLevel(i, t)));
     network.labels.forEach((l) => addLabel(l.text, l.kind,
         (t, out) => network.nodeWorld(l.node, out),
-        (t) => l.kind === 'tf' ? 0.55 + 0.45 * network.nodeLevel[l.node]
+        (t) => l.kind === 'tf' ? 0.8 + 0.2 * network.nodeLevel[l.node]
             : Math.max(network.nodeLevel[l.node], network.hlNode[l.node])));
     cells.labels.forEach((l) => addLabel(l.text, l.kind, l.world, l.level));
     addLabel('Prediction', 'ml', (t, out) => model.outputWorld(out), () => 0.55 + 0.45 * model.outputLevel());
@@ -208,7 +208,7 @@ function init() {
             if (L.kind === 'tf' || L.kind === 'gene') {
                 // labels on the far side of the turning network recede
                 lv.copy(lp).applyMatrix4(camera.matrixWorldInverse);
-                a *= 0.5 + 0.5 * Math.min(1, Math.max(0, 0.5 + (lv.z - center.z) / depthSpan));
+                a *= 0.65 + 0.35 * Math.min(1, Math.max(0, 0.5 + (lv.z - center.z) / depthSpan));
             }
             lp.project(camera);
             L.el.style.transform = `translate(${((lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px)`;
