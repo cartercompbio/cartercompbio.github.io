@@ -32,6 +32,11 @@ function init() {
     const labelLayer = hero.querySelector('.hero__labels');
     const scaleEls = [...hero.querySelectorAll('.hero__scale')];
     const mlTitle = hero.querySelector('.hero__ml-title');
+    const story = hero.querySelector('.hero__story');
+    const steps = [...story.children];
+    // Title style under review: a story line across the top (default) or ?titles=captions
+    const captions = new URLSearchParams(location.search).get('titles') === 'captions';
+    hero.classList.add(captions ? 'hero--captions' : 'hero--story');
     const mobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
     const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
     // ?hero-t=9.5 freezes the loop at that second (handy for reviewing a single beat).
@@ -70,7 +75,8 @@ function init() {
 
     // --- Layout: biology right of (or below) the heading, the model along the bottom.
     let distance = 30, halfW = 1, halfH = 1;
-    let bioTop = 0;   // world y of the biology band's top edge, where the section titles sit
+    let bioTop = 0, bioBottom = 0;   // world y of the biology band's edges, for the titles
+    let regionLeft = 0, regionRight = 0;   // world x span of the visualization
     const setScale = (obj, materials, s) => {
         obj.scale.setScalar(s);
         materials.forEach((m) => { m.uniforms.uScale.value = s; });
@@ -105,12 +111,15 @@ function init() {
         } else {
             const tb = (r.bottom - heroRect.top) / h;   // heading's bottom, as a fraction
             left = -halfW + 0.6; right = halfW - 0.6;
-            bioY = fy(tb + 0.11); bioH = fh(0.19);
-            modelTop = fy(tb + 0.25); modelGap = fh(0.045);
-            cohortY = fy(tb + 0.48); cohortGap = fh(0.035);
+            bioY = fy(tb + 0.14); bioH = fh(0.19);
+            modelTop = fy(tb + 0.28); modelGap = fh(0.045);
+            cohortY = fy(tb + 0.51); cohortGap = fh(0.035);
         }
         const span = right - left;
         bioTop = bioY + bioH / 2;
+        bioBottom = bioY - bioH / 2;
+        regionLeft = left;
+        regionRight = right;
         const sDna = Math.min(bioH / dna.length, span * 0.2 / 6);
         dna.group.position.set(left + span * 0.09, bioY, 0);
         setScale(dna.group, dna.materials, sDna);
@@ -217,21 +226,31 @@ function init() {
         // the model's title sits in the open space to the right of its hidden layers
         model.titleWorld(lp).project(camera);
         mlTitle.style.transform = `translate(${Math.min(w - 16 - mlTitle.offsetWidth, (lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px) translateY(-50%)`;
-        // section titles centred over their component, just above the biology band
+        if (!captions) {
+            // story line spanning the visualization, just above the biology band
+            const a = { x: 0, y: 0 }, b = { x: 0, y: 0 };
+            project(lp.set(regionLeft, bioTop, 0), a);
+            project(lp.set(regionRight, bioTop, 0), b);
+            story.style.width = `${(b.x - a.x).toFixed(1)}px`;
+            story.style.transform = `translate(${a.x.toFixed(1)}px, ${a.y.toFixed(1)}px) translateY(-100%)`;
+            return;
+        }
+        // captions centred under their component, just below the biology band
         [dna.group, network.group, cells.group].forEach((g, i) => {
             g.getWorldPosition(lp);
-            lp.y = bioTop;
+            lp.y = bioBottom;
             lp.z = 0;
             lp.project(camera);
             const el = scaleEls[i], bw = el.offsetWidth;
             const x = Math.min(w - 16 - bw, Math.max(16, (lp.x * 0.5 + 0.5) * w - bw / 2));
-            el.style.transform = `translate(${x.toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px) translateY(-100%)`;
+            el.style.transform = `translate(${x.toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px)`;
         });
     }
 
     // --- Frame ------------------------------------------------------------------------
     let elapsed = 0;
     let failed = false;
+    let currentStep = -1;
     function draw(t, time, instant) {
         try {
             shared.uTime.value = time;
@@ -243,6 +262,11 @@ function init() {
             renderer.render(scene, camera);
             placeLabels(t);
             cohort.update(t, project);
+            const step = Math.min(4, Math.floor(t / 4));
+            if (step !== currentStep) {
+                currentStep = step;
+                steps.forEach((el, i) => el.classList.toggle('is-on', i === step));
+            }
             hero.classList.add('is-live');
         } catch (e) {
             console.error('Hero animation stopped:', e);
