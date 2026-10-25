@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Carter Lab - Computational Cancer Genomics</title>
-    <link rel="stylesheet" href="styles.css?v=2026-10-25d">
+    <link rel="icon" type="image/png" href="assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="styles.css?v=2026-10-25k">
     <!-- Cache busting: bump v (here, in the import map and on hero.js below) whenever the
          hero or the styles change, so browsers fetch fresh copies instead of cached ones. -->
     <script type="importmap">
     {
         "imports": {
-            "./assets/hero/timeline.js": "./assets/hero/timeline.js?v=2026-10-25d",
-            "./assets/hero/materials.js": "./assets/hero/materials.js?v=2026-10-25d",
-            "./assets/hero/dna.js": "./assets/hero/dna.js?v=2026-10-25d",
-            "./assets/hero/network.js": "./assets/hero/network.js?v=2026-10-25d",
-            "./assets/hero/cells.js": "./assets/hero/cells.js?v=2026-10-25d",
-            "./assets/hero/model.js": "./assets/hero/model.js?v=2026-10-25d",
-            "./assets/hero/cohort.js": "./assets/hero/cohort.js?v=2026-10-25d",
-            "./assets/hero/outputs.js": "./assets/hero/outputs.js?v=2026-10-25d"
+            "./assets/hero/timeline.js": "./assets/hero/timeline.js?v=2026-10-25k",
+            "./assets/hero/materials.js": "./assets/hero/materials.js?v=2026-10-25k",
+            "./assets/hero/dna.js": "./assets/hero/dna.js?v=2026-10-25k",
+            "./assets/hero/network.js": "./assets/hero/network.js?v=2026-10-25k",
+            "./assets/hero/cells.js": "./assets/hero/cells.js?v=2026-10-25k",
+            "./assets/hero/model.js": "./assets/hero/model.js?v=2026-10-25k",
+            "./assets/hero/cohort.js": "./assets/hero/cohort.js?v=2026-10-25k",
+            "./assets/hero/outputs.js": "./assets/hero/outputs.js?v=2026-10-25k",
+            "./assets/hero/logo.js": "./assets/hero/logo.js?v=2026-10-25k"
         }
     }
     </script>
@@ -60,12 +62,17 @@
             <div class="hero__cohort"></div>
         </div>
         <div class="hero__content">
+            <!-- Lab emblem, spinning in 3D (assets/hero/logo.js); the flat image shows until it loads -->
+            <div class="hero__logo" role="img" aria-label="Carter Lab logo: two cats forming a DNA double helix">
+                <img src="assets/images/logo/carter_lab_cats.png" alt="" />
+                <canvas aria-hidden="true"></canvas>
+            </div>
             <h1 class="hero__title">Carter Lab</h1>
             <p class="hero__subtitle">Computational Cancer Genomics</p>
             <a class="hero__cta" href="#research">Explore Our Research <span aria-hidden="true">→</span></a>
         </div>
     </header>
-    <script type="module" src="assets/hero/hero.js?v=2026-10-25d"></script>
+    <script type="module" src="assets/hero/hero.js?v=2026-10-25k"></script>
 
 
     <main class="container">
