@@ -1,9 +1,10 @@
 {
   "id": "clarence-mah-phd",
   "name": "Clarence Mah, PhD",
-  "position": "Graduate Researcher (PhD)",
+  "position": "",
   "program": "Bioinformatics & Systems Biology",
-  "affiliation": "",
+  "affiliation": "Stellaromics",
+  "affiliationUrl": "https://stellaromics.com",
   "bio": "Clarence is a Ph.D. student in the Bioinformatics and Systems Biology Program (BISB) at UC San Diego. After graduation, he pursued computational cancer research with Dr. Jill Mesirov at UCSD focused in brain cancers. Alongside research, he worked on bioinformatics software tools, such as GenePattern and open-source Python packages, focused on research reproducible. Clarence is currently jointly advised by Dr. Gene Yeo and Dr. Hannah Carter in the UCSD School of Medicine and is developing methods for analyzing spatial transcriptomics data.",
   "education": [
     "B.S. in Bioengineering: Bioinformatics, 2016UC San Diego"

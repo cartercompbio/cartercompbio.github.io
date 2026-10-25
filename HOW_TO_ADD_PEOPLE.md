@@ -22,7 +22,8 @@ Edit `people/profiles/your-name.json` and commit.
   "name": "Your Name",                   // Required
   "position": "Graduate Student (PhD)",  // Recommended
   "program": "Your Program",             // Optional
-  "affiliation": "",                     // Optional
+  "affiliation": "",                     // Optional (for alumni: where they are now)
+  "affiliationUrl": "",                  // Optional: links the affiliation
   "bio": "Brief bio...",                 // Recommended
   "education": ["Degree, Year, School"], // Recommended
   "interests": ["Interest 1", "..."],    // Recommended
@@ -52,7 +53,7 @@ Examples:
 
 Edit `people/index.json`:
 - Move your ID from `"current"` to `"alumni"` array
-- Optionally update position in your profile JSON
+- Set `affiliation` (and optionally `affiliationUrl`) to your current position; it shows on your alumni card
 
 ## Naming Conventions
 

@@ -253,7 +253,7 @@
                         <h1 class="member-name">${member.name}</h1>
                         ${member.position ? `<p class="member-position">${member.position}</p>` : ''}
                         ${member.program ? `<p class="member-program">Program: ${member.program}</p>` : ''}
-                        ${member.affiliation ? `<p class="member-affiliation">${member.affiliation}</p>` : ''}
+                        ${member.affiliation ? `<p class="member-affiliation">${member.affiliationUrl ? `<a href="${member.affiliationUrl}" target="_blank">${member.affiliation}</a>` : member.affiliation}</p>` : ''}
                     </div>
                 `;
 

@@ -4,6 +4,7 @@
   "position": "Your Position (e.g., Graduate Student, Postdoc, etc.)",
   "program": "Your Program (optional)",
   "affiliation": "Your Affiliation (optional)",
+  "affiliationUrl": "https://your-affiliation-website.com (optional)",
   "bio": "A brief bio about yourself, your research, and interests.",
   "education": [
     "Degree, Year, Institution",
