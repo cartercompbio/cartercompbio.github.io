@@ -10,7 +10,7 @@ import { createNetwork } from './network.js';
 import { createCells } from './cells.js';
 import { createModel } from './model.js';
 import { createCohort } from './cohort.js';
-import { createProfile } from './profile.js';
+import { createOutputs } from './outputs.js';
 
 const FOV = 35;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -62,7 +62,7 @@ function init() {
     });
     scene.add(model.group);
     const cohort = createCohort({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
-    const profile = createProfile({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
+    const outputs = createOutputs({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
     const outputAnchor = new THREE.Vector3();
     // Section titles fade out as their part of the loop finishes, and return before it restarts.
     const titleFades = [
@@ -253,7 +253,7 @@ function init() {
             renderer.render(scene, camera);
             placeLabels(t);
             cohort.update(t, project);
-            profile.update(t, project, model.outputWorld(outputAnchor));
+            outputs.update(t, project, model.outputWorld(outputAnchor));
             for (const [el, from, to] of titleFades) {
                 el.style.opacity = (t < 22.8 ? 1 - smoothstep(from, to, t) : smoothstep(22.8, 23.8, t)).toFixed(3);
             }

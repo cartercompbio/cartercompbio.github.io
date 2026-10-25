@@ -94,8 +94,6 @@ body {
     --lbl-tf: #5b4bd1;
     --lbl-gene: #0f6f8a;
     --lbl-immune: #1d5fd6;
-    --lbl-cytokine: #0f8f7a;
-    --lbl-death: #c2412f;
     --lbl-ml: #0c162c;
     --lbl-attr: #b7791f;
 }
@@ -124,8 +122,6 @@ body {
     --lbl-tf: #b3a8ff;
     --lbl-gene: #bdf5ff;
     --lbl-immune: #bfeaff;
-    --lbl-cytokine: #9ff5e0;
-    --lbl-death: #ff8a78;
     --lbl-ml: #effcff;
     --lbl-attr: #ffc857;
 }
@@ -203,7 +199,7 @@ body {
 /* One label style everywhere: plain text, coloured by what it names, with a soft halo. */
 .hero__lbl span,
 .hero__therapy-tag,
-.hero__profile-tag {
+.hero__output-tag {
     position: absolute;
     white-space: nowrap;
     font-size: 0.78rem;
@@ -217,9 +213,6 @@ body {
 .hero__lbl--tf span { transform: translate(-50%, -165%); font-weight: 600; color: var(--lbl-tf); }
 .hero__lbl--gene span { transform: translate(9px, -50%); font-style: italic; color: var(--lbl-gene); }   /* gene symbols in italics */
 .hero__lbl--immune span { transform: translate(-50%, 0); color: var(--lbl-immune); }
-/* event labels sit to the left of what they name */
-.hero__lbl--cytokine span { transform: translate(-100%, -50%); color: var(--lbl-cytokine); }
-.hero__lbl--death span { transform: translate(-100%, -50%); color: var(--lbl-death); }
 .hero__lbl--attr span { transform: translate(-50%, -100%); font-weight: 600; color: var(--lbl-attr); }
 
 /* Patient cohort and therapeutics (assets/hero/cohort.js positions them). */
@@ -235,9 +228,10 @@ body {
 .hero__ring { width: 70px; height: 70px; border: 1.5px solid; border-radius: 50%; opacity: 0; }
 .hero__therapy-tag { color: var(--lbl-ml); font-weight: 600; opacity: 0; }
 
-/* The model's output: a small molecular-profile heatmap (assets/hero/profile.js). */
-.hero__profile { position: absolute; left: 0; top: 0; overflow: visible; will-change: transform; filter: var(--hero-icon-filter); }
-.hero__profile-tag { left: 0; top: 0; color: var(--lbl-ml); font-weight: 600; opacity: 0; will-change: transform, opacity; }
+/* The model's outputs: molecular profile, class probabilities, survival (assets/hero/outputs.js). */
+.hero__output { position: absolute; left: 0; top: 0; overflow: visible; opacity: 0; will-change: transform, opacity; filter: var(--hero-icon-filter); }
+.hero__output-tag { left: 0; top: 0; color: var(--lbl-ml); font-weight: 600; opacity: 0; will-change: transform, opacity; }
+.hero__output-axis { stroke: var(--hero-muted); stroke-width: 1; opacity: 0.7; }
 
 .hero__content {
     position: absolute;
@@ -322,9 +316,7 @@ body {
     /* phones: no scale titles; only TF names, variant tags and the prediction stay */
     .hero__scale,
     .hero__lbl--gene,
-    .hero__lbl--immune,
-    .hero__lbl--cytokine,
-    .hero__lbl--death { display: none; }
+    .hero__lbl--immune { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

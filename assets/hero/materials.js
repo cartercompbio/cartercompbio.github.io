@@ -67,7 +67,7 @@ const pointVert = /* glsl */`
     }
 `;
 const pointFrag = /* glsl */`
-    uniform float uGain, uDisc;
+    uniform float uGain, uShape;
     ${INK}
     varying vec3 vColor;
     varying float vSoft;
@@ -76,7 +76,11 @@ const pointFrag = /* glsl */`
         float r2 = dot(d, d) * 4.0;
         if (r2 > 1.0) discard;
         float shape;
-        if (uDisc > 0.5) {
+        if (uShape > 1.5) {
+            // a thin ring, for pulses that highlight an interaction
+            float r = sqrt(r2);
+            shape = exp(-pow((r - 0.8) / 0.09, 2.0));
+        } else if (uShape > 0.5) {
             // a solid node with a slightly stronger rim, as in neural-network diagrams
             float body = 1.0 - smoothstep(0.72, 0.95, r2);
             shape = body * (0.7 + 0.5 * smoothstep(0.35, 0.8, r2));
@@ -87,10 +91,10 @@ const pointFrag = /* glsl */`
     }
 `;
 
-// Glowing points by default; { disc: true } draws solid circular nodes instead.
-export function pointsMaterial({ disc = false } = {}) {
+// Point shapes: 'glow' (soft, default), 'disc' (solid node) or 'ring' (thin circle).
+export function pointsMaterial({ shape = 'glow' } = {}) {
     return new THREE.ShaderMaterial({
-        uniforms: { ...shared, uScale: { value: 1 }, uDisc: { value: disc ? 1 : 0 } },
+        uniforms: { ...shared, uScale: { value: 1 }, uShape: { value: { glow: 0, disc: 1, ring: 2 }[shape] } },
         vertexShader: pointVert,
         fragmentShader: pointFrag,
         ...blending(),
@@ -133,14 +137,16 @@ export function makePoints(count, material) {
 }
 
 // Cells as translucent 3D spheres: the surface is displaced by slow noise (membrane
-// ruffling, breathing, blebbing when a cell dies) and shaded with a bright rim, a soft
-// key light and a faint texture, so membranes read as glassy shells with a nucleus inside.
+// ruffling and breathing; broad ruffles for macrophages, spiky processes for dendritic
+// cells) and shaded with a bright rim, a soft key light and a faint texture, so
+// membranes read as glassy shells with a nucleus inside.
+// aKind: 0 cancer cell, 1 lymphocyte (T/NK), 2 nucleus, 3 macrophage, 4 dendritic cell.
 const cellVert = /* glsl */`
     uniform float uTime;
     attribute vec3 aCenter, aMove, aColor;
-    attribute float aRadius, aSeed, aKind, aState, aShrink, aBleb;
+    attribute float aRadius, aSeed, aKind, aState;
     varying vec3 vN, vV, vObj, vColor;
-    varying float vKind, vState, vShrink;
+    varying float vKind, vState;
     float hash3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
     float noise3(vec3 p) {
         vec3 i = floor(p), f = fract(p);
@@ -151,16 +157,22 @@ const cellVert = /* glsl */`
     void main() {
         vec3 n = normalize(position);
         float s = aSeed * 40.0;
-        float amp = aKind > 1.5 ? 0.06 : (aKind > 0.5 ? 0.13 : 0.08);
-        float d = (noise3(n * 1.7 + s + uTime * 0.12) - 0.5) * 2.0 * amp
-                + (noise3(n * 4.5 + s) - 0.5) * aBleb * 0.35;
+        float d;
+        if (aKind > 3.5) {          // dendritic cell: spiky processes
+            float k = max(noise3(n * 3.2 + s + uTime * 0.08) - 0.45, 0.0) / 0.55;
+            d = 0.55 * k * k - 0.05;
+        } else {
+            float amp = aKind > 2.5 ? 0.2 : (aKind > 1.5 ? 0.06 : (aKind > 0.5 ? 0.13 : 0.08));
+            float freq = aKind > 2.5 ? 1.2 : 1.7;
+            d = (noise3(n * freq + s + uTime * 0.12) - 0.5) * 2.0 * amp;
+        }
         float breath = 1.0 + 0.03 * sin(uTime * 0.6 + s);
-        vec3 p = aCenter + aMove + n * aRadius * (1.0 + d) * breath * aShrink;
+        vec3 p = aCenter + aMove + n * aRadius * (1.0 + d) * breath;
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         vN = normalize(normalMatrix * n);
         vV = normalize(-mv.xyz);
         vObj = n + s;
-        vColor = aColor; vKind = aKind; vState = aState; vShrink = aShrink;
+        vColor = aColor; vKind = aKind; vState = aState;
         gl_Position = projectionMatrix * mv;
     }
 `;
@@ -168,7 +180,7 @@ const cellFrag = /* glsl */`
     uniform float uGain;
     ${INK}
     varying vec3 vN, vV, vObj, vColor;
-    varying float vKind, vState, vShrink;
+    varying float vKind, vState;
     float hash3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
     float noise3(vec3 p) {
         vec3 i = floor(p), f = fract(p);
@@ -184,10 +196,10 @@ const cellFrag = /* glsl */`
         float spec = pow(max(dot(reflect(-L, N), V), 0.0), 28.0);
         float tex = 0.8 + 0.4 * noise3(vObj * 6.0);
         vec3 col;
-        if (vKind > 1.5) {          // nucleus: a dim inner shell
+        if (vKind > 1.5 && vKind < 2.5) {   // nucleus: a dim inner shell
             col = vColor * (0.05 + 0.45 * fres) * tex * 0.8;
         } else {
-            float energy = (0.6 + 0.6 * vState) * (0.5 + 0.5 * vShrink);
+            float energy = 0.6 + 0.6 * vState;
             col = vColor * (0.08 + 0.2 * diff + 1.15 * fres) * tex * energy + vec3(1.0) * spec * 0.22 * (1.0 - uLight);
         }
         gl_FragColor = inkOut(col * uGain);

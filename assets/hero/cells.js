@@ -10,10 +10,11 @@ const COL = {
     orange: new THREE.Color('#ff9457'),
     cyan: new THREE.Color('#3fd0ff'),
     blue: new THREE.Color('#3d7bff'),
-    synapse: new THREE.Color('#d8f6ff'),
     mhc: new THREE.Color('#ffdc8c'),
     cytokine: new THREE.Color('#9ff5e0'),
     contact: new THREE.Color('#ffc2b5'),
+    violet: new THREE.Color('#a77bff'),
+    amber: new THREE.Color('#ffb347'),
 };
 
 // Tumour nests in different molecular states. `mhc` is MHC class I surface display:
@@ -77,10 +78,16 @@ export function createCells({ mobile }) {
         });
     }
 
-    // Engagements: each immune cell crawls to the nearest cell of its nest, holds
-    // contact, then withdraws before the loop ends.
-    const engagements = [[0, 0], [1, 1]].map(([ii, ci]) => {
-        const im = cells[immune[ii]];
+    // Two more cell types: a macrophage (large, ruffled) and a dendritic cell (spiky).
+    const macrophage = cells.length;
+    cells.push({ p: new THREE.Vector3(-3.4, -2.2, 0.3), r: 0.85, kind: 3, color: COL.violet, seed: rand() });
+    const dendritic = cells.length;
+    cells.push({ p: new THREE.Vector3(2.3, 3.7, 0.6), r: 0.62, kind: 4, color: COL.amber, seed: rand() });
+
+    // Engagements: the T cell, NK cell and macrophage each crawl to the nearest cell of
+    // a nest, hold contact, then withdraw before the loop ends.
+    const engagements = [[immune[0], 0, 8.0], [immune[1], 1, 8.7], [macrophage, 2, 8.4]].map(([idx, ci, at]) => {
+        const im = cells[idx];
         let best = -1, bestD = Infinity;
         cells.forEach((c, k) => {
             if (c.kind === 0 && c.cluster === ci && c.p.distanceTo(im.p) < bestD) { bestD = c.p.distanceTo(im.p); best = k; }
@@ -89,14 +96,13 @@ export function createCells({ mobile }) {
         const dir = im.p.clone().sub(tumor.p).normalize();
         const dock = tumor.p.clone().add(dir.clone().multiplyScalar((tumor.r + im.r) * 0.9));
         const contact = tumor.p.clone().add(dir.multiplyScalar(tumor.r * 0.98));
-        return { immune: immune[ii], tumor: best, dock, contact, at: 8.0 + ii * 0.7 };
+        return { immune: idx, tumor: best, dock, contact, at };
     });
     const approachOf = (en, t) => envelope(t, en.at, 1.7, 2.1, 3.2);
     const contactOf = (en, t) => envelope(t, en.at + 1.5, 0.5, 1.4, 1.6);
-    // the T cell's target blebs and shrinks after the hit, then recovers by the loop's end
-    const target = engagements[0].tumor;
-    const blebOf = (t) => envelope(t, 10.6, 0.6, 1.6, 2.0);
-    const shrinkOf = (t) => 1 - 0.32 * envelope(t, 10.9, 1.0, 1.4, 2.4);
+    const target = engagements[0].tumor;   // the cancer cell the T cell attacks
+    // the dendritic cell presents antigen to the T cell before the T cell sets off
+    const presentOf = (t) => envelope(t, 7.2, 0.5, 1.4, 0.8);
 
     // Cytokine (IFN-γ) release from the docked T cell toward neighbouring cancer cells.
     const neighbours = cells.map((c, k) => k)
@@ -119,20 +125,19 @@ export function createCells({ mobile }) {
     const inst = (size) => new THREE.InstancedBufferAttribute(new Float32Array(n * 2 * size), size);
     const A = {
         aCenter: inst(3), aMove: inst(3), aColor: inst(3),
-        aRadius: inst(1), aSeed: inst(1), aKind: inst(1), aState: inst(1), aShrink: inst(1), aBleb: inst(1),
+        aRadius: inst(1), aSeed: inst(1), aKind: inst(1), aState: inst(1),
     };
     cells.forEach((c, i) => {
         const off = new THREE.Vector3(gauss(rand), gauss(rand), gauss(rand)).multiplyScalar(c.r * 0.12);
         A.aCenter.array.set([c.p.x, c.p.y, c.p.z], i * 3);
         A.aCenter.array.set([c.p.x + off.x, c.p.y + off.y, c.p.z + off.z], (n + i) * 3);
         A.aRadius.array[i] = c.r;
-        A.aRadius.array[n + i] = c.r * (c.kind ? 0.55 : 0.48);
+        A.aRadius.array[n + i] = c.r * (c.kind === 1 ? 0.55 : 0.45);
         A.aSeed.array[i] = c.seed;
         A.aSeed.array[n + i] = c.seed + 0.37;
         A.aKind.array[i] = c.kind;
         A.aKind.array[n + i] = 2;    // nucleus
     });
-    A.aShrink.array.fill(1);
     for (const [name, attr] of Object.entries(A)) geom.setAttribute(name, attr);
     geom.instanceCount = n * 2;
     const mesh = new THREE.Mesh(geom, cell3dMaterial());
@@ -147,9 +152,16 @@ export function createCells({ mobile }) {
     // Synapse glows, cytotoxic granules, cytokines and cell-cell signals.
     const GRANULES = mobile ? 5 : 10;
     const PER_SIGNAL = 3;
+    const BEAM = mobile ? 8 : 12;   // dots in each interaction beam
+    const BEAM_COL = [COL.cyan, COL.blue, COL.violet];
     const nSparks = engagements.length * (1 + GRANULES) + neighbours.length * PER_SIGNAL + pairs.length * PER_SIGNAL;
     const sparks = makePoints(nSparks, pointsMaterial());
     inner.add(sparks.points);
+    // Interaction highlights: crisp dotted beams, and rings that ping out from each contact.
+    const beamPts = makePoints((1 + engagements.length) * BEAM, pointsMaterial({ shape: 'disc' }));
+    inner.add(beamPts.points);
+    const rings = makePoints(engagements.length + 1, pointsMaterial({ shape: 'ring' }));
+    inner.add(rings.points);
 
     // Faint extracellular particles (cytokine-like haze).
     const nHaze = mobile ? 50 : 130;
@@ -166,9 +178,8 @@ export function createCells({ mobile }) {
     inner.add(haze.points);
 
     const move = A.aMove.array, color = A.aColor.array, state = A.aState.array;
-    const shrink = A.aShrink.array, bleb = A.aBleb.array;
     const cur = cells.map(() => new THREE.Vector3());   // current centres, for particles and labels
-    const v = new THREE.Vector3();
+    const v = new THREE.Vector3(), w = new THREE.Vector3();
 
     function setSpark(o, p, c, b, size) {
         sparks.position.set([p.x, p.y, p.z], o * 3);
@@ -183,6 +194,29 @@ export function createCells({ mobile }) {
             setSpark(o + j, v, c, on * Math.sin(Math.PI * u) * 0.8, 0.09);
         }
         return o + PER_SIGNAL;
+    }
+    // a dotted link between two cell surfaces, with a pulse marching from a to b
+    function beam(o, a, b, ra, rb, c, on, time) {
+        v.copy(b).sub(a);
+        const len = v.length() || 1;
+        for (let j = 0; j < BEAM; j++) {
+            const u = (j + 0.5) / BEAM;
+            w.copy(a).addScaledVector(v, (ra + (len - ra - rb) * u) / len);
+            const pulse = Math.pow(Math.max(0, Math.sin((u - time * 0.9) * Math.PI * 2)), 6);
+            const b = on * (0.55 + 0.6 * pulse);
+            beamPts.position.set([w.x, w.y, w.z], (o + j) * 3);
+            beamPts.color.set([c.r * b, c.g * b, c.b * b], (o + j) * 3);
+            beamPts.size[o + j] = 0.16 + 0.1 * pulse;
+        }
+        return o + BEAM;
+    }
+    // a ring pinging outward from p, repeating while `on`
+    function ping(k, p, c, on, time) {
+        const f = (time * 0.7 + k * 0.33) % 1;
+        const b = on * (1 - f) * 1.3;
+        rings.position.set([p.x, p.y, p.z + 0.1], k * 3);
+        rings.color.set([c.r * b, c.g * b, c.b * b], k * 3);
+        rings.size[k] = 1.4 + 1.8 * f;
     }
 
     function update(t, time) {
@@ -215,10 +249,7 @@ export function createCells({ mobile }) {
             state[en.immune] = Math.max(state[en.immune], approach * 0.6 + contact * 0.4);
             state[en.tumor] = Math.max(state[en.tumor], contact * 0.7);
         });
-        shrink.fill(1);
-        bleb.fill(0);
-        shrink[target] = shrink[n + target] = shrinkOf(t);
-        bleb[target] = blebOf(t);
+        state[dendritic] = Math.max(state[dendritic], presentOf(t) * 0.8);
 
         // nuclei follow their cells
         for (let i = 0; i < n; i++) {
@@ -230,8 +261,8 @@ export function createCells({ mobile }) {
 
         // MHC-I puncta
         for (let i = 0; i < nTumor; i++) {
-            const b = mhcLevel(CLUSTERS[cells[i].cluster], t) * shrink[i] * 0.9;
-            const r = cells[i].r * 1.05 * shrink[i];
+            const b = mhcLevel(CLUSTERS[cells[i].cluster], t) * 0.9;
+            const r = cells[i].r * 1.05;
             DIRS.forEach((d, k) => {
                 const o = i * DIRS.length + k;
                 mhcPts.position.set([cur[i].x + d.x * r, cur[i].y + d.y * r, cur[i].z + d.z * r], o * 3);
@@ -242,9 +273,10 @@ export function createCells({ mobile }) {
 
         // synapses and granules
         let o = 0;
-        engagements.forEach((en) => {
+        engagements.forEach((en, k) => {
             const contact = contactOf(en, t);
-            setSpark(o++, en.contact, COL.synapse, contact * 0.85, 0.9 + 0.5 * contact);
+            const throb = 0.75 + 0.25 * Math.sin(time * 4);   // contact glow pulses while engaged
+            setSpark(o++, en.contact, BEAM_COL[k], contact * 1.4 * throb, (1.4 + 0.9 * contact) * throb);
             for (let j = 0; j < GRANULES; j++) {
                 const u = (t * 0.7 + j / GRANULES) % 1;
                 v.copy(cur[en.immune]).lerp(en.contact, u);
@@ -261,8 +293,18 @@ export function createCells({ mobile }) {
             o = k % 2 ? stream(o, cur[j], cur[i], COL.contact, on, t, 0.7) : stream(o, cur[i], cur[j], COL.contact, on, t, 0.7);
         });
 
-        for (const name of ['aMove', 'aColor', 'aState', 'aShrink', 'aBleb']) geom.attributes[name].needsUpdate = true;
-        for (const pts of [mhcPts, sparks]) {
+        // interaction beams: dendritic cell → T cell, and each immune cell → its target while
+        // approaching; rings ping from each contact (and from the T cell while it is primed)
+        let b = beam(0, cur[dendritic], cur[immune[0]], cells[dendritic].r, cells[immune[0]].r, COL.amber, presentOf(t), time);
+        engagements.forEach((en, k) => {
+            const on = approachOf(en, t) * (1 - contactOf(en, t));
+            b = beam(b, cur[en.immune], cur[en.tumor], cells[en.immune].r, cells[en.tumor].r, BEAM_COL[k], on, time);
+            ping(k, en.contact, BEAM_COL[k], contactOf(en, t), time);
+        });
+        ping(engagements.length, cur[immune[0]], COL.amber, presentOf(t) * (1 - approachOf(engagements[0], t)), time);
+
+        for (const name of ['aMove', 'aColor', 'aState']) geom.attributes[name].needsUpdate = true;
+        for (const pts of [mhcPts, sparks, beamPts, rings]) {
             const g = pts.points.geometry;
             g.attributes.position.needsUpdate = g.attributes.color.needsUpdate = g.attributes.size.needsUpdate = true;
         }
@@ -282,15 +324,9 @@ export function createCells({ mobile }) {
     const labels = [
         { text: 'T cell', kind: 'immune', world: below(engagements[0].immune, -0.95), level: (t) => 0.6 + 0.4 * approachOf(engagements[0], t) },
         { text: 'NK cell', kind: 'immune', world: below(engagements[1].immune, -1.05), level: (t) => 0.6 + 0.4 * approachOf(engagements[1], t) },
-        // event labels: shown only while the cytokine release and the cell death play,
-        // pinned just left of the nests (clear background) at the height of the event
-        { text: 'Cytokines', kind: 'cytokine',
-            world: (t, out) => inner.localToWorld(out.set(-3.6, cur[engagements[0].immune].y + 0.3, cur[engagements[0].immune].z)),
-            level: (t) => envelope(t, 9.8, 0.4, 1.4, 0.8) },
-        { text: 'Cell death', kind: 'death',
-            world: (t, out) => inner.localToWorld(out.set(-3.6, cur[target].y + 0.2, cur[target].z)),
-            level: (t) => envelope(t, 10.8, 0.5, 1.6, 1.2) },
+        { text: 'Macrophage', kind: 'immune', world: below(macrophage, -1.3), level: (t) => 0.6 + 0.4 * approachOf(engagements[2], t) },
+        { text: 'Dendritic cell', kind: 'immune', world: below(dendritic, -1.0), level: (t) => 0.6 + 0.4 * presentOf(t) },
     ];
 
-    return { group, materials: [sparks.points.material, haze.points.material, mhcPts.points.material], update, signalTarget, labels, samples };
+    return { group, materials: [sparks, haze, mhcPts, beamPts, rings].map((pts) => pts.points.material), update, signalTarget, labels, samples };
 }

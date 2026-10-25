@@ -71,7 +71,7 @@ export function createModel({ mobile, sources }) {
     ribbons.frustumCulled = false;
     group.add(ribbons);
 
-    const nodes = makePoints(total, pointsMaterial({ disc: true }));
+    const nodes = makePoints(total, pointsMaterial({ shape: 'disc' }));
     group.add(nodes.points);
     const P = Array.from({ length: total }, () => new THREE.Vector3());   // node positions
 
