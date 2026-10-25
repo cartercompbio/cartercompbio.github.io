@@ -1,7 +1,7 @@
 // Hero animation: "From Genome to Cancer Ecosystem".
 // Genetic variation (helix) -> regulatory network -> tumour/immune microenvironment,
-// with a machine-learning model beneath that integrates all three, choreographed on a
-// 16 s loop (see timeline.js). Illustrative research themes, not a causal model.
+// with a machine-learning model beneath that integrates and explains, and patients who are
+// stratified and treated, choreographed on a 24 s loop (see timeline.js). Illustrative research themes, not a causal model.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { shared, pointsMaterial, makePoints } from './materials.js';
 import { LOOP, envelope, rng } from './timeline.js';
@@ -9,6 +9,7 @@ import { createDNA } from './dna.js';
 import { createNetwork } from './network.js';
 import { createCells } from './cells.js';
 import { createModel } from './model.js';
+import { createCohort } from './cohort.js';
 
 const FOV = 35;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -56,6 +57,7 @@ function init() {
         ],
     });
     scene.add(model.group);
+    const cohort = createCohort({ mobile, layer: hero.querySelector('.hero__cohort') });
 
     scene.add(createBackdrop());
     const ambient = createAmbient(mobile);
@@ -83,20 +85,25 @@ function init() {
         shared.uViewHeight.value = h / (2 * TAN);
         shared.uPixelRatio.value = renderer.getPixelRatio();
 
+        // Bands, as fractions of the hero's height from the top: biology, the model's rows,
+        // then the patient cohort. Landscape keeps the left side clear for the heading;
+        // portrait stacks everything below it.
         const heroRect = hero.getBoundingClientRect();
         const r = copy.getBoundingClientRect();
-        let left, right, bioY, bioH, modelTop, modelGap;
+        const fy = (f) => (1 - 2 * f) * halfH, fh = (f) => f * 2 * halfH;
+        let left, right, bioY, bioH, modelTop, modelGap, cohortY, cohortGap;
         if (!portrait) {
             left = ((r.right - heroRect.left) / w * 2 - 1) * halfW + 0.8;
             right = halfW - 1.2;
-            bioY = halfH * 0.24; bioH = halfH * 2 * 0.58;
-            modelTop = -halfH * 0.36; modelGap = halfH * 0.13;
+            bioY = fy(0.26); bioH = fh(0.38);
+            modelTop = fy(0.5); modelGap = fh(0.055);
+            cohortY = fy(0.8); cohortGap = fh(0.04);
         } else {
-            const textBottom = (1 - (r.bottom - heroRect.top) / h * 2) * halfH;
-            const band = textBottom - 0.5 + halfH;   // space below the heading
+            const tb = (r.bottom - heroRect.top) / h;   // heading's bottom, as a fraction
             left = -halfW + 0.6; right = halfW - 0.6;
-            bioY = textBottom - 0.5 - band * 0.3; bioH = band * 0.5;
-            modelTop = textBottom - 0.5 - band * 0.66; modelGap = band * 0.09;
+            bioY = fy(tb + 0.11); bioH = fh(0.19);
+            modelTop = fy(tb + 0.25); modelGap = fh(0.045);
+            cohortY = fy(tb + 0.48); cohortGap = fh(0.035);
         }
         const span = right - left;
         const sDna = Math.min(bioH / dna.length, span * 0.2 / 6);
@@ -113,6 +120,7 @@ function init() {
             groupW: span * 0.2, centerX: network.group.position.x,
             top: modelTop, gap: modelGap, width: span,
         });
+        cohort.layout({ centerX: (left + right) / 2, y: cohortY, width: span * 0.9, rowGap: cohortGap, source: model.outputWorld(new THREE.Vector3()) });
         placeCamera(true);
     }
 
@@ -177,8 +185,14 @@ function init() {
             : Math.max(network.nodeLevel[l.node], network.hlNode[l.node])));
     cells.labels.forEach((l) => addLabel(l.text, l.kind, l.world, l.level));
     addLabel('Prediction', 'ml', (t, out) => model.outputWorld(out), () => 0.55 + 0.45 * model.outputLevel());
+    addLabel('Feature attribution', 'attr', (t, out) => model.attributionWorld(out), (t) => model.attributionLevel(t));
 
-    const lp = new THREE.Vector3(), lv = new THREE.Vector3(), center = new THREE.Vector3();
+    const lp = new THREE.Vector3(), lv = new THREE.Vector3(), center = new THREE.Vector3(), pv = new THREE.Vector3();
+    const project = (world, out) => {
+        pv.copy(world).project(camera);
+        out.x = (pv.x * 0.5 + 0.5) * hero.clientWidth;
+        out.y = (0.5 - pv.y * 0.5) * hero.clientHeight;
+    };
     function placeLabels(t) {
         const w = hero.clientWidth, h = hero.clientHeight;
         network.group.getWorldPosition(center).applyMatrix4(camera.matrixWorldInverse);
@@ -214,10 +228,11 @@ function init() {
             dna.update(t, time);
             network.update(t, time, instant);
             cells.update(t, time);
-            model.update(t);
-            bridges.update(t, dna, network, cells);
+            model.update(t, time);
+            bridges.update(t, { dna, network, cells, model, cohort });
             renderer.render(scene, camera);
             placeLabels(t);
+            cohort.update(t, project);
             hero.classList.add('is-live');
         } catch (e) {
             console.error('Hero animation stopped:', e);
@@ -229,7 +244,7 @@ function init() {
 
     const staticMode = () => frozenParam !== null || reducedMq.matches;
     function renderStatic() {
-        const t = frozenParam !== null ? Number(frozenParam) % LOOP : 10.6;   // network afterglow, engaged cells, model inputs lit
+        const t = frozenParam !== null ? Number(frozenParam) % LOOP : 15.0;   // the model explaining its prediction
         placeCamera(true);
         draw(t, t, true);
     }
@@ -317,19 +332,19 @@ function createAmbient(mobile) {
     return p;
 }
 
-// Two travelling signals that tie the scales together: helix -> network entry hub
-// (end of the variant phase) and network exit hub -> engaging immune cell.
+// Travelling signals that tie the scales together: helix -> network (end of the variant
+// phase), network -> the cancer cell the T cell will meet, prediction -> patients.
 function createBridges() {
     const TRAIL = 6;
-    const p = makePoints(2 * TRAIL, pointsMaterial());
+    const p = makePoints(3 * TRAIL, pointsMaterial());
     const col = new THREE.Color('#d8fbff');
     const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), q = new THREE.Vector3();
     const legs = [
         { from: (o, s) => s.dna.signalOrigin(o), to: (o, s) => s.network.nodeWorld(s.network.entry, o), start: 3.35, dur: 0.8 },
         { from: (o, s) => s.network.nodeWorld(s.network.exit, o), to: (o, s) => s.cells.signalTarget(o), start: 7.3, dur: 0.85 },
+        { from: (o, s) => s.model.outputWorld(o), to: (o, s) => s.cohort.center(o), start: 15.6, dur: 0.7 },
     ];
-    function update(t, dna, network, cells) {
-        const s = { dna, network, cells };
+    function update(t, s) {
         legs.forEach((leg, li) => {
             leg.from(a, s);
             leg.to(b, s);

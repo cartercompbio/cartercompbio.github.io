@@ -93,96 +93,70 @@ export function makePoints(count, material) {
     return { points, position, color, size, drift, seed };
 }
 
-// Translucent cells drawn procedurally on camera-facing quads: a deforming membrane
-// rim, faint cytoplasm with granular texture, and an off-centre nucleus.
-// Cheaper and softer than meshing every cell.
+// Cells as translucent 3D spheres: the surface is displaced by slow noise (membrane
+// ruffling, breathing, blebbing when a cell dies) and shaded with a bright rim, a soft
+// key light and a faint texture, so membranes read as glassy shells with a nucleus inside.
 const cellVert = /* glsl */`
-    uniform float uTime, uFocus, uDof, uScale;
-    attribute vec3 aCenter;
-    attribute vec3 aMove;
-    attribute float aRadius;
-    attribute float aSeed;
-    attribute float aKind;      // 0 tumor, 1 immune
-    attribute vec3 aColor;
-    attribute float aState;     // 0 rest .. 1 fully engaged
-    attribute float aMhc;       // MHC-I surface display, 0 none .. 1 high
-    varying vec2 vUv;
-    varying vec3 vColor;
-    varying float vSeed, vKind, vState, vBlur, vMhc;
+    uniform float uTime;
+    attribute vec3 aCenter, aMove, aColor;
+    attribute float aRadius, aSeed, aKind, aState, aShrink, aBleb;
+    varying vec3 vN, vV, vObj, vColor;
+    varying float vKind, vState, vShrink;
+    float hash3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+    float noise3(vec3 p) {
+        vec3 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(mix(hash3(i), hash3(i + vec3(1, 0, 0)), f.x), mix(hash3(i + vec3(0, 1, 0)), hash3(i + vec3(1, 1, 0)), f.x), f.y),
+                   mix(mix(hash3(i + vec3(0, 0, 1)), hash3(i + vec3(1, 0, 1)), f.x), mix(hash3(i + vec3(0, 1, 1)), hash3(i + vec3(1, 1, 1)), f.x), f.y), f.z);
+    }
     void main() {
-        float breath = 1.0 + 0.025 * sin(uTime * 0.6 + aSeed * 40.0);
-        vec4 mv = modelViewMatrix * vec4(aCenter + aMove, 1.0);
-        mv.xy += position.xy * aRadius * 2.6 * breath * uScale;
-        float coc = abs(-mv.z - uFocus) * uDof;
-        vBlur = clamp(coc * 0.9, 0.0, 1.0);
-        vUv = position.xy * 2.6;     // cell radius maps to |vUv| = 1
-        vColor = aColor;
-        vSeed = aSeed; vKind = aKind; vState = aState; vMhc = aMhc;
+        vec3 n = normalize(position);
+        float s = aSeed * 40.0;
+        float amp = aKind > 1.5 ? 0.06 : (aKind > 0.5 ? 0.13 : 0.08);
+        float d = (noise3(n * 1.7 + s + uTime * 0.12) - 0.5) * 2.0 * amp
+                + (noise3(n * 4.5 + s) - 0.5) * aBleb * 0.35;
+        float breath = 1.0 + 0.03 * sin(uTime * 0.6 + s);
+        vec3 p = aCenter + aMove + n * aRadius * (1.0 + d) * breath * aShrink;
+        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        vN = normalize(normalMatrix * n);
+        vV = normalize(-mv.xyz);
+        vObj = n + s;
+        vColor = aColor; vKind = aKind; vState = aState; vShrink = aShrink;
         gl_Position = projectionMatrix * mv;
     }
 `;
 const cellFrag = /* glsl */`
-    uniform float uTime, uGain;
-    varying vec2 vUv;
-    varying vec3 vColor;
-    varying float vSeed, vKind, vState, vBlur, vMhc;
-
-    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-    float noise(vec2 p) {
-        vec2 i = floor(p), f = fract(p);
-        vec2 u = f * f * (3.0 - 2.0 * f);
-        return mix(mix(hash(i), hash(i + vec2(1, 0)), u.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), u.x), u.y);
+    uniform float uGain;
+    varying vec3 vN, vV, vObj, vColor;
+    varying float vKind, vState, vShrink;
+    float hash3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+    float noise3(vec3 p) {
+        vec3 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(mix(hash3(i), hash3(i + vec3(1, 0, 0)), f.x), mix(hash3(i + vec3(0, 1, 0)), hash3(i + vec3(1, 1, 0)), f.x), f.y),
+                   mix(mix(hash3(i + vec3(0, 0, 1)), hash3(i + vec3(1, 0, 1)), f.x), mix(hash3(i + vec3(0, 1, 1)), hash3(i + vec3(1, 1, 1)), f.x), f.y), f.z);
     }
-
     void main() {
-        float r = length(vUv);
-        float a = atan(vUv.y, vUv.x);
-        float s = vSeed * 31.0;
-        float t = uTime;
-        // membrane outline: gentle lobes for tumor cells, small pseudopod-like bulges for immune cells
-        float R = 1.0
-            + mix(0.035, 0.05, vKind) * sin(mix(3.0, 2.0, vKind) * a + t * 0.35 + s)
-            + 0.025 * sin(5.0 * a - t * 0.27 + s * 1.3)
-            + vKind * 0.012 * sin(7.0 * a + t * 0.5 + s * 0.7);
-        float d = r - R;
-        float w = mix(0.035, 0.22, vBlur);
-        float rim = exp(-(d * d) / (w * w));
-        float inside = 1.0 - smoothstep(-w, w, d);
-        float glow = exp(-max(d, 0.0) * 5.0) * 0.18 * (1.0 - inside);
-
-        // cytoplasm: brighter toward the membrane (translucent shell), granular texture
-        float shell = pow(clamp(r / R, 0.0, 1.0), 3.0);
-        float gran = noise(vUv * 7.0 + s) * noise(vUv * 15.0 - s + t * 0.05);
-        float cyto = inside * (0.05 + 0.16 * shell + 0.12 * gran * (1.0 - vBlur));
-
-        // nucleus, offset and slightly lobed; larger in tumor cells
-        vec2 nc = vUv - vec2(sin(s) * 0.12, cos(s) * 0.12);
-        float nr = length(nc);
-        float na = atan(nc.y, nc.x);
-        float NR = mix(0.48, 0.55, vKind) * (1.0 + 0.06 * sin(3.0 * na + s + t * 0.2));
-        float nd = nr - NR;
-        float nw = mix(0.04, 0.2, vBlur);
-        float nucRim = exp(-(nd * nd) / (nw * nw)) * 0.45;
-        float nucFill = (1.0 - smoothstep(-nw, nw, nd)) * (0.10 + 0.10 * noise(nc * 9.0 + s));
-
-        float energy = 0.55 + 0.3 * vKind + 0.6 * vState;
-        vec3 rimCol = mix(vColor, vec3(1.0, 0.95, 0.9), 0.18 * vState);
-        vec3 col = rimCol * (rim * 0.85 + glow) + vColor * (cyto + nucRim + nucFill) * 0.85;
-        col *= energy;
-
-        // MHC-I complexes: evenly spaced bright puncta just outside the membrane
-        float stepA = 6.2831853 / 18.0;
-        float k = floor((a - s) / stepA + 0.5) * stepA + s;
-        vec2 dp = vUv - R * 1.03 * vec2(cos(k), sin(k));
-        col += vec3(1.0, 0.86, 0.55) * exp(-dot(dp, dp) / 0.0018) * vMhc * 1.4;
-
-        gl_FragColor = vec4(col * (1.0 - 0.45 * vBlur) * uGain, 1.0);
+        vec3 N = normalize(vN), V = normalize(vV);
+        float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.2);
+        vec3 L = normalize(vec3(-0.4, 0.7, 0.6));
+        float diff = max(dot(N, L), 0.0);
+        float spec = pow(max(dot(reflect(-L, N), V), 0.0), 28.0);
+        float tex = 0.8 + 0.4 * noise3(vObj * 6.0);
+        vec3 col;
+        if (vKind > 1.5) {          // nucleus: a dim inner shell
+            col = vColor * (0.05 + 0.45 * fres) * tex * 0.8;
+        } else {
+            float energy = (0.6 + 0.6 * vState) * (0.5 + 0.5 * vShrink);
+            col = vColor * (0.08 + 0.2 * diff + 1.15 * fres) * tex * energy + vec3(1.0) * spec * 0.22;
+        }
+        gl_FragColor = vec4(col * uGain, 1.0);
     }
 `;
 
-export function cellsMaterial() {
+export function cell3dMaterial() {
     return new THREE.ShaderMaterial({
-        uniforms: { ...shared, uScale: { value: 1 } },
+        uniforms: { ...shared },
         vertexShader: cellVert,
         fragmentShader: cellFrag,
         ...additive,

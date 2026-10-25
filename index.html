@@ -11,6 +11,22 @@
     <script src="publications.js"></script>
 </head>
 <body>
+    <nav class="main-nav main-nav--top">
+        <a href="#home">Home</a>
+        <a href="#research">Research</a>
+        <div class="nav-item has-menu">
+            <a href="#people" aria-haspopup="true">People</a>
+            <div class="nav-menu">
+                <a href="#people-current">Current Team</a>
+                <a href="#people-alumni">Alumni</a>
+                <a href="#people-photos">Lab Photos</a>
+            </div>
+        </div>
+        <a href="#software">Software</a>
+        <a href="#publications">Publications</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
     <!-- Animated hero (assets/hero/). Falls back to the static cover image without WebGL. -->
     <header class="hero">
         <div class="hero__fallback" style="background-image: url('assets/images/homepage.webp');"></div>
@@ -20,8 +36,9 @@
             <div class="hero__labels"></div>
             <p class="hero__scale">Genetic variation</p>
             <p class="hero__scale">Gene regulatory network</p>
-            <p class="hero__scale">Tumor–immune microenvironment</p>
+            <p class="hero__scale">Cancer &amp; immune cells</p>
             <p class="hero__ml-title">Machine learning model</p>
+            <div class="hero__cohort"></div>
         </div>
         <div class="hero__content">
             <h1 class="hero__title">Carter Lab</h1>
@@ -31,14 +48,6 @@
     </header>
     <script type="module" src="assets/hero/hero.js"></script>
 
-    <nav class="main-nav">
-        <a href="#home">Home</a>
-        <a href="#research">Research</a>
-        <a href="#people">People</a>
-        <a href="#software">Software</a>
-        <a href="#publications">Publications</a>
-        <a href="#contact">Contact</a>
-    </nav>
 
     <main class="container">
         <section id="home" class="intro">
@@ -110,16 +119,28 @@
             <p>Members of the Carter lab, past and present.</p>
             <hr>
 
-            <!-- PI container loaded dynamically -->
-            <div id="pi-container"></div>
+            <!-- Tabs; the nav's People menu opens them too (people.js) -->
+            <div class="people-tabs" role="tablist" aria-label="People">
+                <button type="button" class="people-tab" role="tab" id="tab-current" aria-controls="people-current" aria-selected="true">Current Team</button>
+                <button type="button" class="people-tab" role="tab" id="tab-alumni" aria-controls="people-alumni" aria-selected="false" tabindex="-1">Alumni</button>
+                <button type="button" class="people-tab" role="tab" id="tab-photos" aria-controls="people-photos" aria-selected="false" tabindex="-1">Lab Photos</button>
+            </div>
 
-            <h2>Current Members</h2>
-            <!-- Current members loaded dynamically -->
-            <div id="current-members-grid" class="people-grid"></div>
+            <div id="people-current" class="people-panel" role="tabpanel" aria-labelledby="tab-current">
+                <!-- PI and current members loaded dynamically -->
+                <div id="pi-container"></div>
+                <div id="current-members-grid" class="people-grid"></div>
+            </div>
 
-            <h2>Alumni</h2>
-            <!-- Alumni loaded dynamically -->
-            <div id="alumni-grid" class="people-grid"></div>
+            <div id="people-alumni" class="people-panel" role="tabpanel" aria-labelledby="tab-alumni" hidden>
+                <!-- Alumni loaded dynamically -->
+                <div id="alumni-grid" class="people-grid"></div>
+            </div>
+
+            <div id="people-photos" class="people-panel" role="tabpanel" aria-labelledby="tab-photos" hidden>
+                <!-- Photos listed in people/photos.json -->
+                <div id="lab-photos-grid" class="photo-grid"></div>
+            </div>
         </section>
 
         <section id="software" class="software-section">

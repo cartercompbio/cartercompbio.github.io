@@ -82,5 +82,65 @@ function getPhotoPath(photoFilename) {
     return `assets/images/people/${photoFilename}`;
 }
 
+// Lab photos are listed in people/photos.json; image files live in assets/images/lab_photos/
+async function loadLabPhotos() {
+    const grid = document.getElementById('lab-photos-grid');
+    if (!grid) return;
+
+    try {
+        const response = await fetch('people/photos.json?_=' + Date.now());
+        const { photos } = await response.json();
+
+        if (!photos.length) {
+            grid.innerHTML = '<p class="photos-empty">Lab photos are coming soon.</p>';
+            return;
+        }
+
+        grid.innerHTML = photos.map(photo => `
+            <figure class="lab-photo">
+                <img src="assets/images/lab_photos/${photo.file}" alt="${photo.caption || 'Carter Lab photo'}" loading="lazy" />
+                ${photo.caption ? `<figcaption>${photo.caption}${photo.date ? ` <span>${photo.date}</span>` : ''}</figcaption>` : ''}
+            </figure>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading lab photos:', error);
+    }
+}
+
+// People tabs (Current Team / Alumni / Lab Photos). The nav's People menu opens them too.
+function showPeopleTab(panelId) {
+    document.querySelectorAll('.people-tab').forEach(tab => {
+        const selected = tab.getAttribute('aria-controls') === panelId;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
+    });
+}
+
+function setupPeopleTabs() {
+    const tabs = [...document.querySelectorAll('.people-tab')];
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => showPeopleTab(tab.getAttribute('aria-controls')));
+        // arrow keys move between tabs
+        tab.addEventListener('keydown', e => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+            next.focus();
+            showPeopleTab(next.getAttribute('aria-controls'));
+        });
+    });
+
+    // a link straight to a tab (e.g. index.html#people-alumni); scroll once images above have loaded
+    const panelId = location.hash.slice(1);
+    if (panelId.startsWith('people-') && document.getElementById(panelId)) {
+        showPeopleTab(panelId);
+        window.addEventListener('load', () => document.getElementById('people').scrollIntoView());
+    }
+}
+
 // Load people when page loads
-document.addEventListener('DOMContentLoaded', loadPeople);
+document.addEventListener('DOMContentLoaded', () => {
+    loadPeople();
+    loadLabPhotos();
+    setupPeopleTabs();
+});

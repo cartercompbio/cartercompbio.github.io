@@ -9,7 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get the target section ID from the href
             const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
+            let targetSection = document.getElementById(targetId);
+
+            // People menu entries open their tab, then scroll to the People section
+            if (targetId.startsWith('people-') && typeof showPeopleTab === 'function') {
+                showPeopleTab(targetId);
+                targetSection = document.getElementById('people');
+                this.blur();   // close the menu
+            }
 
             if (targetSection) {
                 // Get the height of the sticky nav

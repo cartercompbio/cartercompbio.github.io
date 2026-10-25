@@ -1,11 +1,13 @@
-// 16-second choreography shared by every layer of the hero.
+// 24-second choreography shared by every layer of the hero.
 //   0–4s   genetic variants light up on the helix
 //   4–8s   signals propagate through the regulatory network
-//   8–12s  tumor/immune cells shift state and interact
-//   12–16s everything settles back to the resting configuration
-// Every envelope below returns to 0 before the loop wraps, so the loop is seamless.
+//   8–12s  cancer and immune cells shift state and interact
+//   12–16s the machine-learning model predicts, then explains (feature attribution)
+//   16–20s patients are stratified by the prediction
+//   20–24s therapeutics reach each group; everything settles back to rest
+// Every envelope returns to 0 before the loop wraps, so the loop is seamless.
 
-export const LOOP = 16;
+export const LOOP = 24;
 
 export function smoothstep(a, b, x) {
     const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
