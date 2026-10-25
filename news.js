@@ -6,8 +6,8 @@ async function loadNews() {
 
         // Sort by date (newest first)
         newsItems.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
+            const dateA = parseNewsDate(a.date);
+            const dateB = parseNewsDate(b.date);
             return dateB - dateA;
         });
 
@@ -19,15 +19,6 @@ async function loadNews() {
         // Fallback to hardcoded news if JSON fails to load
         displayFallbackNews();
     }
-}
-
-function parseNewsDate(dateStr) {
-    // Handle date ranges (use the first date)
-    const datePart = dateStr.split('→')[0].trim();
-
-    // Parse various date formats
-    const date = new Date(datePart);
-    return isNaN(date.getTime()) ? new Date(0) : date;
 }
 
 function displayNews(newsItems) {
@@ -61,12 +52,10 @@ function displayNews(newsItems) {
 }
 
 function formatNewsDate(item) {
-    const startDate = new Date(item.date);
     if (item.dateEnd) {
-        const endDate = new Date(item.dateEnd);
-        return `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        return `${formatNewsDateString(item.date, 'short')} - ${formatNewsDateString(item.dateEnd, 'short')}`;
     }
-    return startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    return formatNewsDateString(item.date, 'long');
 }
 
 function formatDate(dateStr) {

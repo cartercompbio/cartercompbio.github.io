@@ -164,6 +164,7 @@
             }
         }
     </style>
+    <script src="../news-dates.js"></script>
     <script>
         async function loadNewsArchive() {
             try {
@@ -172,15 +173,15 @@
 
                 // Sort by date (newest first)
                 newsItems.sort((a, b) => {
-                    const dateA = new Date(a.date);
-                    const dateB = new Date(b.date);
+                    const dateA = parseNewsDate(a.date);
+                    const dateB = parseNewsDate(b.date);
                     return dateB - dateA;
                 });
 
                 // Group by year
                 const newsByYear = {};
                 newsItems.forEach(item => {
-                    const year = new Date(item.date).getFullYear();
+                    const year = parseNewsDate(item.date).getFullYear();
                     if (!newsByYear[year]) {
                         newsByYear[year] = [];
                     }
@@ -281,14 +282,10 @@
         }
 
         function formatNewsDate(item) {
-            const startDate = new Date(item.date);
-            const options = { month: 'short', day: 'numeric', year: 'numeric' };
-
             if (item.dateEnd) {
-                const endDate = new Date(item.dateEnd);
-                return `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', options)}`;
+                return `${formatNewsDateString(item.date, 'short', false)} - ${formatNewsDateString(item.dateEnd, 'short')}`;
             }
-            return startDate.toLocaleDateString('en-US', options);
+            return formatNewsDateString(item.date, 'short');
         }
 
         document.addEventListener('DOMContentLoaded', loadNewsArchive);
