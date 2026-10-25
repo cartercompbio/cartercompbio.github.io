@@ -6,7 +6,7 @@ import { envelope, rng, smoothstep } from './timeline.js';
 // colour-coded groups (16–20 s); a therapy then reaches each group (20–23 s) before the
 // cohort merges back into one row.
 // palettes for the dark and light themes: neutral patients, then the three groups
-const PALETTES = {
+export const PALETTES = {
     dark: { neutral: '#cdd6ff', groups: ['#2ec4b6', '#b3a8ff', '#ff8a78'] },
     light: { neutral: '#9aa8c0', groups: ['#0f9488', '#6d5fd8', '#e2554a'] },
 };

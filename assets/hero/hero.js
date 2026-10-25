@@ -10,6 +10,7 @@ import { createNetwork } from './network.js';
 import { createCells } from './cells.js';
 import { createModel } from './model.js';
 import { createCohort } from './cohort.js';
+import { createProfile } from './profile.js';
 
 const FOV = 35;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -61,6 +62,8 @@ function init() {
     });
     scene.add(model.group);
     const cohort = createCohort({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
+    const profile = createProfile({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
+    const outputAnchor = new THREE.Vector3();
     // Section titles fade out as their part of the loop finishes, and return before it restarts.
     const titleFades = [
         [scaleEls[0], 2.5, 4], [scaleEls[1], 6.5, 8], [scaleEls[2], 10.5, 12],
@@ -197,7 +200,6 @@ function init() {
         (t) => l.kind === 'tf' ? 0.8 + 0.2 * network.nodeLevel[l.node]
             : Math.max(network.nodeLevel[l.node], network.hlNode[l.node])));
     cells.labels.forEach((l) => addLabel(l.text, l.kind, l.world, l.level));
-    addLabel('Prediction', 'ml', (t, out) => model.outputWorld(out), () => 0.55 + 0.45 * model.outputLevel());
     addLabel('Feature attribution', 'attr', (t, out) => model.attributionWorld(out), (t) => model.attributionLevel(t));
 
     const lp = new THREE.Vector3(), lv = new THREE.Vector3(), center = new THREE.Vector3(), pv = new THREE.Vector3();
@@ -251,6 +253,7 @@ function init() {
             renderer.render(scene, camera);
             placeLabels(t);
             cohort.update(t, project);
+            profile.update(t, project, model.outputWorld(outputAnchor));
             for (const [el, from, to] of titleFades) {
                 el.style.opacity = (t < 22.8 ? 1 - smoothstep(from, to, t) : smoothstep(22.8, 23.8, t)).toFixed(3);
             }

@@ -242,10 +242,9 @@ export function createModel({ mobile, sources }) {
 
     const outputWorld = (out) => out.copy(P[total - 1]);
     const titleWorld = (out) => out.copy(titleAnchor);
-    const outputLevel = () => level[total - 1];
     // where the "Feature attribution" label sits: over the network group's bars
     const attributionWorld = (out) => out.copy(P[perGroup]).add(q.set(0, gap * 0.95, 0));
     const attributionLevel = (t) => envelope(t, EXPLAIN, 0.5, 1.2, 1.0);
 
-    return { group, layout, update, outputWorld, outputLevel, attributionWorld, attributionLevel, titleWorld };
+    return { group, layout, update, outputWorld, attributionWorld, attributionLevel, titleWorld };
 }

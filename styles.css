@@ -202,7 +202,8 @@ body {
 .hero__lbl { position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform, opacity; }
 /* One label style everywhere: plain text, coloured by what it names, with a soft halo. */
 .hero__lbl span,
-.hero__therapy-tag {
+.hero__therapy-tag,
+.hero__profile-tag {
     position: absolute;
     white-space: nowrap;
     font-size: 0.78rem;
@@ -219,7 +220,6 @@ body {
 /* event labels sit to the left of what they name */
 .hero__lbl--cytokine span { transform: translate(-100%, -50%); color: var(--lbl-cytokine); }
 .hero__lbl--death span { transform: translate(-100%, -50%); color: var(--lbl-death); }
-.hero__lbl--ml span { transform: translate(14px, -50%); font-weight: 600; color: var(--lbl-ml); }
 .hero__lbl--attr span { transform: translate(-50%, -100%); font-weight: 600; color: var(--lbl-attr); }
 
 /* Patient cohort and therapeutics (assets/hero/cohort.js positions them). */
@@ -234,6 +234,10 @@ body {
 .hero__pill svg { display: block; width: 100%; height: 100%; fill: currentColor; }
 .hero__ring { width: 70px; height: 70px; border: 1.5px solid; border-radius: 50%; opacity: 0; }
 .hero__therapy-tag { color: var(--lbl-ml); font-weight: 600; opacity: 0; }
+
+/* The model's output: a small molecular-profile heatmap (assets/hero/profile.js). */
+.hero__profile { position: absolute; left: 0; top: 0; overflow: visible; will-change: transform; filter: var(--hero-icon-filter); }
+.hero__profile-tag { left: 0; top: 0; color: var(--lbl-ml); font-weight: 600; opacity: 0; will-change: transform, opacity; }
 
 .hero__content {
     position: absolute;
