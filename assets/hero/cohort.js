@@ -5,17 +5,23 @@ import { envelope, rng, smoothstep } from './timeline.js';
 // coordinates each frame. The model's prediction stratifies a uniform cohort into three
 // colour-coded groups (16–20 s); a therapy then reaches each group (20–23 s) before the
 // cohort merges back into one row.
-const NEUTRAL = new THREE.Color('#cdd6ff');
-const GROUPS = ['#2ec4b6', '#b3a8ff', '#ff8a78'].map((c) => new THREE.Color(c));
+// palettes for the dark and light themes: neutral patients, then the three groups
+const PALETTES = {
+    dark: { neutral: '#cdd6ff', groups: ['#2ec4b6', '#b3a8ff', '#ff8a78'] },
+    light: { neutral: '#9aa8c0', groups: ['#0f9488', '#6d5fd8', '#e2554a'] },
+};
 const SCAN = 16.3, SPLIT = [17.2, 18.6], MERGE = [22.6, 23.7];
-const DOSE = 20.0;   // syringes set off, one group after another
+const DOSE = 20.0;   // pills set off, one group after another
 
 const PERSON = '<svg viewBox="0 0 20 24" aria-hidden="true"><circle cx="10" cy="5.5" r="4.3"/><path d="M2 23.5C2 15.8 5.6 11.8 10 11.8s8 4 8 11.7z"/></svg>';
-const SYRINGE = '<svg viewBox="0 0 14 44" aria-hidden="true"><rect x="5" y="0" width="4" height="2.4" rx="1"/><rect x="6.2" y="2" width="1.6" height="8"/>' +
-    '<rect x="2" y="9.5" width="10" height="2" rx="1"/><rect x="3.5" y="11" width="7" height="20" rx="1.6" fill-opacity="0.35" stroke="currentColor" stroke-width="1.2"/>' +
-    '<rect x="3.5" y="21" width="7" height="10" rx="1"/><rect x="6.3" y="31" width="1.4" height="12"/></svg>';
+// a two-tone capsule: one half solid, the other outlined
+const PILL = '<svg viewBox="0 0 48 20" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="17" rx="8.5" fill="none" stroke="currentColor" stroke-width="2.4"/>' +
+    '<path d="M10 1.5h14v17H10a8.5 8.5 0 0 1 0-17z"/></svg>';
 
-export function createCohort({ mobile, layer }) {
+export function createCohort({ mobile, light, layer }) {
+    const palette = PALETTES[light ? 'light' : 'dark'];
+    const NEUTRAL = new THREE.Color(palette.neutral);
+    const GROUPS = palette.groups.map((c) => new THREE.Color(c));
     const rand = rng(41);
     const n = mobile ? 12 : 24;
     const make = (cls, html) => {
@@ -32,10 +38,11 @@ export function createCohort({ mobile, layer }) {
     const counts = [0, 0, 0];
     patients.forEach((p) => { p.slot = counts[p.group]++; });
 
-    const syringes = GROUPS.map(() => make('hero__syringe', SYRINGE));
+    const pills = GROUPS.map(() => make('hero__pill', PILL));
     const rings = GROUPS.map(() => make('hero__ring', ''));
     const title = make('hero__cohort-title', '');
     title.textContent = 'Patients';
+    title.style.setProperty('--dot', 'var(--dot-patients)');
     const tag = make('hero__therapy-tag', '');
     tag.textContent = 'Therapeutics';
 
@@ -75,17 +82,18 @@ export function createCohort({ mobile, layer }) {
             place(p.el, s.x, s.y, ` scale(${(1 + 0.25 * scan + 0.18 * dose).toFixed(3)})`);
         });
 
-        // syringes travel from the model's prediction to above each group, then dip in
-        syringes.forEach((el, g) => {
+        // pills travel from the model's prediction to above each group, turning as they
+        // fly, then drop in and dissolve
+        pills.forEach((el, g) => {
             const start = DOSE + g * 0.35;
             const travel = smoothstep(start, start + 1.3, t);
-            const dip = envelope(t, start + 1.3, 0.25, 0.3, 0.4);
-            const vis = envelope(t, start, 0.3, 1.9, 0.6);
+            const drop = smoothstep(start + 1.3, start + 1.75, t);
+            const vis = envelope(t, start, 0.3, 1.6, 0.5);
             v.copy(from).lerp(groupCenter[g], travel);
             project(v, s);
             el.style.color = css(GROUPS[g]);
             el.style.opacity = vis.toFixed(3);
-            place(el, s.x, s.y - 46 + dip * 14);   // hover above the group, dip to inject
+            place(el, s.x, s.y - 40 + drop * 26, ` rotate(${(-35 + 360 * travel).toFixed(1)}deg) scale(${(1 - 0.5 * drop).toFixed(3)})`);
             const pulse = Math.max(0, Math.min(1, (t - start - 1.45) / 1.1));
             project(groupCenter[g], s);
             rings[g].style.borderColor = css(GROUPS[g]);

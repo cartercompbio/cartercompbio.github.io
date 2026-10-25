@@ -98,6 +98,7 @@ export function createModel({ mobile, sources }) {
     group.add(bars.points);
 
     let unit = 1, gap = 1;
+    const titleAnchor = new THREE.Vector3();
     // Place the layers: inputs under each scale (groupX), hidden layers narrowing to the centre.
     function layout({ groupX, groupW, centerX, top, gap: rowGap, width }) {
         unit = width / 30;
@@ -114,6 +115,7 @@ export function createModel({ mobile, sources }) {
         row(1, centerX, width * 0.42);
         row(2, centerX, width * 0.22);
         row(3, centerX, 0);
+        titleAnchor.set(centerX + width * 0.26, top - gap * 1.5, 0);   // right of the hidden layers
         P.forEach((p, i) => nodes.position.set([p.x, p.y, 0], i * 3));
         edges.forEach(([, a, b], e) => linePos.set([P[a].x, P[a].y, 0, P[b].x, P[b].y, 0], e * 6));
         for (let i = 0; i < perGroup * 3; i++) {
@@ -229,11 +231,11 @@ export function createModel({ mobile, sources }) {
     }
 
     const outputWorld = (out) => out.copy(P[total - 1]);
-    const inputWorld = (out) => out.copy(P[0]);
+    const titleWorld = (out) => out.copy(titleAnchor);
     const outputLevel = () => level[total - 1];
     // where the "Feature attribution" label sits: over the network group's bars
     const attributionWorld = (out) => out.copy(P[perGroup]).add(q.set(0, gap * 0.95, 0));
     const attributionLevel = (t) => envelope(t, EXPLAIN, 0.5, 1.2, 1.0);
 
-    return { group, layout, update, outputWorld, inputWorld, outputLevel, attributionWorld, attributionLevel };
+    return { group, layout, update, outputWorld, outputLevel, attributionWorld, attributionLevel, titleWorld };
 }

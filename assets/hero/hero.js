@@ -3,7 +3,7 @@
 // with a machine-learning model beneath that integrates and explains, and patients who are
 // stratified and treated, choreographed on a 24 s loop (see timeline.js). Illustrative research themes, not a causal model.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { shared, pointsMaterial, makePoints } from './materials.js';
+import { shared, theme, pointsMaterial, makePoints } from './materials.js';
 import { LOOP, envelope, rng } from './timeline.js';
 import { createDNA } from './dna.js';
 import { createNetwork } from './network.js';
@@ -26,6 +26,9 @@ function init() {
     } catch (e) {
         return;   // no WebGL: the static fallback image stays in place
     }
+    // light theme unless the page asked for dark (see the script in index.html's head)
+    theme.light = !document.documentElement.classList.contains('theme-dark');
+    shared.uLight.value = theme.light ? 1 : 0;
     const labelLayer = hero.querySelector('.hero__labels');
     const scaleEls = [...hero.querySelectorAll('.hero__scale')];
     const mlTitle = hero.querySelector('.hero__ml-title');
@@ -34,7 +37,7 @@ function init() {
     // ?hero-t=9.5 freezes the loop at that second (handy for reviewing a single beat).
     const frozenParam = new URLSearchParams(location.search).get('hero-t');
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75));
-    renderer.setClearColor(0x0c162c, 1);
+    renderer.setClearColor(theme.light ? 0xf8fafc : 0x0c162c, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.5, 200);
@@ -57,7 +60,7 @@ function init() {
         ],
     });
     scene.add(model.group);
-    const cohort = createCohort({ mobile, layer: hero.querySelector('.hero__cohort') });
+    const cohort = createCohort({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
 
     scene.add(createBackdrop());
     const ambient = createAmbient(mobile);
@@ -67,6 +70,7 @@ function init() {
 
     // --- Layout: biology right of (or below) the heading, the model along the bottom.
     let distance = 30, halfW = 1, halfH = 1;
+    let bioTop = 0;   // world y of the biology band's top edge, where the section titles sit
     const setScale = (obj, materials, s) => {
         obj.scale.setScalar(s);
         materials.forEach((m) => { m.uniforms.uScale.value = s; });
@@ -106,6 +110,7 @@ function init() {
             cohortY = fy(tb + 0.48); cohortGap = fh(0.035);
         }
         const span = right - left;
+        bioTop = bioY + bioH / 2;
         const sDna = Math.min(bioH / dna.length, span * 0.2 / 6);
         dna.group.position.set(left + span * 0.09, bioY, 0);
         setScale(dna.group, dna.materials, sDna);
@@ -209,13 +214,18 @@ function init() {
             L.el.style.transform = `translate(${((lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px)`;
             L.el.style.opacity = a.toFixed(3);
         }
-        model.inputWorld(lp).project(camera);
-        mlTitle.style.transform = `translate(${Math.max(16, (lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h - 34).toFixed(1)}px)`;
+        // the model's title sits in the open space to the right of its hidden layers
+        model.titleWorld(lp).project(camera);
+        mlTitle.style.transform = `translate(${Math.min(w - 16 - mlTitle.offsetWidth, (lp.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px) translateY(-50%)`;
+        // section titles centred over their component, just above the biology band
         [dna.group, network.group, cells.group].forEach((g, i) => {
-            g.getWorldPosition(lp).project(camera);
+            g.getWorldPosition(lp);
+            lp.y = bioTop;
+            lp.z = 0;
+            lp.project(camera);
             const el = scaleEls[i], bw = el.offsetWidth;
             const x = Math.min(w - 16 - bw, Math.max(16, (lp.x * 0.5 + 0.5) * w - bw / 2));
-            el.style.transform = `translateX(${x.toFixed(1)}px)`;
+            el.style.transform = `translate(${x.toFixed(1)}px, ${((0.5 - lp.y * 0.5) * h).toFixed(1)}px) translateY(-100%)`;
         });
     }
 
@@ -292,14 +302,20 @@ function createBackdrop() {
         vertexShader: /* glsl */`
             varying vec2 vUv;
             void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+        uniforms: { uLight: shared.uLight },
         fragmentShader: /* glsl */`
+            uniform float uLight;
             varying vec2 vUv;
-            vec3 pool(vec2 c, vec2 r, vec3 col) { return col * max(0.0, 1.0 - length((vUv - c) / r) / 0.7); }
+            float pool(vec2 c, vec2 r) { return max(0.0, 1.0 - length((vUv - c) / r) / 0.7); }
             void main() {
-                vec3 col = vec3(0.047, 0.086, 0.172)
-                    + pool(vec2(0.18, 0.50), vec2(0.30, 0.60), vec3(0.31, 0.36, 0.84) * 0.20)
-                    + pool(vec2(0.48, 0.50), vec2(0.45, 0.55), vec3(0.18, 0.77, 0.71) * 0.14)
-                    + pool(vec2(0.82, 0.50), vec2(0.32, 0.55), vec3(1.00, 0.44, 0.38) * 0.15);
+                float a = pool(vec2(0.18, 0.50), vec2(0.30, 0.60));
+                float b = pool(vec2(0.48, 0.50), vec2(0.45, 0.55));
+                float c = pool(vec2(0.82, 0.50), vec2(0.32, 0.55));
+                vec3 dark = vec3(0.047, 0.086, 0.172) + vec3(0.31, 0.36, 0.84) * 0.20 * a
+                    + vec3(0.18, 0.77, 0.71) * 0.14 * b + vec3(1.00, 0.44, 0.38) * 0.15 * c;
+                vec3 light = vec3(0.973, 0.98, 0.988) - vec3(0.05, 0.04, 0.0) * a
+                    - vec3(0.05, 0.0, 0.015) * b - vec3(0.0, 0.04, 0.045) * c;
+                vec3 col = mix(dark, light, uLight);
                 col += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
                 gl_FragColor = vec4(col, 1.0);
             }`,
