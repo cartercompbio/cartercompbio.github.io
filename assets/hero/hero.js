@@ -4,7 +4,7 @@
 // stratified and treated, choreographed on a 24 s loop (see timeline.js). Illustrative research themes, not a causal model.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { shared, theme, pointsMaterial, makePoints } from './materials.js';
-import { LOOP, envelope, rng } from './timeline.js';
+import { LOOP, envelope, rng, smoothstep } from './timeline.js';
 import { createDNA } from './dna.js';
 import { createNetwork } from './network.js';
 import { createCells } from './cells.js';
@@ -61,6 +61,11 @@ function init() {
     });
     scene.add(model.group);
     const cohort = createCohort({ mobile, light: theme.light, layer: hero.querySelector('.hero__cohort') });
+    // Section titles fade out as their part of the loop finishes, and return before it restarts.
+    const titleFades = [
+        [scaleEls[0], 2.5, 4], [scaleEls[1], 6.5, 8], [scaleEls[2], 10.5, 12],
+        [mlTitle, 14.5, 16], [hero.querySelector('.hero__cohort-title'), 20.5, 22],
+    ];
 
     scene.add(createBackdrop());
     const ambient = createAmbient(mobile);
@@ -243,6 +248,9 @@ function init() {
             renderer.render(scene, camera);
             placeLabels(t);
             cohort.update(t, project);
+            for (const [el, from, to] of titleFades) {
+                el.style.opacity = (t < 22.8 ? 1 - smoothstep(from, to, t) : smoothstep(22.8, 23.8, t)).toFixed(3);
+            }
             hero.classList.add('is-live');
         } catch (e) {
             console.error('Hero animation stopped:', e);

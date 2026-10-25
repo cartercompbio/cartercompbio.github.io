@@ -75,7 +75,7 @@ body {
     --hero-ink: #0c162c;
     --hero-sub: #13788f;
     --hero-muted: #7a889c;
-    --hero-title-glow: 0 1px 3px rgba(12, 22, 44, 0.18), 0 0 8px var(--hero-bg);
+    --hero-title-glow: 0 1px 2px rgba(12, 22, 44, 0.45), 0 0 10px rgba(12, 22, 44, 0.2);
     --hero-rule: rgba(12, 22, 44, 0.12);
     --hero-title-shadow: none;
     --hero-cta-rgb: 19, 120, 143;
@@ -104,7 +104,7 @@ body {
     --hero-ink: #edf3fb;
     --hero-sub: #9fdcef;
     --hero-muted: #8ea3bf;
-    --hero-title-glow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px var(--hero-bg);
+    --hero-title-glow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.3);
     --hero-rule: rgba(255, 255, 255, 0.14);
     --hero-title-shadow: 0 2px 24px rgba(5, 11, 24, 0.6);
     --hero-cta-rgb: 79, 227, 255;
@@ -177,7 +177,8 @@ body {
 
 .hero.is-live .hero__annotations { opacity: 1; }
 
-/* Section titles: small and muted with a soft shadow, so they label without competing. */
+/* Section titles: faint white capitals with a soft shadow. The script fades each one
+   out as its part of the loop finishes and brings them back before the loop restarts. */
 .hero__scale,
 .hero__ml-title,
 .hero__cohort-title {
@@ -185,10 +186,11 @@ body {
     left: 0;
     top: 0;
     margin: 0;
-    color: var(--hero-muted);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     white-space: nowrap;
     text-shadow: var(--hero-title-glow);
 }
