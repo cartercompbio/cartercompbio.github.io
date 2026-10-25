@@ -3,11 +3,15 @@
   "name": "Hannah Carter",
   "position": "Principal Investigator",
   "program": "",
-  "affiliation": "UC San Diego, Department of Medicine, Division of Medical Genetics",
+  "affiliation": "UC San Diego, Department of Medicine, Division of Genomics and Precision Medicine",
+  "positions": [
+    "Moores Cancer Center Member",
+    "Co-lead Structural and Functional Genomics Program at Moores Cancer Center"
+  ],
   "bio": "",
   "education": [
-    "Ph.D. in Biomedical Engineering, 2012Johns Hopkins University",
-    "M.Eng. in Electrical and Computer Engineering, 2004University of Louisville"
+    "Ph.D. in Biomedical Engineering, 2012, Johns Hopkins University",
+    "M.Eng. in Electrical and Computer Engineering, 2004, University of Louisville"
   ],
   "interests": [
     "Cancer Biology",

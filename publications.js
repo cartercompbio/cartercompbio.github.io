@@ -69,6 +69,10 @@ function highlightPublication(pub) {
         });
     }
 
+    // Link PubMed IDs to their PubMed pages
+    text = text.replace(/PMID:\s*(\d+)/g,
+        'PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/$1/" target="_blank">$1</a>');
+
     // Add URL link if provided
     if (pub.url) {
         text += ` <a href="${pub.url}" target="_blank">[Link]</a>`;

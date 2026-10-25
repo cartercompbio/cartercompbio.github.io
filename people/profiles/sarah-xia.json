@@ -1,0 +1,31 @@
+{
+  "id": "sarah-xia",
+  "name": "Sarah Xia",
+  "position": "Graduate Student",
+  "program": "Biomedical Sciences",
+  "affiliation": "",
+  "bio": "Sarah is a PhD student in the Biomedical Sciences program co-advised by Dr. Kyle Gaulton.",
+  "education": [
+    "Biomolecular Engineering and Bioinformatics, 2023, UC Santa Cruz" ],
+  "interests": [
+    "Genomics",
+    "Gene Regulation",
+    "Precision Medicine"
+  ],
+  "email": "sxia@ucsd.edu",
+  "links": [
+    {
+      "type": "Google Scholar",
+      "url": "https://scholar.google.com/citations?hl=en&user=ys5LlG8AAAAJ"
+    },
+    {
+      "type": "LinkedIn",
+      "url": "https://www.linkedin.com/in/xiasarah/"
+    }
+  ],
+  "photo": "sarah_xia.jpg",
+  "radar_data": {
+    "labels": ["Dancing", "Bullet journaling", "Genetics/Genomics", "Going to the grocery store", "oh no", "Category 6", "Category 7", "Category 8"],
+    "values": [8, 7, 9, 10, 10, 10, 3, 5]
+  }
+}

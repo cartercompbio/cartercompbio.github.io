@@ -253,7 +253,7 @@
                         <h1 class="member-name">${member.name}</h1>
                         ${member.position ? `<p class="member-position">${member.position}</p>` : ''}
                         ${member.program ? `<p class="member-program">Program: ${member.program}</p>` : ''}
-                        ${member.affiliation ? `<p class="member-affiliation">${member.affiliation}</p>` : ''}
+                        ${member.affiliation ? `<p class="member-affiliation">${member.affiliationUrl ? `<a href="${member.affiliationUrl}" target="_blank">${member.affiliation}</a>` : member.affiliation}</p>` : ''}
                     </div>
                 `;
 
@@ -263,6 +263,18 @@
                         <div class="member-section">
                             <h2>About</h2>
                             <p class="member-bio">${member.bio}</p>
+                        </div>
+                    `;
+                }
+
+                // Positions section
+                if (member.positions && member.positions.length > 0) {
+                    html += `
+                        <div class="member-section">
+                            <h2>💼 Positions</h2>
+                            <ul>
+                                ${member.positions.map(position => `<li>${position}</li>`).join('')}
+                            </ul>
                         </div>
                     `;
                 }

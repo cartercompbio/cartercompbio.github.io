@@ -25,8 +25,8 @@ async function loadPeople() {
         const currentMembers = currentProfiles.filter(p => p.id !== 'hannah-carter');
         displayPeopleGrid('current-members-grid', currentMembers);
 
-        // Display alumni
-        displayPeopleGrid('alumni-grid', alumniProfiles);
+        // Display alumni with their current affiliation
+        displayPeopleGrid('alumni-grid', alumniProfiles, true);
 
     } catch (error) {
         console.error('Error loading people:', error);
@@ -47,7 +47,7 @@ function displayPI(person) {
     `;
 }
 
-function displayPeopleGrid(containerId, people) {
+function displayPeopleGrid(containerId, people, showAffiliation = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
@@ -60,7 +60,9 @@ function displayPeopleGrid(containerId, people) {
         personCard.innerHTML = `
             <img src="${getPhotoPath(person.photo)}" alt="${person.name}" />
             <h4>${person.name}</h4>
-            ${person.position ? `<p class="person-position">${person.position}</p>` : ''}
+            ${showAffiliation && person.affiliation
+                ? `<p class="person-affiliation">${formatAffiliation(person)}</p>`
+                : person.position ? `<p class="person-position">${person.position}</p>` : ''}
         `;
 
         // Make card clickable to go to detail page
@@ -71,6 +73,15 @@ function displayPeopleGrid(containerId, people) {
 
         container.appendChild(personCard);
     });
+}
+
+/**
+ * Affiliation text, linked to affiliationUrl when provided
+ */
+function formatAffiliation(person) {
+    if (!person.affiliationUrl) return person.affiliation;
+    // Stop the click from also opening the card's detail page
+    return `<a href="${person.affiliationUrl}" target="_blank" onclick="event.stopPropagation()">${person.affiliation}</a>`;
 }
 
 function getPhotoPath(photoFilename) {

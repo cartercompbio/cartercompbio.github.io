@@ -1,5 +1,83 @@
 [
   {
+    "id": "laub-defense-2026",
+    "title": "David defends! Congratulations Dr. Laub!",
+    "date": "2026-08",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "new-members-jun-2026",
+    "title": "Sarah and Junxi join the lab. Welcome!",
+    "date": "2026-06",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "t1grs-2026",
+    "title": "T1GRS published in Nature Genetics.",
+    "date": "2026-05",
+    "paper": {
+      "title": "Genetic association and machine learning improve the prediction of type 1 diabetes risk",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42062540/"
+    },
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "neoprecis-2026",
+    "title": "NeoPrecis published in Nature Communications.",
+    "date": "2026-01",
+    "paper": {
+      "title": "NeoPrecis: Enhancing Immunotherapy Response Prediction through Integration of Qualified Immunogenicity and Clonality-Aware Neoantigen Landscapes",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41577704/"
+    },
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "sears-defense-2025",
+    "title": "TJ defends! Congratulations Dr. Sears!",
+    "date": "2025-10",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "klie-defense-2025",
+    "title": "Adam defends! Congratulations Dr. Klie!",
+    "date": "2025-07",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "noa-joins-2025",
+    "title": "Noa joins the lab. Welcome!",
+    "date": "2025-06",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "sungsik-joins-2025",
+    "title": "Sungsik joins the lab. Welcome!",
+    "date": "2025-02",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
+    "id": "talwar-defense-2024",
+    "title": "James defends! Congratulations Dr. Talwar!",
+    "date": "2024-07",
+    "paper": null,
+    "github": null,
+    "links": []
+  },
+  {
     "id": "grievous-2024",
     "title": "GRIEVOUS now published in Bioinformatics!",
     "date": "2024-07-30",

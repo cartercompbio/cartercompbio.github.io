@@ -1,0 +1,13 @@
+{
+  "id": "ginger_spice",
+  "name": "Ginger and Spice",
+  "position": "Research Assistants",
+  "program": "",
+  "affiliation": "",
+  "interests": ["Supporting lab members", "Joining in on critical research meetings"],
+  "photo": "ginger_and_spice.jpeg",
+  "radar_data": {
+    "labels": ["Moral support", "Drinking Water", "Sleeping", "Airshows", "Fighting each other", "Cuteness", "Sniffing laptops"],
+    "values": [10, 3, 8, 1, 8, 10, 9]
+  }
+}

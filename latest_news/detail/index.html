@@ -80,6 +80,7 @@
             color: #1e748a;
         }
     </style>
+    <script src="../../news-dates.js"></script>
     <script>
         // Load news data and populate page
         async function loadNewsDetail() {
@@ -146,12 +147,10 @@
         }
 
         function formatDate(newsItem) {
-            const startDate = new Date(newsItem.date);
             if (newsItem.dateEnd) {
-                const endDate = new Date(newsItem.dateEnd);
-                return `${startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                return `${formatNewsDateString(newsItem.date, 'long')} - ${formatNewsDateString(newsItem.dateEnd, 'long')}`;
             }
-            return startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            return formatNewsDateString(newsItem.date, 'long');
         }
 
         document.addEventListener('DOMContentLoaded', loadNewsDetail);
