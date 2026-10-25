@@ -11,7 +11,6 @@ import { createCells } from './cells.js';
 import { createModel } from './model.js';
 import { createCohort } from './cohort.js';
 import { createOutputs } from './outputs.js';
-import { createLogo } from './logo.js';
 
 const FOV = 35;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -20,8 +19,6 @@ const hero = document.querySelector('.hero');
 const canvas = hero && hero.querySelector('.hero__canvas');
 const copy = hero && hero.querySelector('.hero__content');
 if (hero && canvas) init();
-const logo = document.querySelector('.hero__logo');
-if (logo) createLogo(logo);
 
 function init() {
     let renderer;

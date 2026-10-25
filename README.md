@@ -20,7 +20,7 @@ cartercompbio.github.io/
 ├── assets/
 │   ├── hero/                       # Homepage animation (Three.js modules)
 │   └── images/
-│       ├── logo/                   # Lab logo, its depth map, and favicon
+│       ├── logo/                   # Favicon (also the nav logo on inner pages)
 │       ├── research_*.png          # Research area images
 │       ├── people/                 # Member photos (*.jpg/png)
 │       └── software/               # Software logos
