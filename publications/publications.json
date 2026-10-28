@@ -1,6 +1,12 @@
 {
   "2026": [
     {
+      "citation": "Laub D, Ho A, Raina L, Jaureguy J, Klie A, Salem RM, McVicker G, Carter H. GenVarLoader: an accelerated dataloader for applying deep learning to personalized genomics. BMC Genomics. 2026 Jul 24;27(1):871. PMID: 42897450.",
+      "journal": "BMC Genomics",
+      "labAuthors": ["Laub D", "Raina L", "Klie A", "Carter H"],
+      "url": "https://doi.org/10.1186/s12864-026-13225-5"
+    },
+    {
       "citation": "McGrail C, Sears TJ, Griffin EN, Ghaben AL, Smadbeck P, Flannick J, Kudtarkar P, Carter H, Gaulton K. Genetic association and machine learning improve the prediction of type 1 diabetes risk. Nature Genetics. 2026 Apr 30. PMID: 42062540.",
       "journal": "Nature Genetics",
       "labAuthors": ["Sears TJ", "Carter H"],
